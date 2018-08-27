@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Airpay]">
+  <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
+  <parameter name="tcID" value="TC_PP_BharatOR_BarCode_img_verification"/>
+  <parameter name="browserType" value="CHROME"/>
+  <test name="TC_PP_BharatOR_BarCode_img_verification">
+    <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
+    <parameter name="tcID" value="TC_PP_BharatOR_BarCode_img_verification"/>
+    <parameter name="browserType" value="CHROME"/>
+    <classes>
+      <class name="com.Airpay.Tests.TC_PP_BharatOR_BarCode_img_verification"/>
+    </classes>
+  </test> <!-- TC_PP_BharatOR_BarCode_img_verification -->
+</suite> <!-- Failed suite [Airpay] -->
