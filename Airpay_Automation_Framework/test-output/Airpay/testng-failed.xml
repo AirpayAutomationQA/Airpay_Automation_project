@@ -2,14 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Airpay]">
   <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
-  <parameter name="tcID" value="TC_PP_BharatOR_BarCode_img_verification"/>
+  <parameter name="tcID" value="TC_PP_Tez_UPI_Success_Transaction"/>
   <parameter name="browserType" value="CHROME"/>
-  <test name="TC_PP_BharatOR_BarCode_img_verification">
+  <test name="TC_PP_Tez_UPI_Success_Transaction">
     <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
-    <parameter name="tcID" value="TC_PP_BharatOR_BarCode_img_verification"/>
+    <parameter name="tcID" value="TC_PP_Tez_UPI_Success_Transaction"/>
     <parameter name="browserType" value="CHROME"/>
     <classes>
-      <class name="com.Airpay.Tests.TC_PP_BharatOR_BarCode_img_verification"/>
+      <class name="com.Airpay.Tests.TC_PP_Tez_UPI_Success_Transaction"/>
     </classes>
-  </test> <!-- TC_PP_BharatOR_BarCode_img_verification -->
+  </test> <!-- TC_PP_Tez_UPI_Success_Transaction -->
 </suite> <!-- Failed suite [Airpay] -->

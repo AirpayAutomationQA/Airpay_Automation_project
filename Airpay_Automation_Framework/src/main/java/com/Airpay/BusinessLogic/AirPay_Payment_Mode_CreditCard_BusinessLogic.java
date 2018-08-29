@@ -396,6 +396,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	public void sessionCancel_errMsg() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
+			Thread.sleep(5000);
 			if(Assert.isElementDisplayed(driver, SessionTimer, "Session timer")){
 				Extent_Reporting.Log_report_img("Session timer popup is exist", "Passed", driver);	
 				Assert.Clickbtn(driver, UPICrossCancelBtn, "Cross cance button");	
@@ -826,7 +827,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	public void Cash_paymentSuccessMesg() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
-			Thread.sleep(5000);			
+			Thread.sleep(10000);			
 			if(Assert.isElementDisplay(driver, CashSuccessTransaction)){
 				List<WebElement> tblcontent = driver.findElements(By.xpath("(//table[2]/tbody/tr/td[1])"));
 				for(int i=1;i<=tblcontent.size();i++)
@@ -836,7 +837,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 					if(tblrowVal.equalsIgnoreCase("TRANSACTIONID:")){
 						//Extent_Reporting.Log_Pass("Actual Transaction ID Name Is: "+tblrowVal, "Expected Transaction Id Name is: "+"TRANSACTIONID:");
 						String TxnExpectedID = driver.findElement(By.xpath("(//table[2]/tbody/tr/td[2])["+i+"]")).getText().trim();
-						if(TxnExpectedID.equalsIgnoreCase(AirPay_PaymentPage_BusinessLogic.GetOrderID.trim())){
+						if(TxnExpectedID.equalsIgnoreCase(AirPay_PaymentPage_BusinessLogic.GetOrderID)){
 							Extent_Reporting.Log_Pass("Actual Transaction ID is: "+TxnExpectedID, "Expected Transaction Id Is: "+AirPay_PaymentPage_BusinessLogic.GetOrderID.trim());
 							Extent_Reporting.Log_report_img("Success payment Transaction ID is as expected", "Passed", driver);
 							break;

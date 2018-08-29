@@ -1899,7 +1899,8 @@ public void inputTextwithClick(WebDriver screenName,String ObjectxPath,String sV
 			        else
 			        {
 			            System.out.println("Image displayed.");
-						Extent_Reporting.Log_Pass(Element_Name+" exist",Element_Name+" has "+ ImageFile.getAttribute("src"));
+						Extent_Reporting.Log_Pass(Element_Name+" exist",Element_Name+" As expected");
+						Extent_Reporting.Log_report_img("Respective Image is exist", "Image", screenName);
 			        }								
 					return ImageFile.getAttribute("src");
 				}

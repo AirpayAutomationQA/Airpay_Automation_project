@@ -34,7 +34,11 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String CreditCardMakePaymtBtn = "//input[@class='btn submit-credit-dtls']";
 		public static final String CreditCardHolderName = "(//div[@class='blockMain blockCards credit-tab']//following::input[contains(@class,'form-control cardname')])[1]";
 		public static final String CreditCardErrField = "//div[@class='formDom form-group errorvalue']//label";
-		public static final String CardInvalidErrMsgVerify = "(//div[@class='generic-error'])[1]";
+		public static final String CardInvalidErrMsgVerify = "(//*[@class='generic-error'])[1]";
+		public static final String GenericSuccessMessage = "(//*[@class='generic-success'])[1]";
+
+		
+		
 		
 		public static final String CancelCreditPayment = "//*[text()='CANCEL' or text()='Cancel']";
 					
@@ -114,14 +118,33 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String BharatOrMakepaymtBtn ="//*[@class='btn bharat-qr-submit']";
 		public static final String BharatQRbarCodeImg ="//img[@class='bt-qr-img']";
 		public static final String BharatQRBtnclose ="//*[@class='cls-popup bhaqrbtnclose']";
+     //*******************************************Amex eZeclick ****************************************************
+		
+		public static final String AmexeZclickMakePaymentBtn ="//*[@class='btn vm-submit-btn disable-click']";
+		public static final String virtualAccounttBtn = "//*[@class='btn virtual-acc-details rtgsfrm']";
+		public static final String virtualBankAccountBtn = "//*[@class='btn virtual-bank-details rtgsfrm']";
 
+		
+		public static final String AccountDetails ="//*[contains(text(),'The Account Details for this transaction is as below :')]";
+		public static final String AmazonMakePaymentBtn ="//*[@class='btn' and @data-sub-form-id='amazonpay-form']";
+		
+	//************************************************************Tez Channel ***************************
+		public static final String TezIDField ="//*[@class='form-control tez-validation']";
+		public static final String TezIDMakepayment ="//*[@class='btn' and @data-sub-form-id='upi-form']";
+		public static final String TezDomainName ="//*[@class='form-control tez-upi-bank']";
+		public static final String TezIdFieldErrRedline ="//*[@class='formDom form-group errorvalue']";		
+		public static final String TezDomainRedLineErr= "//*[@class='formDom form-group select-group errorvalue']";
+		
+		
+		
 		
 		
 		
 		// = session timeout
 		
 		
-		
+		//Password does not match.
+		//Your account has been blocked.
 		
 		
 		//  -- client rejected

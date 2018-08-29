@@ -2,8 +2,10 @@ package com.Airpay.BusinessLogic;
 
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -161,9 +163,7 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
-	
-	
-	
+		
 	public void BharatQRMakePayBtn() throws Exception{
 		try{		   		   			
 			Extent_Reporting.Log_report_img("Bharat QR option is exist", "Passed", driver);
@@ -175,10 +175,57 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			e.printStackTrace();
 			throw new Exception("Bharat QR option");
 		}
+	}		
+	
+	public void AmexZeClick() throws Exception{
+		try{		   		   			
+			Extent_Reporting.Log_report_img("AmexeZeClick is exist as expected", "Passed", driver);
+			Assert.Clickbtn(driver, AmexeZclickMakePaymentBtn, "make payment");	
+			Assert.waitForPageToLoad(driver);
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("AmexeZeClick does not disp", "Failed", driver);   
+			Log.error("Bharat QR option issue");
+			e.printStackTrace();
+			throw new Exception("Bharat QR option");
+		}
+	}
+	
+	public void Amazon_pay() throws Exception{
+		try{		   		   			
+			Extent_Reporting.Log_report_img("Amazon_pay is exist as expected", "Passed", driver);
+			Assert.Clickbtn(driver, AmazonMakePaymentBtn, "make payment");	
+			Assert.waitForPageToLoad(driver);
+			Thread.sleep(5000);
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Amazon_pay does not disp", "Failed", driver);   
+			Log.error("Amazon_pay issue");
+			e.printStackTrace();
+			throw new Exception("Amazon_pay issue");
+		}
 	}	
-	
-	
-	
+		
+	public void Verify_BharatQR_CrossBtnClick() throws Exception{
+		try{	
+			Thread.sleep(5000);
+			if(Assert.isElementDisplayed(driver, BharatQRbarCodeImg, "Bharat QR code"))
+			{
+				Assert.Verify_Image(driver, BharatQRbarCodeImg, "Bar code");
+				Assert.Clickbtn(driver, BharatQRBtnclose, "Bharat QR cross close button");
+				Extent_Reporting.Log_report_img("Bharat QR code is exist", "Passed", driver);
+			}else{			
+				Extent_Reporting.Log_Fail("Bharat QR Popup does not exist","failed",driver);   
+				throw new Exception("Test failed due to local host page not displayed");
+			}	   
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Bar code issue", "Failed", driver);   
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}	
+		
 	public void Verify_BharatQR_BarCodeImg() throws Exception{
 		try{	
 			Thread.sleep(5000);
@@ -196,6 +243,259 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			e.printStackTrace();
 			throw new Exception("Test failed due to local host page not displayed");
 		}
+	}
+	
+	
+	public void Card_InvalidMesgVerify() throws Exception{
+		try{	
+			Thread.sleep(10000);
+			if(Assert.isElementDisplayed(driver, CardInvalidErrMsgVerify, "Error Message"))
+			{
+				String errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();
+				System.out.println(errMsg);
+				if(errMsg.contains("Transaction Operation Failed - Card No, not valid. Card Number is Invalid")
+						||errMsg.contains("Transaction Operation Failed - Card No, not valid. Card Number Verification Failed") 		                    
+						||errMsg.contains("Please use a valid debit card issued in india")|| errMsg.contains("Improper Card Name Entered")
+						||errMsg.contains("Credit Card Number is Empty")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method")
+						|| errMsg.contains("This card is not valid for selected bank.")){	
+					Extent_Reporting.Log_Pass("Repective Error Message is exist", "Error Msg is:"+errMsg);
+					Extent_Reporting.Log_report_img("Respective Error Message is exist", "Passed", driver);		    	 
+				}else{
+	
+					Extent_Reporting.Log_Fail("Respective error Message does not exist", "Failed", driver);
+				}
+			}else{
+				Extent_Reporting.Log_Fail("Respective error Message does not exist", "Failed", driver);
+			}
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Respective error Message does not exist", "Failed", driver);
+			Log.error("Respective error Message does not exist");
+			e.printStackTrace();
+			throw new Exception("Respective error Message does not exist");
+		}
+	}
+	
+	public static String errMsg = null;
+	public void sessionTimeOut_errMsg() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			Thread.sleep(5000);
+			for(int i=1;i<=1;i++)
+			{
+			 if(Assert.isElementDisplayed(driver, SessionTimer, "Session timer"))
+			 {				 
+				boolean timerState = driver.findElement(By.xpath(SessionTimer)).isDisplayed();
+				System.out.println(timerState);	
+				if(timerState==true){					
+					Thread.sleep(190000);				
+					Assert.waitForPageToLoad(driver);
+					WebElement hiddenDiv = driver.findElement(By.xpath(CardInvalidErrMsgVerify));
+					errMsg = hiddenDiv.getText(); // does not work (returns "" as expected)
+					String script = "return arguments[0].innerText";
+					errMsg = (String) ((JavascriptExecutor) driver).executeScript(script, hiddenDiv);			
+					System.out.println(errMsg);					
+					Assert.waitForPageToLoad(driver);
+					if(errMsg.contains("REJECTED. Please try paying using another method?")
+							||errMsg.contains("We are sorry but the transaction failed. Try paying using another method?") 		                    
+							||errMsg.contains("Please use a valid debit card issued in india")|| errMsg.contains("Improper Card Name Entered")
+							||errMsg.contains("FAILED. Please try paying using another method?")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method"))
+					{
+						Extent_Reporting.Log_Pass("Repective Error Message is exist", "Error Msg is:"+errMsg);
+						Extent_Reporting.Log_report_img("Respective Error Message is exist", "Passed", driver);	
+						break;
+					}
+				}else{	
+					Extent_Reporting.Log_Fail("Repective Error Message does not exist", "Error Msg is:"+errMsg, driver);
+				}
+			 }else{
+					Extent_Reporting.Log_Fail("Session timer does not exist", "Error Msg is:"+errMsg, driver);
+					break;
+			 }
+			}
+		}catch(Exception e){
+			Extent_Reporting.Log_Fail("Repective Error Message does not exist", "Error Msg is:"+errMsg, driver);
+
+		}
+
+	}
+	
+	public void AmexeZeClickNavigation_page() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	
+			Assert.waitForPageToLoad(driver);
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			  String domain = (String) js.executeScript("return document.domain");
+			  driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);			 			 
+			  if(domain.equals("") || domain.equals("payments.airpay.co.in")||(driver.getPageSource().contains("Error Page Exception"))==true
+					  ||(driver.getPageSource().contains("Internal Server Error"))==true|| driver.getTitle().contains("HTTP Status - 400"))
+			  {			 
+				  Extent_Reporting.Log_Fail("Its not navigated to Respective Bank as", "Error Snap", driver);
+				  Log.error("Its not navigated to Respective Bank as :"+bankName);
+				//throw new Exception("Net Banking page issue");
+			  }else{
+				  Extent_Reporting.Log_Pass("Its Navigated to :"+bankName, "Passed");
+				  Extent_Reporting.Log_report_img("Its Navigated to respective Page" , "Passed", driver);
+				  Thread.sleep(2000);
+			}
+		}catch(Exception e)	
+			{
+				Extent_Reporting.Log_Fail(" Make payment button does not exist for net banking",	"Failed",driver);
+				Log.error("Test failed due to card does not exist");
+				e.printStackTrace();
+				//throw new Exception("Test failed due to local host page not displayed");
+			}
+		} 
+	
+	public void VirtualmakePaymentBtnClick() throws Exception{
+		try{		   		   			
+			Extent_Reporting.Log_report_img("AmexeZeClick is exist as expected", "Passed", driver);
+			Assert.Clickbtn(driver, virtualAccounttBtn, "make payment");	
+			Thread.sleep(2000);
+			Assert.waitForPageToLoad(driver);
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("AmexeZeClick does not disp", "Failed", driver);   
+			Log.error("Bharat QR option issue");
+			e.printStackTrace();
+			throw new Exception("Bharat QR option");
+		}
 	}	
+	
+	public void VirtualBankMakePaymentBtnClick() throws Exception{
+		try{		   		   			
+			Extent_Reporting.Log_report_img("Virtual Bank Account details", "Passed", driver);
+			Assert.Clickbtn(driver, virtualBankAccountBtn, "make payment");	
+			Thread.sleep(2000);
+			Assert.waitForPageToLoad(driver);
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Virtual Bank Account details does not disp", "Failed", driver);   
+			Log.error("Virtual Bank Account details issue");
+			e.printStackTrace();
+			throw new Exception("Virtual Bank Account details issue");
+		}
+	}	
+	
+	
+	
+	public void VirtualAccountDetails() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			Thread.sleep(2000);
+			if(Assert.isElementDisplayed(driver, AccountDetails, "Account details"))
+			{
+				Extent_Reporting.Log_report_img("Virtual Account is exist as expected", "Passed", driver);
+				Assert.waitForPageToLoad(driver);			
+			}else{
+				Extent_Reporting.Log_Fail("Virtual Account details fields does not exist", "Failed", driver);
+			}		
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Virtual Account details fields does not exist", "Failed", driver);
+			Log.error("Bharat QR option issue");
+			e.printStackTrace();
+			throw new Exception("Bharat QR option");
+		}
+	}
+	
+	public void TezField() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			Thread.sleep(2000);
+			if(Assert.isElementDisplayed(driver, TezIDMakepayment, "Tez Id field"))
+			{
+				Assert.inputText(driver, TezIDField, Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim(), "UPI Id field");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, TezDomainName, Excel_Handling.Get_Data(TC_ID, "TezDomain").trim(), "Bank Domain name");
+				errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();
+				System.out.println(errMsg);
+				Extent_Reporting.Log_report_img("Tez details entered as expectedd", "Passed", driver);
+				Assert.waitForPageToLoad(driver);			
+			}else{
+				Extent_Reporting.Log_Fail("Tez details fields does not exist", "Failed", driver);
+			}		
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Tez details fields does not exist", "Failed", driver);
+			Log.error("Tez details option issue");
+			e.printStackTrace();
+			throw new Exception("Tez details");
+		}
+	}
+	
+	public void TezMakepaymentBtn() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, TezIDField, "Tez Id field"))
+			{
+				Assert.Clickbtn(driver, TezIDMakepayment, "Tez make payment button");
+				Assert.waitForPageToLoad(driver);			
+			}else{
+				Extent_Reporting.Log_Fail("Tez make payment button does not exist", "Failed", driver);
+			}		
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Tez make payment button does not exist", "Failed", driver);
+			Log.error("Tez details option issue");
+			e.printStackTrace();
+			throw new Exception("Tez details");
+		}
+	}
+	
+	public void Tez_UPIRedLineError() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			Assert.Clickbtn(driver, TezIDMakepayment, "Tez make payment button");
+			if(Assert.isElementDisplayed(driver, TezIdFieldErrRedline, "Tez Id field")){
+				Assert.isElementDisplayed(driver, TezIdFieldErrRedline, "Tez Id field Red line Error is exist");
+				Assert.isElementDisplayed(driver, TezDomainRedLineErr, "Domain Name");
+				Extent_Reporting.Log_Pass("UPI Address and Domain Name field red line error is exist as expected", "Passed");
+				Extent_Reporting.Log_report_img("Red line error screen print", "Passed", driver);
+
+			}else{
+				Extent_Reporting.Log_Fail("UPI Address Red Line Error does not exist", "Failed", driver);
+				throw new Exception("UPI Address Red Line Error does not exist");
+			}
+		}catch(Exception e) 
+		{
+			Extent_Reporting.Log_Fail("UPI Address Red Line Error does not exist", "Failed", driver);
+			Log.error("UPI Address Red Line Error does not exist");
+			e.printStackTrace();
+			throw new Exception("UPI Address Red Line Error does not exist");
+		}
+	}
+	
+	public void InValid_UPIAddress_ErrMsg() throws Exception{
+		try{
+			for(int i=1;i<=10;i++)
+			{
+				System.out.println(errMsg);
+				if(errMsg.isEmpty()==true){	
+					try{
+						errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();
+						Thread.sleep(10000);
+					}catch(Exception e){						
+						System.out.println("second"+errMsg);
+						Thread.sleep(1000);
+					}
+				}else{	  
+					if(errMsg.contains("REJECTED. Please try paying using another method?")
+							||errMsg.contains("We are sorry but the transaction failed. Try paying using another method?") 		                    
+							||errMsg.contains("Please use a valid debit card issued in india")|| errMsg.contains("Improper Card Name Entered")
+							||errMsg.contains("FAILED. Please try paying using another method?")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method"))
+					{
+						Extent_Reporting.Log_Pass("Repective Error Message is exist", "Error Msg is:"+errMsg);
+						Extent_Reporting.Log_report_img("Respective Error Message is exist", "Passed", driver);	
+						break;
+					}
+				}
+			}
+		}catch(Exception e){
+			Extent_Reporting.Log_Fail("Repective Error Message does not exist", "Error Msg is:"+errMsg, driver);
+		}
+
+	}
+	
+	
 	
 }
