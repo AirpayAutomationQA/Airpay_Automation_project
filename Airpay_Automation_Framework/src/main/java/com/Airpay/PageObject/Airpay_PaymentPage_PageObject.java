@@ -136,7 +136,7 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String TezDomainRedLineErr= "//*[@class='formDom form-group select-group errorvalue']";
 		
 		
-		
+	//**************************************MA Panel ********************************************************
 		
 		
 		

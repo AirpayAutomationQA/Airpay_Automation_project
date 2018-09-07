@@ -116,11 +116,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 		
-	}
-	
-	
-	
-	
+	}		
 	
 	/**
 	 * @author parmeshwar Sakole
@@ -555,7 +551,6 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			  {			 
 				  Extent_Reporting.Log_Fail("Its not navigated to Respective Bank as", "Error Snap", driver);
 				  Log.error("Its not navigated to Respective Bank as :"+bankName);
-				//throw new Exception("Net Banking page issue");
 			  }else{
 				  Extent_Reporting.Log_Pass("Its Navigated to :"+bankName, "Passed");
 				  Extent_Reporting.Log_report_img("Its Navigated to respective bank" , "Passed", driver);
@@ -566,7 +561,6 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 				Extent_Reporting.Log_Fail(" Make payment button does not exist for net banking",	"Failed",driver);
 				Log.error("Test failed due to card does not exist");
 				e.printStackTrace();
-				//throw new Exception("Test failed due to local host page not displayed");
 			}
 		} 
 		
@@ -574,7 +568,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 		try{ 
 				Log.info("Navigating To Net Banking Page");	
 				Assert.waitForPageToLoad(driver);
-				driver.get(Excel_Handling.Get_Data(TC_ID, "URL").trim());
+				driver.get(Excel_Handling.Get_Data(TC_ID, "PaymentPage_URL").trim());
 				Assert.waitForPageToLoad(driver);
 				LocalHostDetailPage();	
 				Card_Details_Options();

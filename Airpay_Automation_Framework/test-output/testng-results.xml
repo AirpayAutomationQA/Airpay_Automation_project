@@ -2,12 +2,12 @@
 <testng-results skipped="0" failed="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Main Test Suite" duration-ms="119481" started-at="2018-08-29T06:06:41Z" finished-at="2018-08-29T06:08:40Z">
+  <suite name="Main Test Suite" duration-ms="507340" started-at="2018-09-05T05:37:35Z" finished-at="2018-09-05T05:46:02Z">
     <groups>
     </groups>
-    <test name="TestNG Test Group1" duration-ms="119481" started-at="2018-08-29T06:06:41Z" finished-at="2018-08-29T06:08:40Z">
+    <test name="TestNG Test Group1" duration-ms="507340" started-at="2018-09-05T05:37:35Z" finished-at="2018-09-05T05:46:02Z">
       <class name="com.Airpay.Utilities.Create_TestNGXML">
-        <test-method status="PASS" signature="createXMLfile()[pri:0, instance:com.Airpay.Utilities.Create_TestNGXML@7d9d1a19]" name="createXMLfile" duration-ms="119433" started-at="2018-08-29T11:36:41Z" finished-at="2018-08-29T11:38:40Z">
+        <test-method status="PASS" signature="createXMLfile()[pri:0, instance:com.Airpay.Utilities.Create_TestNGXML@7d9d1a19]" name="createXMLfile" duration-ms="507292" started-at="2018-09-05T11:07:35Z" finished-at="2018-09-05T11:16:02Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- createXMLfile -->

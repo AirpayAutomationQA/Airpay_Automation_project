@@ -2,14 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Airpay]">
   <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
-  <parameter name="tcID" value="TC_PP_Tez_UPI_Success_Transaction"/>
+  <parameter name="tcID" value="TC_002_MA_Panel_Save_Card_EnableDisable_ForDebitCard"/>
   <parameter name="browserType" value="CHROME"/>
-  <test name="TC_PP_Tez_UPI_Success_Transaction">
+  <test name="TC_002_MA_Panel_Save_Card_EnableDisable_ForDebitCard">
     <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
-    <parameter name="tcID" value="TC_PP_Tez_UPI_Success_Transaction"/>
+    <parameter name="tcID" value="TC_002_MA_Panel_Save_Card_EnableDisable_ForDebitCard"/>
     <parameter name="browserType" value="CHROME"/>
     <classes>
-      <class name="com.Airpay.Tests.TC_PP_Tez_UPI_Success_Transaction"/>
+      <class name="com.Airpay.Tests.TC_MA_Panel_Save_Card_EnableDisable_CheckBox"/>
     </classes>
-  </test> <!-- TC_PP_Tez_UPI_Success_Transaction -->
+  </test> <!-- TC_002_MA_Panel_Save_Card_EnableDisable_ForDebitCard -->
 </suite> <!-- Failed suite [Airpay] -->
