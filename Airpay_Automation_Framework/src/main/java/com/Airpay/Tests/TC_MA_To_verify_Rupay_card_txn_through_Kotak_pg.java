@@ -55,7 +55,12 @@ public class TC_MA_To_verify_Rupay_card_txn_through_Kotak_pg extends Driver_Setu
 			MA_panel.Home_LHS_Dashboard(AirPay_Payment_MA_Panel_PageObject.MM_Transaction_History);
 			MA_panel.MerchantTransactionID();
 			
-		   	MA_panel.Enable_Disable_SaveCardChkBox();
+		   
+			
+			
+			
+			
+			MA_panel.Enable_Disable_SaveCardChkBox();
 		   	
 			Log.info("Scripts Ends....");
 		} catch (Exception e) {

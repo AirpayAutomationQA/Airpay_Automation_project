@@ -38,8 +38,11 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	public static final String MM_PaymentMode_NextBtn ="//*[@class='mm-next' and @href='#mm-2']";
 	public static final String MM_PayMent_Mode_UrlLink ="//*[@href='payment_mode_urls.php']";
 	public static final String MM_URLDetails ="//a[@href='#collapseTwo']";
-	
+	public static final String MM_BankDetails ="//a[@href='#collapseOne']";
+
 	public static final String MM_FindURLDetails = "(//*[@class='table border_table']/tbody/tr)";
+	public static final String MM_FindBANKDetails = "((//*[@class='table']/tbody)[1]/tr)";
+
 	public static final String MM_URLRowVerify ="(//*[@class='table border_table']/tbody/tr)[1]/td";
 	public static final String MM_Bank_URL ="//following::tbody[1]/tr";
 	
@@ -57,7 +60,25 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	public static final String MMTransacionCardCategory ="//*[text()='Card Category']/following-sibling::td";
 
 	public static final String MMTransacionAirapyMerchantID ="//*[text()='Airpay Merchant Id']/following-sibling::td";
+	public static final String MMBankdetailsPage ="//*[contains(text(),'Bank Details')]";
+	public static final String MMURLdetailsPage ="//*[contains(text(),'edit url bank mapping')]";
 
+	public static final String MMbankStatus ="//select[@id='bank_status']";
+	public static final String MMBankSaveBtn ="//*[@id='btneditbank' or @id='btneditmapping']";
+	public static final String BankEditSuccMsg ="//*[contains(text(),'Bank edited successfully')]";
+	public static final String URLEditSuccMsg ="//*[@class='success-block']/p";
+
+	public static final String BankURLMiniumVal ="//*[@id='min_amount']";
+	public static final String BankURLMaxiumVal ="//*[@id='max_amount' or @class='required']";
+	public static final String TotAmt ="//*[@id='total_amount']";
+
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
