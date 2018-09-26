@@ -3,13 +3,16 @@ package com.Airpay.BusinessLogic;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.server.handler.GetWindowSize;
 import org.openqa.selenium.support.ui.Select;
 
 import com.Airpay.PageObject.Airpay_PaymentPage_PageObject;
@@ -211,17 +214,18 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			List<WebElement> Channels = driver.findElements(By.xpath(AirpayChannals));
 			int ChannelsCnt = Channels.size();
 			System.out.println("Channels count is:"+ChannelsCnt);
-			for(int i=1; i<=ChannelsCnt;i++)
+			for(int i=0; i<ChannelsCnt;i++)
 			{
 				WebElement ChannelsName = Channels.get(i);
-				String name = ChannelsName.getText();				
+				String name = ChannelsName.getText();
+				System.out.println(name);
 				if(name.equalsIgnoreCase(Card)){					
 					ChannelsName.click();
 					Extent_Reporting.Log_report_img(" payment mode option choosen as: "+name, "Passed", driver);
 					flag = false;
 					break;					
 				}
-				 temp = i;
+				temp = i;
 				if(temp==ChannelsCnt-1){
 					flag = true;
 					Extent_Reporting.Log_report_img(Card+" Channel Mode OFF or else Amount Range Issue ", "Failed", driver);					
@@ -632,20 +636,19 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			}
 		}catch(Exception e){
 			Extent_Reporting.Log_Fail("Respective Channel is exist", "Failed", driver);
-
 			Log.error("Test failed due to card does not exist");
 			e.printStackTrace();
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
-	
+
 	public void Cash_ChannelVerificationExist() throws Exception {
 		try{ 			
 			if(flag==false)
 			{
 				Extent_Reporting.Log_Pass("Respective Channel is exist as expected", "Passed");			
 			}else{
-				Extent_Reporting.Log_Fail("Respective Channel is exist", "Failed", driver);			
+				Extent_Reporting.Log_Fail("Respective Channel does not exist", "Failed", driver);			
 			}
 		}catch(Exception e){
 			Extent_Reporting.Log_Fail("Respective Channel is exist", "Failed", driver);
@@ -655,7 +658,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
-	
+
 	public void NavigateToLocalHostPage_WithAmount(String Amt) throws Exception {
 		try{ 
 			Log.info("Navigating To Net Banking Page");	
@@ -670,5 +673,64 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 		}
 	}
 
+	public static String MAPanelWindow = null;
+	public static String child = null;
+	public  static String[] browser =null;
+	public void NavigateToLocalHostPage_WithAmountAnotherWindow(String Amt) throws Exception {
+		try{ 
+		
+			Log.info("Navigating To Net Banking Page");	
+			Assert.waitForPageToLoad(driver);
+			MAPanelWindow = driver.getTitle();
+			
+			((JavascriptExecutor) driver).executeScript("window.open();");
+			Set<String> handles = driver.getWindowHandles();
+			browser =	handles.toArray(new String[0]);
+			System.out.println("Number of browsers opened are"+ browser.length);
+			for (int i=0; i<handles.size();i++)
+			{
+				try
+				{
+					driver.switchTo().window(browser[i]);
+					System.out.println(driver.getTitle());
+					child =driver.getTitle();
+					if(!child.contains(MAPanelWindow)){
+						System.out.println(driver.getTitle()+"found");
+						driver.navigate().to(Excel_Handling.Get_Data(TC_ID, "PaymentPage_URL").trim());
+						driver.getWindowHandle();						
+						Assert.waitForPageToLoad(driver);
+						LocalHostDetailPage(Amt);	
+						Card_Details_Options();
+						break;
+					}
+				}
+				catch(Throwable t)
+				{
+					System.out.println("Browser not opened");
+				}
+			}		
+		}catch(Exception e){
+			Log.error("Test failed due to card does not exist");
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
 
+   public void SearchTransaction() throws Exception{
+	   try{		  
+		   if(Assert.isElementDisplayed(driver, "//*[@class='table']/tbody/tr/td/a[contains(text(),'"+GetOrderID+"')]", "Transaction Records"))
+		   {
+			 Assert.Clickbtn(driver, "//*[@class='table']/tbody/tr/td/a[contains(text(),'"+GetOrderID+"')]", "Respective Transaction");
+			 Extent_Reporting.Log_report_img("Transaction Records", "Passed", driver);  
+		   }else{
+			  Extent_Reporting.Log_Fail("Respective Transaction records does not exist", "Failed", driver); 
+		   }   
+	   }catch(Exception t){
+			  Extent_Reporting.Log_Fail("Respective Transaction records does not exist", "Failed", driver); 
+			  t.printStackTrace();
+		   
+	   }
+   }
+   
+   
+   
 }

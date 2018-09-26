@@ -75,7 +75,7 @@ public class Airpay_PaymentPage_PageObject {
 	//********************************* Cash Test case ***********************************************
 		public static final String CashPinCode = "//*[@class='form-control cash_pincode']";
 		public static final String CashPincodeErrLine ="//*[contains(@class,'formDom form-group errorvalue')]";
-		public static final String CashMakePayment = "//*[@class='btn cash-submit' or @class='btn']";
+		public static final String CashMakePayment = "//*[@class='btn cash-submit' and @data-sub-form-id='cash-form']";
         public static final String UPIMakePayment ="//*[@class='btn' and @data-sub-form-id='upi-form']";
 		public static final String CashSuccessTransaction = "//*[text()='Success Transaction']";	
 		

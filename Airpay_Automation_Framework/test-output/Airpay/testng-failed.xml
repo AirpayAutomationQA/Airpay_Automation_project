@@ -2,14 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Airpay]">
   <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
-  <parameter name="tcID" value="TC_MA_Panel_Cash_BankDetails_Inactive"/>
+  <parameter name="tcID" value="TC_PP_03"/>
   <parameter name="browserType" value="CHROME"/>
-  <test name="TC_MA_Panel_Cash_BankDetails_Inactive">
+  <test name="TC_PP_03">
     <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
-    <parameter name="tcID" value="TC_MA_Panel_Cash_BankDetails_Inactive"/>
+    <parameter name="tcID" value="TC_PP_03"/>
     <parameter name="browserType" value="CHROME"/>
     <classes>
-      <class name="com.Airpay.Tests.TC_MA_Panel_Cash_BankDetails_Inactive"/>
+      <class name="com.Airpay.Tests.TC_PP_01"/>
     </classes>
-  </test> <!-- TC_MA_Panel_Cash_BankDetails_Inactive -->
+  </test> <!-- TC_PP_03 -->
 </suite> <!-- Failed suite [Airpay] -->

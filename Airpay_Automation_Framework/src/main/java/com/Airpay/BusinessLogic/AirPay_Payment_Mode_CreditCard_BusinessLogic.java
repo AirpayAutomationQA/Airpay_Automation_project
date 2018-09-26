@@ -89,6 +89,60 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
+	
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * Following method is used for Filling up the local host details page.
+	 * @throws Exception
+	 */
+	public void LocalHost_Page_ValidationWithoutOrderGenerate() throws Exception {
+		try{ 
+			Log.info("Navigating To Local Host page of Payment");	   
+			if(Assert.isElementDisplay(driver, BuyerMailId))
+			{ 
+				Log.debug("Local Host page");
+				Assert.inputText(driver, BuyerMailId, Excel_Handling.Get_Data(TC_ID, "BuyerMailID"), "Buyer Mail ID");
+				Assert.inputText(driver, BuyerPhoneNumber, Excel_Handling.Get_Data(TC_ID, "BuyerPhoneNumber"), "Buyer Phone Number");
+				Assert.inputText(driver, BuyerFirstName, Excel_Handling.Get_Data(TC_ID, "BuyerFirstName"), "Buyer First Name");
+				Assert.inputText(driver, BuyerLastName, Excel_Handling.Get_Data(TC_ID, "BuyerLastName"), "Buyer Last Name");
+				Assert.inputText(driver, BuyerPinCode, Excel_Handling.Get_Data(TC_ID, "Pin_Code"), "Buyer Pin Code");    		
+				/*String  string = RandomStringUtils.randomAlphabetic(8);		
+				System.out.println("Random 1 = " + string);				
+				Assert.inputText(driver, Order_Id, string, "Order_Id");*/
+				Assert.inputText(driver, Order_Id, Excel_Handling.Get_Data(TC_ID, "Order_Id"), "Order_Id");
+				Assert.inputText(driver, Amount, Excel_Handling.Get_Data(TC_ID, "Amount"), "Amount");
+				Extent_Reporting.Log_report_img("Local Host page required field filled", "Passed", driver);
+				Assert.Clickbtn(driver, payHerebtn, "Pay Here");            
+				String errVerfiy = driver.findElement(By.xpath("//span[@class='alert alert-error']")).getText();
+				if(errVerfiy.contains("Either email or contact number is mandatory") || errVerfiy.contains("Invalid Order Id") ||errVerfiy.contains("Invalid Contact No") ||errVerfiy.contains("Wrong Checksum")
+						||errVerfiy.contains("Invalid Email Id") ||errVerfiy.contains("Invalid Amount")|| errVerfiy.contains("Transaction Update Failed - Merchant Transaction Id not valid")
+						|| errVerfiy.contains("Invalid First Name")||errVerfiy.contains("Invalid Last Name")||errVerfiy.contains("Invalid Pincode")
+						||errVerfiy.contains("Oops! An error occurred while completing your request. Our engineers have been notified and are working towards resolving it as soon as possible."))
+				{  
+					Extent_Reporting.Log_report_img("Respective error is exist ", "Passed", driver);
+					Extent_Reporting.Log_Pass("Respective error is exist as :"+errVerfiy, "Passed");           	
+				}else{ 
+					Extent_Reporting.Log_Fail("Respective error does not exist :"+errVerfiy, "Might be provided valid data", driver);
+					throw new Exception("error verification");
+				}
+				Assert.waitForPageToLoad(driver);
+			}
+			else{
+				Extent_Reporting.Log_Fail("Local Host page not exist ", "Local Host page not displayed", driver);   
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception(" Test failed due to local host page not displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Payment page is exist", "Might be provided valid data", driver);   
+			Log.error("Test failed due to page is navigating to payment page");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+
 
 
 	public void Verify_Credit_Card_Fields() throws Exception{
@@ -226,7 +280,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
-	
+
 	public void EMI_CardHolderName() throws Exception{
 		try{		   		   
 			Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, EmiBankNameSelectDropDown, Excel_Handling.Get_Data(TC_ID, "BankName").trim(), "Bank Selected for EMI");			
@@ -243,7 +297,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			robot.keyPress(KeyEvent.VK_V);
 			robot.keyRelease(KeyEvent.VK_V);
 			robot.keyRelease(KeyEvent.VK_CONTROL);
-			
+
 			Assert.inputText(driver, EMICardNumber, Excel_Handling.Get_Data(TC_ID, "ValidCardNumber").trim(), "EMI Card Number");
 			Assert.inputText(driver, EMICardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "EMI Card Number Exp Date");
 			Assert.inputText(driver, EMICardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), " card Number CVVCode");
@@ -371,7 +425,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 
 	}
 
-	
+
 	public void UPI_SuccessTransaction() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
@@ -783,6 +837,26 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
+	public void Cash_payment_Success() throws Exception{
+		try{
+			if(Assert.isElementDisplayed(driver, CashMakePayment, "Cash payment pin code"))
+			{
+				Assert.inputText(driver, CashPinCode, Excel_Handling.Get_Data(TC_ID, "Pin_Code").trim(), "Cash payment pin code");
+				Extent_Reporting.Log_report_img("PinCode Entered", "Passed", driver);
+				Assert.Clickbtn(driver, CashMakePayment, "Credit Card make payment button");  
+			}else{
+				Extent_Reporting.Log_Fail("Cash Pincode field does not exist", "Failed", driver);
+			}
+		}catch(Exception e) 
+		{
+			Extent_Reporting.Log_Fail("Cash Pincode field does not exist", "Failed", driver);
+			Log.error("Test failed due to page is navigating to payment page");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+
+
 	public void UTR_payment() throws Exception{
 		try{
 			Keyboard keyboard = ((HasInputDevices) driver).getKeyboard();
@@ -823,6 +897,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
+	public static String  AirPaytransactionID = null;
 
 	public void Cash_paymentSuccessMesg() throws Exception{
 		try{
@@ -856,8 +931,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 					if(tblrowVal.equalsIgnoreCase("AMOUNT:")){
 						//Extent_Reporting.Log_Pass("Actual Amount field Name Is: "+tblrowVal, "Expected Amount field Name is: "+"AMOUNT:");
 						String TxnAmt = driver.findElement(By.xpath("(//table[2]/tbody/tr/td[2])["+i+"]")).getText().trim();
-						if(TxnAmt.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "Amount").trim())){
-							Extent_Reporting.Log_Pass("Actual Transaction Amount is: "+TxnAmt, "Expected Transaction Id Is: "+Excel_Handling.Get_Data(TC_ID, "Amount").trim());
+						if(TxnAmt.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "Amount").trim())||TxnAmt.contains(AirPay_MA_Panel_Select_Merchant_BusinessLogic.MINADDONE)){
+							Extent_Reporting.Log_Pass("Actual Transaction Amount is: "+TxnAmt, "Passed");
 							Extent_Reporting.Log_report_img("Success payment Transaction Amount is as expected", "Passed", driver);
 							break;
 						}
@@ -872,10 +947,9 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 					String tblrowVal = driver.findElement(By.xpath("(//table[2]/tbody/tr/td[1])["+i+"]")).getText().trim();
 					System.out.println("rowValue: "+tblrowVal);
 					if(tblrowVal.equalsIgnoreCase("MESSAGE:")){
-						//Extent_Reporting.Log_Pass("Actual Message Name Is: "+tblrowVal, "Expected Transaction Id Name is: "+"MESSAGE:");
 						String TxnMessage = driver.findElement(By.xpath("(//table[2]/tbody/tr/td[2])["+i+"]")).getText().trim();
 						if(TxnMessage.equalsIgnoreCase("Success")){
-							Extent_Reporting.Log_Pass("Actual Transaction TxnMessage is: "+TxnMessage, "Expected Transaction Id Is: "+TxnMessage);
+							Extent_Reporting.Log_Pass("Actual Transaction TxnMessage is: "+TxnMessage, "Passed");
 							Extent_Reporting.Log_report_img("Success payment Transaction Message is displayed", "Passed", driver);
 							break;
 						}
@@ -883,7 +957,24 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 					if(i==tblcontent.size()){
 						Extent_Reporting.Log_Fail("Transaction Amount Field row Does not exist", "Failed", driver);
 					}					
-				}		
+				}
+
+				List<WebElement> ApTransaction = driver.findElements(By.xpath("(//table[2]/tbody/tr/td[1])"));
+				for(int i=1;i<=ApTransaction.size();i++)
+				{				
+					String tblrowVal = driver.findElement(By.xpath("(//table[2]/tbody/tr/td[1])["+i+"]")).getText().trim();
+					System.out.println("rowValue: "+tblrowVal);
+					if(tblrowVal.equalsIgnoreCase("APTRANSACTIONID:")){
+						AirPaytransactionID = driver.findElement(By.xpath("(//table[2]/tbody/tr/td[2])["+i+"]")).getText().trim();
+						Extent_Reporting.Log_Pass("Airpay Transaction ID is as : "+AirPaytransactionID, "Passed");
+						Extent_Reporting.Log_report_img("Success payment Transaction Message is displayed", "Passed", driver);
+						break;
+
+					}
+					if(i==tblcontent.size()){
+						Extent_Reporting.Log_Fail("Transaction Amount Field row Does not exist", "Failed", driver);
+					}					
+				}
 			}else{
 				Extent_Reporting.Log_Fail("Cash Payment Transaction success Message does not exist", "Failed", driver);
 				throw new Exception("Test failed due to local host page not displayed");
@@ -1052,8 +1143,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	}
 
 
-	
-	
+
+
 	public void Cash_RTGS_And_NEFT() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
@@ -1085,7 +1176,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
-	
-	
+
+
 
 }

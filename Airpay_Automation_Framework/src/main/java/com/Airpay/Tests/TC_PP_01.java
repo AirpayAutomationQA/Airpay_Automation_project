@@ -25,7 +25,7 @@ public class TC_PP_01 extends Driver_Setup{
 		try {
 			Log.info("Script Starts..");
 			AirPay_Payment_Mode_CreditCard_BusinessLogic AirPay_Local = new AirPay_Payment_Mode_CreditCard_BusinessLogic(driver, TC_ID);
-				AirPay_Local.LocalHost_Page_Validation();					
+				AirPay_Local.LocalHost_Page_ValidationWithoutOrderGenerate();					
 			Log.info("Scripts Ends....");
 		} catch (Exception e) {
 			Log.error(e.getMessage());

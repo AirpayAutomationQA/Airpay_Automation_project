@@ -49,7 +49,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				Assert.clickButton(driver, AirPay_Payment_MA_Panel_PageObject.MA_SubmitBtn, "Sign In button");
 				Assert.waitForPageToLoad(driver);
 			}else{
-				
+
 				Extent_Reporting.Log_Fail("MA Panel User field does not exist", "Failed", driver);
 			}			
 		}catch(Exception t){
@@ -58,7 +58,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("MA panel page issue");
 		}
 	}
-	
+
 	public static String MerchantName =null;
 	public void Select_Merchant() throws Exception{
 		try{			
@@ -75,7 +75,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					Extent_Reporting.Log_report_img("Merchant selected as: "+MerchantName, "Passed", driver);
 				}				
 			}else{
-				
+
 				Extent_Reporting.Log_Fail("MA Panel User field does not exist", "Failed", driver);
 			}			
 		}catch(Exception t){
@@ -84,8 +84,8 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("MA panel page issue");
 		}
 	}
-	
-	
+
+
 	public void Filter_Merchant() throws Throwable{
 		try{
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MM_Merchant_Search, "Merchant Search"))
@@ -105,11 +105,11 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Merchant ID search field does not exost", "Failed", driver);
 			throw new Exception("Serch filter does not exist");
-			
+
 		}
 	}
-	
-	
+
+
 	public void Choose_Merchant() throws Exception{
 		try{
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MM_Merchant_Select, "Merchant Select")){	
@@ -122,7 +122,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				{				
 					Extent_Reporting.Log_Pass("Merchant selected as :"+SelectedMerchant, "Expected Merchant AS:"+MerchantName);
 					Extent_Reporting.Log_report_img("Merchant selected", "Passed", driver);
-					
+
 				}else{
 					Extent_Reporting.Log_Fail("Selected Merchant Name is: "+SelectedMerchant, "Updated Merchant name is:"+MerchantName, driver);
 				}				
@@ -133,14 +133,15 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Merchant ID search field does not exost", "Failed", driver);
 			throw new Exception("Serch filter does not exist");
-			
+
 		}
 	}
-	
-	
+
+
 	public void Home_LHS_Dashboard(String MenuOption ) throws Exception{
 		try{
-			if(Assert.isElementDisplayed(driver, MenuOption, "Respective LHS Menu"))
+
+			if(Assert.isElementDisplayed(driver, MenuOption, "RespectiveLHS Menu"))
 			{	
 				Assert.Clickbtn(driver, MenuOption, "Respective Menu");
 				Assert.waitForPageToLoad(driver);
@@ -152,11 +153,11 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
 			throw new Exception("Serch filter does not exist");
-			
+
 		}
 	}
-	
-	
+
+
 	public void VerifyText(String Xpath, String TextVerify) throws Exception{
 		try{
 			if(Assert.isElementDisplayed(driver, Xpath, "Respective Text Xpath"))
@@ -170,24 +171,24 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					Extent_Reporting.Log_Fail("Respective text Does not exist as "+TextVal , "Failed", driver);
 				}			
 			}else{
-				
+
 				Extent_Reporting.Log_Fail("Respective text Does not exist" , "Failed", driver);
 			}				
 		}catch(Exception t){
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
 			throw new Exception("Serch filter does not exist");
-			
+
 		}
 	}
-	
+
 	public void DetailsLinkClicked(String Xpath, String Deatils) throws Exception{
 		try{
 			if(Assert.isElementDisplayed(driver, Xpath, Deatils+" is"))
 			{				
-					Assert.Clickbtn(driver, Xpath, Deatils+" ");
-					Extent_Reporting.Log_Pass("Field name is: "+Deatils, "Expected as: "+Deatils);
-					Extent_Reporting.Log_report_img("Respective Link Clicked", "Passed", driver);								
+				Assert.Clickbtn(driver, Xpath, Deatils+" ");
+				Extent_Reporting.Log_Pass("Field name is: "+Deatils, "Expected as: "+Deatils);
+				Extent_Reporting.Log_report_img("Respective Link Clicked", "Passed", driver);								
 			}else{				
 				Extent_Reporting.Log_Fail("Respective text Does not exist" , "Failed", driver);
 			}				
@@ -197,9 +198,9 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Serch filter does not exist");			
 		}
 	}
-	
-	
-	
+
+
+
 	public static String flag = null;
 	public void Verify_Button_Color(String Xpath) throws Exception{
 		try{
@@ -207,7 +208,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			{					
 				WebElement switchLabel = driver.findElement(By.xpath(Xpath));
 				String pseudo = ((JavascriptExecutor)driver)
-				        .executeScript("return window.getComputedStyle(arguments[0]).getPropertyValue('right');",switchLabel).toString();		
+						.executeScript("return window.getComputedStyle(arguments[0]).getPropertyValue('right');",switchLabel).toString();		
 				System.out.println("sudo:"+pseudo);
 				if(pseudo.equalsIgnoreCase("47px")){
 					System.out.println("OFF Save Card");
@@ -227,17 +228,17 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					Extent_Reporting.Log_Fail("Save button does not exist", "Failed", driver);
 				}						
 			}else{
-				
+
 				Extent_Reporting.Log_Fail("Respective text Does not exist" , "Failed", driver);
 			}				
 		}catch(Exception t){
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
 			throw new Exception("Serch filter does not exist");
-			
+
 		}
 	}
-	
+
 	public void SubmitBtnClick() throws Exception{
 		try{
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MM_SigleSubmitBtn, "Submit button"))
@@ -253,12 +254,12 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Submit button does not exost", "Failed", driver);
 			throw new Exception("Submit buttondoes not exist");
-			
+
 		}
 	}
-	
-	
-	
+
+
+
 	public void ON_OFF_SaveCrad() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
@@ -273,7 +274,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				}else{
 					Extent_Reporting.Log_Fail("Check boc shuld be check", "Failed", driver);
 				}
-							
+
 			}else if(flag.equalsIgnoreCase("OFF")){
 				boolean checkbxselected = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_PP_SaveCardchkbox)).isSelected();
 				if(checkbxselected==false)
@@ -291,10 +292,10 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Save Card option does not exist", "Failed", driver);
 			throw new Exception("Submit buttondoes not exist");
-			
+
 		}
 	}
-	
+
 	public void Enable_Disable_SaveCardChkBox() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
@@ -307,7 +308,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 						Extent_Reporting.Log_report_img("Save card check box", "Passed", driver);	
 					}
 				}catch(Exception t){
-					
+
 					Extent_Reporting.Log_Fail("Check box should be present for save Card but its not there", "Failed", driver);				
 				}		
 			}else if(flag.equalsIgnoreCase("OFF")){
@@ -319,7 +320,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				}catch(Exception t){
 					Extent_Reporting.Log_Pass("Save card check box is exist as expected ", "Passed");
 					Extent_Reporting.Log_report_img("Save card check box", "Passed", driver);
-					
+
 				}					
 			}else{
 				Extent_Reporting.Log_Fail("Save Card option does not exist", "Failed", driver);
@@ -328,11 +329,11 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Save Card option does not exist", "Failed", driver);
 			throw new Exception("Submit buttondoes not exist");
-			
+
 		}
 	}
-	
-	
+
+
 	public static int Counter;
 	public void Domain_URLFindOut() throws Exception{
 		try{
@@ -348,7 +349,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					if(DomainName.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "Doamin_name").trim())
 							&& SuccessURL.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "SuccessURL").trim())
 							&& IpnUrl.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "IpnURL").trim())){
-						
+
 						Extent_Reporting.Log_Pass("Exact URL Row Find out at :"+i+"th Position", "Passed");
 						Assert.clickButton(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindURLDetails+"["+i+"]/td[7]/div[@class='btnlink']/a", "Details Button");
 						Counter = i;
@@ -366,14 +367,14 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Respective URL Does not exist", "Failed", driver);
 			throw new Exception("Submit buttondoes not exist");
-			
+
 		}
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 	public static int Maxval=1;
 	public static int Minval=1;
 	public void BANK_DetailsFindOut() throws Exception{
@@ -396,23 +397,23 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 							&& BankStatus.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "Status").trim()))
 					{						
 						List<WebElement> priorityElement= driver.findElements(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_FindURLDetails+"["+Counter+"]/td[7]/div[@class='btnlink']"
-					                                  +AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"/td/input"));
-						
+								+AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"/td/input"));
+
 						for(int j =1;j<priorityElement.size();j++)
 						{						
 							String priortival = driver.findElement(By.xpath("((//*[@class='table border_table']/tbody/tr)["+Counter+"]/td[7]/div[@class='btnlink']//following::tbody[1]/tr/td/input)["+j+"]")).getAttribute("value");
 							int priIntval = Integer.parseInt(priortival);
-							
+
 							if(Minval>priIntval)
 							{
 								Minval = priIntval;	
 								System.out.println("Minval: "+Minval);
-								
+
 							}
 							if(Maxval<priIntval)
 							{	
-									Maxval = priIntval;	
-									System.out.println("Maxval:"+Maxval);
+								Maxval = priIntval;	
+								System.out.println("Maxval:"+Maxval);
 							}
 							if(j==priorityElement.size())
 							{
@@ -422,20 +423,20 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 						System.out.println("Maxium val: "+Maxval);
 						System.out.println("minium val :"+Minval);		
 						Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindURLDetails+"["+Counter+"]/td[7]/div[@class='btnlink']"
-                                +AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"/td/input[@value='"+Maxval+"']", Integer.toString(Maxval+2), "Max val");					
+								+AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"/td/input[@value='"+Maxval+"']", Integer.toString(Maxval+2), "Max val");					
 						Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindURLDetails+"["+Counter+"]/td[7]/div[@class='btnlink']"
-                                +AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"/td/input[@value='"+Minval+"']", Integer.toString(Maxval+1), "Minval");						
+								+AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"/td/input[@value='"+Minval+"']", Integer.toString(Maxval+1), "Minval");						
 						Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindURLDetails+"["+Counter+"]/td[7]/div[@class='btnlink']"+AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"["+i+"]/td/input",Integer.toString(Minval), "Min val");						
 						Extent_Reporting.Log_Pass("Exact URL Row Find out at :"+i+"th Position", "Passed state");
 						Thread.sleep(10000);
 						break;	
-								
+
 					}
 					if(i==Bank_URLRows.size())
 					{
 						Extent_Reporting.Log_Fail("Respective URL Does not exist", "Failed", driver);
 					}									
-					}
+				}
 			}							
 		}catch(Exception t){
 			t.printStackTrace();
@@ -450,12 +451,11 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			{
 				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.MM_MerchantTrxID, AirPay_PaymentPage_BusinessLogic.GetOrderID.trim(), "Merchant Transaction ID");
 				Assert.clickButton(driver, AirPay_Payment_MA_Panel_PageObject.MM_MerchantTrxID, "Merchant Transaction ID");
-				Extent_Reporting.Log_Pass("Merchant ID Entered as:"+AirPay_PaymentPage_BusinessLogic.GetOrderID, "Passed");
 				Extent_Reporting.Log_report_img("Merchant transaction id", "Passed", driver);
-				
+				Extent_Reporting.Log_Pass("Merchant ID Entered as:"+AirPay_PaymentPage_BusinessLogic.GetOrderID, "Passed");
 			}else{
 				Extent_Reporting.Log_Fail("Transaction Record does not exist", "Failed", driver);
-				
+
 			}			
 		}catch(Exception t){
 			t.printStackTrace();
@@ -463,21 +463,28 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Submit buttondoes not exist");			
 		}
 	}
-	
-	public void TransactionRecords() throws Exception{
+
+
+
+
+
+
+
+
+	public void TransactionRecords() throws Throwable{
 		try{
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MM_TransactionRecords, "Transaction records")){
 				List<WebElement> transactionHeaders = driver.findElements(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_TransactionRecords));					
-					Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MM_TransactionRecords+"["+transactionHeaders.size()+"]/td[@class='status']","MMTransaction_Clicked");
-					if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MMTransactiondetailsPage, "Transaction Details page"))
-					{
-					  	
-					}else{
-						Extent_Reporting.Log_Fail("Transaction Details Page does not exist", "failed", driver);
-					}
+				Assert.Javascriptexecutor_forClick(driver, AirPay_Payment_MA_Panel_PageObject.MM_TransactionRecords+"["+transactionHeaders.size()+"]/td/a[text()='"+AirPay_Payment_Mode_CreditCard_BusinessLogic.AirPaytransactionID+"']","MMTransaction_Clicked");
+				if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MMTransactiondetailsPage, "Transaction Details page"))
+				{
+					Extent_Reporting.Log_Pass("Transaction details page is exist as expected", "Passed");
+				}else{
+					Extent_Reporting.Log_Fail("Transaction Details Page does not exist", "failed", driver);
+				}
 			}else{
 				Extent_Reporting.Log_Fail("Transaction Records does not exist", "Failed", driver);
-				
+
 			}			
 		}catch(Exception t){
 			t.printStackTrace();
@@ -485,8 +492,8 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Submit buttondoes not exist");			
 		}
 	}
-	
-	
+
+
 	public void Bank_DetailsURL(String active, String inactive ) throws Exception{
 		try{
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MM_BankDetails, "BANK URL Detail Table"))
@@ -499,13 +506,13 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					String ChannelName = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_FindBANKDetails+"["+i+"]/td[2]")).getText().trim();
 					String MidType = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_FindBANKDetails+"["+i+"]/td[3]")).getText().trim();
 					String Status = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_FindBANKDetails+"["+i+"]/td[4]")).getText().trim();
-					
+
 					if(BankName.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel").trim())
 							&& ChannelName.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "ChannelName").trim())
 							&& MidType.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "TransactionTypr").trim())
 							&& (Status.equalsIgnoreCase(active)||Status.equalsIgnoreCase(inactive)))
 					{
-						
+
 						Extent_Reporting.Log_Pass("Exact URL Row Find out at :"+i+"th Position", "Passed");
 						Assert.clickButton(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindBANKDetails+"["+i+"]/td[5]/span/a", "Details Button");
 						Counter = i;
@@ -523,10 +530,10 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Respective URL Does not exist", "Failed", driver);
 			throw new Exception("Submit buttondoes not exist");
-			
+
 		}
 	}
-	
+
 	public void Bank_DetailsStatusActiveInactive(String active,String inactive) throws Exception{
 		try{
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MM_BankDetails, "BANK URL Detail Table"))
@@ -539,13 +546,16 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					String ChannelName = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_FindBANKDetails+"["+i+"]/td[2]")).getText().trim();
 					String MidType = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_FindBANKDetails+"["+i+"]/td[3]")).getText().trim();
 					String Status = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MM_FindBANKDetails+"["+i+"]/td[4]")).getText().trim();
-					
+					System.out.println(Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel"));
+					System.out.println(Excel_Handling.Get_Data(TC_ID, "ChannelName"));
+					System.out.println(Excel_Handling.Get_Data(TC_ID, "TransactionTypr"));
+
 					if(BankName.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel").trim())
 							&& ChannelName.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "ChannelName").trim())
 							&& MidType.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "TransactionTypr").trim())
-							&& Status.equalsIgnoreCase(active)||Status.equalsIgnoreCase(inactive))
+							&& (Status.equalsIgnoreCase(active)||Status.equalsIgnoreCase(inactive)))
 					{
-						
+
 						Extent_Reporting.Log_Pass("Exact URL Row Find out at :"+i+"th Position", "Passed");
 						Assert.clickButton(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindBANKDetails+"["+i+"]/td[5]/span/a", "Details Button");
 						Counter = i;
@@ -563,12 +573,12 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Respective URL Does not exist", "Failed", driver);
 			throw new Exception("Submit buttondoes not exist");
-			
+
 		}
 	}
-	
-	
-	
+
+
+
 	public void BankDetails_Page() throws Exception{
 		try{
 			Thread.sleep(20000);
@@ -579,7 +589,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				Extent_Reporting.Log_report_img("Bank Details", "Image", driver);
 			}else{
 				Extent_Reporting.Log_Fail("Bank details Page does not exist", "Failed", driver);
-				
+
 			}			
 		}catch(Exception t){
 			t.printStackTrace();
@@ -587,11 +597,11 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Submit buttondoes not exist");			
 		}
 	}
+	
 	public static String MINADDONE =null;
 	public static String MINMINUSONE =null;
 	public static String MAXADDONE =null;
 	public static String MAXMINUSONE =null;
-
 
 	public void BankDetails_MinumAndMaxAmt_Val() throws Exception{
 		try{
@@ -612,7 +622,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				MAXMINUSONE = String.valueOf(MaxMinusOne);			
 			}else{
 				Extent_Reporting.Log_Fail("Bank details Page does not exist", "Failed", driver);
-				
+
 			}			
 		}catch(Exception t){
 			t.printStackTrace();
@@ -620,10 +630,10 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Submit buttondoes not exist");			
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 	public void URLDetails_Page() throws Exception{
 		try{
 			Thread.sleep(20000);
@@ -634,7 +644,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				Extent_Reporting.Log_report_img("Bank Details", "Image", driver);
 			}else{
 				Extent_Reporting.Log_Fail("Bank details Page does not exist", "Failed", driver);
-				
+
 			}			
 		}catch(Exception t){
 			t.printStackTrace();
@@ -642,8 +652,8 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Submit buttondoes not exist");			
 		}
 	}
-	
-	
+
+
 	public void BankDetails_PageSaveBtn() throws Exception{
 		try{
 			//Thread.sleep(20000);
@@ -658,7 +668,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				Extent_Reporting.Log_report_img("Save Button Clicked", "Passed", driver);
 			}else{
 				Extent_Reporting.Log_Fail("Bank details Page does not exist", "Failed", driver);
-				
+
 			}			
 		}catch(Exception t){
 			t.printStackTrace();
@@ -666,7 +676,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Submit buttondoes not exist");			
 		}
 	}
-	
+
 	public void ConfigurationModifiedSuccess() throws Exception
 	{
 		try{
@@ -678,7 +688,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.URLEditSuccMsg, "Edit successfully Done");			
 			}else{
 				Extent_Reporting.Log_Fail("Edit successfully not exist", "Failed", driver);
-				
+
 			}			
 		}catch(Exception t){
 			t.printStackTrace();
@@ -687,8 +697,8 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 		}
 	}
 
-	
-	
+
+
 	public static String bankName = null;
 	public void Select_Bank_DropDown_Selection() throws Exception {
 		try{ 
@@ -719,7 +729,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					{
 						Extent_Reporting.Log_Fail("Bank should be exist but not exist", "Passed", driver);
 						break;
-						
+
 					}
 				}   		
 				Assert.waitForPageToLoad(driver);
@@ -738,7 +748,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
-	
+
 	public void Select_Bank_DropDown_SelectionNotExist() throws Exception {
 		try{ 
 			Log.info("Navigating To Net Banking Page");	 
@@ -783,8 +793,8 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
-	
-	public void URL_Details(String active,String inactive) throws Exception{
+
+	public void URL_Details(String active,String inactive) throws Throwable{
 		try{
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindURLDetails, "URL Detail Table"))
 			{					
@@ -804,7 +814,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 							&& (BankStatus.equalsIgnoreCase(active)|| BankStatus.equalsIgnoreCase(inactive)))
 					{
 						Extent_Reporting.Log_Pass("Exact URL Row Find out at :"+i+"th Position is", "Passed");
-						Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindURLDetails+"["+Counter+"]/td[7]/div[@class='btnlink']"+AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"["+i+"]/td[5]/span/a", "Edit button");						
+						Assert.Javascriptexecutor_forClick(driver, AirPay_Payment_MA_Panel_PageObject.MM_FindURLDetails+"["+Counter+"]/td[7]/div[@class='btnlink']"+AirPay_Payment_MA_Panel_PageObject.MM_Bank_URL+"["+i+"]/td[5]/span/a", "Edit button");						
 						Counter = i;
 						break;	
 					}
@@ -812,19 +822,19 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					{
 						Extent_Reporting.Log_Fail("Respective URL Does not exist", "Failed", driver);
 					}									
-					}
+				}
 			}							
 		}catch(Exception t){
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Respective URL Does not exist", "Failed", driver);
 			throw new Exception("Submit buttondoes not exist");
-			
+
 		}
 	}
-	
+
 	public void SummaryAmtVerify(String PassedVal) throws Exception{
 		try{
-			
+
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.TotAmt, "Passed Amount"))
 			{
 				String AmtVal = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.TotAmt)).getText().trim();
@@ -839,10 +849,68 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Amount didn't match", "Failed", driver);
 			throw new Exception("Submit buttondoes not exist");
-			
+
 		}
 	}
-	
-	
-	
+
+	public void TransactionHistory() throws Exception
+	{
+		try{
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MMTransactiondetailsPage, "Transaction History"))
+			{
+				String AirpayID = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MMMerchantTransactionID)).getText().trim();
+				System.out.println("AirpayID: "+AirpayID);
+				System.out.println("AirpayIDActusal: "+AirPay_PaymentPage_BusinessLogic.GetOrderID);
+				String  TransactionBank = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MMTransacionBank)).getText().trim(); 
+				System.out.println("TransactionBank: "+TransactionBank);
+				System.out.println("TransactionBankActusal: "+Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel").trim());
+				String  TransactionType = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MMTypeOFTransaction)).getText().trim(); 
+				System.out.println("TransactionType: "+TransactionType);
+				System.out.println("TransactionTypeActusal: "+Excel_Handling.Get_Data(TC_ID, "BankName").trim());
+				String  IssuingBank = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MMTransacionIssuingBankName)).getText().trim(); 
+				System.out.println("IssuingBank: "+IssuingBank);				
+				System.out.println("IssuingBankDActusal: "+Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel").trim());
+				String  AirPayTransactionID = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.MMApTransacionCardCategory)).getText().trim(); 
+				System.out.println("AirPayTransactionID: "+AirPayTransactionID);
+				System.out.println("AirpayIDActusal: "+AirPay_Payment_Mode_CreditCard_BusinessLogic.AirPaytransactionID);				
+				if(AirpayID.equalsIgnoreCase(AirPay_PaymentPage_BusinessLogic.GetOrderID))
+				{
+					Extent_Reporting.Log_Pass("Airpay ID is exist as expected", "Passed");
+					if(TransactionBank.contains(Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel").split("-")[0].trim()))
+					{
+						Extent_Reporting.Log_Pass("Transaction Bank Name is exist as expected", "Passed");
+						if(TransactionType.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "BankName").trim()))
+						{
+							Extent_Reporting.Log_Pass("Transaction Type is exist as expected", "Passed");
+							if(IssuingBank.contains(Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel").split("-")[0].trim()))
+							{
+								Extent_Reporting.Log_Pass("Issuing Bank Name is exist as expected", "Passed");
+								if(AirPayTransactionID.equalsIgnoreCase(AirPay_Payment_Mode_CreditCard_BusinessLogic.AirPaytransactionID))
+								{
+									Extent_Reporting.Log_Pass("AirPayTransaction ID is exist as expected", "Passed");
+									Assert.waitForPageToLoad(driver);
+									Thread.sleep(2000);
+									Extent_Reporting.Log_report_img("Transaction Details page", "Passed", driver);
+								}else{
+									Extent_Reporting.Log_Fail("Issuing Bank Type not Matced", "Failed", driver);
+								}
+							}else{
+								Extent_Reporting.Log_Fail("Issuing Bank Type not Matced", "Failed", driver);
+							}
+						}else{
+							Extent_Reporting.Log_Fail("Transaction Type not Matced", "Failed", driver);
+						}
+					}else{
+						Extent_Reporting.Log_Fail("Transaction Bank not Matced", "Failed", driver);
+					}
+				}else{
+					Extent_Reporting.Log_Fail("AirpayID not Matced", "Failed", driver);
+				}
+			}
+		}catch(Exception e){
+			Extent_Reporting.Log_Fail("Issue for Transaction History", "Failed", driver);
+		}
+	}
+
+
 }

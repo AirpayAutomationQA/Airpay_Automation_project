@@ -52,13 +52,17 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	
 	//*[text()='Transaction Details']
 	public static final String MMTransactiondetailsPage =  "//*[text()='Transaction Details']";
-	public static final String MMTransacionMerchantTransactionID ="//*[text()='Merchant Transaction Id']/following-sibling::td";
+	public static final String MMMerchantTransactionID ="//*[text()='Merchant Transaction Id']/following-sibling::td";
 	public static final String MMTransacionBank ="//*[text()='Bank']/following-sibling::td";
-	public static final String MMTransacionBankType ="//*[text()='Type of Transaction']/following-sibling::td";
+	public static final String MMTypeOFTransaction ="//*[text()='Type of Transaction']/following-sibling::td";
 	public static final String MMTransacionIssuingBankName ="//*[text()='Issuing Bank Name']/following-sibling::td";
 	public static final String MMTransacionIssuingBankCardType ="//*[text()='Card Type']/following-sibling::td";
 	public static final String MMTransacionCardCategory ="//*[text()='Card Category']/following-sibling::td";
+	public static final String MMApTransacionCardCategory ="//*[text()='PG Transaction Id']/following-sibling::td";
 
+	
+	
+	
 	public static final String MMTransacionAirapyMerchantID ="//*[text()='Airpay Merchant Id']/following-sibling::td";
 	public static final String MMBankdetailsPage ="//*[contains(text(),'Bank Details')]";
 	public static final String MMURLdetailsPage ="//*[contains(text(),'edit url bank mapping')]";
@@ -69,7 +73,7 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	public static final String URLEditSuccMsg ="//*[@class='success-block']/p";
 
 	public static final String BankURLMiniumVal ="//*[@id='min_amount']";
-	public static final String BankURLMaxiumVal ="//*[@id='max_amount' or @class='required']";
+	public static final String BankURLMaxiumVal ="//*[@id='max_amount']";
 	public static final String TotAmt ="//*[@id='total_amount']";
 
 	

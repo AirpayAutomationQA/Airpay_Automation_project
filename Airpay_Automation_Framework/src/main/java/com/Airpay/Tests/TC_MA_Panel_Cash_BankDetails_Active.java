@@ -39,13 +39,10 @@ public class TC_MA_Panel_Cash_BankDetails_Active extends Driver_Setup{
 			MA_panel.Home_LHS_Dashboard(AirPay_Payment_MA_Panel_PageObject.MM_PayMent_Mode_UrlLink);
 			MA_panel.VerifyText(AirPay_Payment_MA_Panel_PageObject.MM_URLDetails, "URL Details");
 			MA_panel.DetailsLinkClicked(AirPay_Payment_MA_Panel_PageObject.MM_BankDetails, "URL Details");
-		   	//MA_panel.Verify_Button_Color(AirPay_Payment_MA_Panel_PageObject.MM_ONOFFCheckBoxSaveCard);			
-			
 			MA_panel.Bank_DetailsURL("Active","Inactive");
 			MA_panel.BankDetails_Page();
 			MA_panel.BankDetails_PageSaveBtn();			
 		   	AirPay_PaymentPage_BusinessLogic PAymentPage = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);		
-
 		   	PAymentPage.NavigateToLocalHostPage();
 		   	PAymentPage.Cash_ChannelVerificationExist();
 			Log.info("Scripts Ends....");
