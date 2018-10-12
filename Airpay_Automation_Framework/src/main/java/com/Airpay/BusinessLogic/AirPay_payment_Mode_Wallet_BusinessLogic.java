@@ -315,7 +315,7 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 		try{ 
 				Log.info("Navigating To Net Banking Page");	
 				Assert.waitForPageToLoad(driver);
-				driver.get(Excel_Handling.Get_Data(TC_ID, "URL").trim());
+				driver.get(Excel_Handling.Get_Data(TC_ID, "PaymentPage_URL").trim());
 				Assert.waitForPageToLoad(driver);
 				LocalHostDetailPage();	
 				Card_Details_Options();

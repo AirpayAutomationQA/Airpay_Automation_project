@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 
 import com.Airpay.PageObject.AirPay_Payment_MA_Panel_PageObject;
 import com.Airpay.PageObject.Airpay_PaymentPage_PageObject;
+
 import com.Airpay.Reporting.Extent_Reporting;
 import com.Airpay.TestData.Excel_Handling;
 import com.Airpay.Utilities.ElementAction;
@@ -48,6 +49,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 				Extent_Reporting.Log_report_img("Login Details entered", "Passed", driver);
 				Assert.clickButton(driver, AirPay_Payment_MA_Panel_PageObject.MA_SubmitBtn, "Sign In button");
 				Assert.waitForPageToLoad(driver);
+				Thread.sleep(10000);
 			}else{
 
 				Extent_Reporting.Log_Fail("MA Panel User field does not exist", "Failed", driver);
@@ -138,14 +140,14 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 	}
 
 
-	public void Home_LHS_Dashboard(String MenuOption ) throws Exception{
+	public void Home_LHS_Dashboard(String MenuOption ) throws Throwable{
 		try{
-
+			Assert.waitForPageToLoad(driver);
 			if(Assert.isElementDisplayed(driver, MenuOption, "RespectiveLHS Menu"))
 			{	
-				Assert.Clickbtn(driver, MenuOption, "Respective Menu");
+				Assert.Javascriptexecutor_forClick(driver, MenuOption, "Respective Menu");
 				Assert.waitForPageToLoad(driver);
-				Extent_Reporting.Log_report_img("Respective Menu Clicked", "Passed", driver);			
+				Extent_Reporting.Log_report_img("Respective link or button", "Passed", driver);			
 			}else{
 				Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
 			}				
@@ -157,15 +159,49 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 		}
 	}
 
+	
+	
+	
 
 	public void VerifyText(String Xpath, String TextVerify) throws Exception{
 		try{
+			Assert.waitForPageToLoad(driver);
 			if(Assert.isElementDisplayed(driver, Xpath, "Respective Text Xpath"))
 			{	
 				String TextVal = driver.findElement(By.xpath(Xpath)).getText().trim();
+				System.out.println(TextVal);
 				if(TextVal.equalsIgnoreCase(TextVerify)){
 					Extent_Reporting.Log_Pass("Field name is: "+TextVal, "Expected as: "+TextVerify);
-					Extent_Reporting.Log_report_img("Respective Menu Clicked", "Passed", driver);			
+					Extent_Reporting.Log_report_img("Respective Link or field is exist", "As expected", driver);			
+
+				}else{
+					Extent_Reporting.Log_Fail("Respective text Does not exist as "+TextVal , "Failed", driver);
+				}			
+			}else{
+
+				Extent_Reporting.Log_Fail("Respective text Does not exist" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	
+	public void VerifyTextWithPassingData(String Xpath, String TextVerify) throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, Xpath, "Respective Text Xpath"))
+			{
+				
+				
+				String TextVal = driver.findElement(By.xpath(Xpath)).getText().trim();
+				System.out.println(TextVal);
+				if(TextVal.equalsIgnoreCase(TextVerify)){
+					Extent_Reporting.Log_Pass("Field name is: "+TextVal, "Expected as: "+TextVerify);
+					Extent_Reporting.Log_report_img("Respective Link or field is exist", "As expected", driver);			
 
 				}else{
 					Extent_Reporting.Log_Fail("Respective text Does not exist as "+TextVal , "Failed", driver);
@@ -182,6 +218,397 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 		}
 	}
 
+	public void NewRuleAddDetails() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, "Respective Text Xpath"))
+			{									
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, Excel_Handling.Get_Data(TC_ID, "RuleTitleName").trim(), "Title name");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_FieldClick, "MCCField box is");
+				Thread.sleep(1000);
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_FirstOptionClick, "MCC Firstoption");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, AirPay_Payment_MA_Panel_PageObject.ChannelName, Excel_Handling.Get_Data(TC_ID, "ChannelName"), "Channel name");
+				//BankNameEnableDisable();
+				//Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, AirPay_Payment_MA_Panel_PageObject.ChannelName, "netbnk", "Channel name");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, AirPay_Payment_MA_Panel_PageObject.CardBankName, Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel"), "Channel name");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, AirPay_Payment_MA_Panel_PageObject.AmountSelectBox, "Greater than", "Amount Greater Than");				
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.AmountEditBox, Excel_Handling.Get_Data(TC_ID, "MaxAmtVal"), "Title Name");
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.PTCEditBox, Excel_Handling.Get_Data(TC_ID, "PTC_Vlaue"), "PTC value");
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.MSFEditBox, Excel_Handling.Get_Data(TC_ID, "MSF_Value"), "MSF Value");						
+			}else{
+
+				Extent_Reporting.Log_Fail("Rule Title Name should be want unique" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			Extent_Reporting.Log_Fail("Rule Title Name should be want unique", "Failed", driver);
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	
+	public void EditSurchargeRuleVerifyPage() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, "Respective Text Xpath"))
+			{									
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, "Title name");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.ChannelName, "Channel name");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.AmountSelectBox, "Amount Greater Than");				
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.AmountEditBox,  "Title Name");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.PTCEditBox, "PTC value");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MSFEditBox,  "MSF Value");						
+			}else{
+
+				Extent_Reporting.Log_Fail("Rule Title Name should be want unique" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			Extent_Reporting.Log_Fail("Rule Title Name should be want unique", "Failed", driver);
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	public void EditConvienceSurchargeRuleVerifyPage() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, "Respective Text Xpath"))
+			{									
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, "Title name");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.ChannelName, "Channel name");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.AmountSelectBox, "Amount Greater Than");				
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.AmountEditBox,  "Title Name");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.PTCEditBox, "PTC value");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MSFEditBox,  "MSF Value");
+				String DataPTCVal= Excel_Handling.Get_Data(TC_ID, "PTC_Vlaue").trim();
+				String MSFDataVal= Excel_Handling.Get_Data(TC_ID, "MSF_Value").trim();
+				double ptcaddvalue =Double.parseDouble(DataPTCVal);
+				double msfaddvalue =Double.parseDouble(MSFDataVal);
+				ptcaddvalue++;
+				msfaddvalue++;
+				System.out.println(ptcaddvalue);
+				System.out.println(msfaddvalue);				
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.PTCEditBox,Double.toString(ptcaddvalue) , "PTC value");
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.MSFEditBox,Double.toString(msfaddvalue) , "MSF Value");
+			}else{
+
+				Extent_Reporting.Log_Fail("Rule Title Name should be want unique" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			Extent_Reporting.Log_Fail("Rule Title Name should be want unique", "Failed", driver);
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	
+	public void BankNameEnableDisable() throws Exception{
+		try{			
+			List<WebElement> BankDropCount = driver.findElements(By.xpath(AirPay_Payment_MA_Panel_PageObject.BankNameDropBox));
+			System.out.println("Bank name count: "+BankDropCount );
+			for(int i=0;i<BankDropCount.size();i++)
+			{				
+				boolean bankEnable = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.BankNameDropBox+"["+(i+1)+"]")).isEnabled();
+				System.out.println("BankStatus: "+bankEnable);	
+				System.out.println("I count:"+ (i+1));
+				if(bankEnable==true)
+				{					
+					Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.BankNameDropBox+"["+i+1+"]", Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel").trim(), "Bank Name drop down");
+					break;					
+				}
+				if(i==BankDropCount.size()-1){
+					Extent_Reporting.Log_Fail("Respective Bank Name does not exist", "Failed", driver);
+				}			
+			}			
+		}catch(Exception t){
+			Extent_Reporting.Log_Fail("Rule Title Name should be want unique", "Failed", driver);
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+		
+		
+		
+	}
+	
+	public void RuleCreatedVerify() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.RuleCreatedVerify, "Details Rule button"))
+			{				
+				String FetchName = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.FetchRulename)).getText().trim();
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.RuleEditButton, "Edit button");
+				Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.RuleCreatedVerify, "Details button");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.RuleCreatedVerify, "Rule Created");
+				if(FetchName.contains(Excel_Handling.Get_Data(TC_ID, "RuleTitleName").trim()))
+				{
+					Extent_Reporting.Log_report_img("Rule Created successfully", "Passed", driver);
+				}else{
+					Extent_Reporting.Log_Fail("Rule Title Name did not matched" , "Failed", driver);
+				}
+			}else{
+
+				Extent_Reporting.Log_Fail("Rule Title Name does not exist" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			Extent_Reporting.Log_Fail("Rule Title Name does not exist" , "Failed", driver);
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	public void RuleCreatedEditMode() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.RuleEditButton, "Details Rule button"))
+			{				
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.RuleEditButton, "Rule Edit button");
+				Extent_Reporting.Log_report_img("Rule Edit button clicked" , "Failed", driver);				
+			}else{
+				Extent_Reporting.Log_Fail("Rule Title Name does not exist" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			Extent_Reporting.Log_Fail("Rule Title Name does not exist" , "Failed", driver);
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	
+	public void RuleAddDetails() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, "Respective Text Xpath"))
+			{									
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, TextVal, "Title name");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_FieldClick, "MCCField box");
+				Thread.sleep(1000);
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_FirstOptionClick, "MCC First option");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, AirPay_Payment_MA_Panel_PageObject.ChannelName, Excel_Handling.Get_Data(TC_ID, "ChannelName"), "Channel name");
+				//Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, AirPay_Payment_MA_Panel_PageObject.ChannelName, "netbnk", "Channel name");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, AirPay_Payment_MA_Panel_PageObject.CardBankName, Excel_Handling.Get_Data(TC_ID, "BankName_MAPanel"), "Channel name");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, AirPay_Payment_MA_Panel_PageObject.AmountSelectBox, "Greater than", "Amount Greater Than");				
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.AmountEditBox, Excel_Handling.Get_Data(TC_ID, "MaxAmtVal"), "Title Name");
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.PTCEditBox, Excel_Handling.Get_Data(TC_ID, "PTC_Vlaue"), "PTC value");
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.MSFEditBox, Excel_Handling.Get_Data(TC_ID, "MSF_Value"), "MSF Value");						
+			}else{
+
+				Extent_Reporting.Log_Fail("Respective text Does not exist" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	public void MCC_MultipleChoiceDropDownVerify() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.TitleInput, "Respective Text Xpath"))
+			{									
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_FieldClick, "MCCField box");
+				Thread.sleep(1000);
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_FirstOptionClick, "MCC First option");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_FieldClick, "MCCField box");
+				Thread.sleep(1000);
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_SecondOptionClick, "MCC second option");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_FieldClick, "MCCField box");
+				Thread.sleep(1000);
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.MCC_thirdOptionClick, "MCC third option");
+				Extent_Reporting.Log_report_img("It's selecting more than one MCC drop box value", "Passed", driver);
+				Thread.sleep(1000);				
+				List<WebElement> crossCount = driver.findElements(By.xpath("//span[@class='select2-selection__choice__remove']"));
+				for(int i=1;i<=crossCount.size();i++)
+				{
+					driver.findElement(By.xpath("//span[@class='select2-selection__choice__remove']")).click();
+				}
+				Extent_Reporting.Log_report_img("It's removed MCC drop box value", "Passed", driver);
+				Thread.sleep(1000);
+			}else{
+
+				Extent_Reporting.Log_Fail("Respective text Does not exist" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	
+	
+	
+	
+	
+	public void ErrorNotifications(String xpath, String ErrXpath, String passVal,String ExpectedVal) throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, xpath, "Respective Text Xpath"))
+			{									
+				Assert.inputText(driver, xpath, passVal, "Title Name");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.SurchargeSubmitBtn, "Submit button");
+				String TextVal = driver.findElement(By.xpath(ErrXpath)).getText().trim();
+				System.out.println(TextVal);
+				if(TextVal.equalsIgnoreCase(ExpectedVal))
+				{
+					Extent_Reporting.Log_Pass("Field name is: "+TextVal, "Expected as: "+ExpectedVal);
+					Extent_Reporting.Log_report_img("Respective Message is exist", "As expected", driver);			
+				}else{
+					Extent_Reporting.Log_Fail("Respective text Does not exist as "+TextVal , "Failed", driver);
+				}						
+			}else{
+
+				Extent_Reporting.Log_Fail("Respective text Does not exist" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective Message does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * @Method Name: Card Selection method.
+	 * Following method is used Handling Multiple Card options
+	 * @throws Exception
+	 */
+	public void AddGlobalDropDown_Verify() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.ChannelName, "Channel name" ))
+			{         	
+				WebElement selectDropBox = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.ChannelName));
+				Select select =new Select(selectDropBox);
+				List<WebElement> optionValue = select.getOptions();
+				for(int i =1;i<optionValue.size();i++)
+				{				
+					WebElement selectDropBox1 = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.ChannelName));
+					Select select1 =new Select(selectDropBox1);
+					Assert.selectDropBoxValue(driver, AirPay_Payment_MA_Panel_PageObject.ChannelName, i, " Bank Name");//(driver, Netbank_DropDown, value[i], value[i+1]+" Bank ");			
+					//Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, Netbank_DropDown, "LAXMI VILAS BANK", " Bank Name");//(driver, Netbank_DropDown, value[i], value[i+1]+" Bank ");			
+					bankName =  select1.getFirstSelectedOption().getText();
+					Extent_Reporting.Log_report_img(bankName+" Bank Selected", "Passed", driver);
+
+				}   		
+				Assert.waitForPageToLoad(driver);
+			}
+			else{
+				Extent_Reporting.Log_Fail("Drop Down values does not exist ex expected",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Drop Down values does not exist ex expected",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+
+
+	
+	
+	
+	
+	public void DuplicateRuleNameErrorExist(String MesgName) throws Exception{
+		try{
+					
+			Assert.waitForPageToLoad(driver);
+			Thread.sleep(5000);
+			WebElement hiddenDiv = driver.findElement(By.xpath(AirPay_Payment_MA_Panel_PageObject.ExistRuleErrorMsg));
+			String errMsg = hiddenDiv.getText(); // does not work (returns "" as expected)
+			String script = "return arguments[0].innerText";
+			errMsg = (String) ((JavascriptExecutor) driver).executeScript(script, hiddenDiv);			
+			System.out.println(errMsg);
+			if(errMsg.contains(MesgName))
+			{
+				Extent_Reporting.Log_Pass("Repective  Message is exist", "Respective Msg is exist as :"+errMsg);
+				Extent_Reporting.Log_report_img("Respective Message is exist", "Passed", driver);	
+				
+			}else
+			{	
+				Extent_Reporting.Log_Fail("Repective Message does not exist", "Error Msg is:"+errMsg, driver);
+			}	
+			
+		}catch(Exception t){
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+	
+	
+	
+	
+	
+	
+	public static String TextVal = null;
+	public void GetTextFromWeb(String Xpath) throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, Xpath, "Respective Text Xpath"))
+			{	
+				 TextVal = driver.findElement(By.xpath(Xpath)).getText().trim();
+				System.out.println(TextVal);
+				if(!TextVal.isEmpty()){
+					Extent_Reporting.Log_Pass("Field name is: "+TextVal, "As Expected");
+					Extent_Reporting.Log_report_img("Respective Link or field is exist", "As expected", driver);			
+				}else{
+					Extent_Reporting.Log_Fail("Respective text Does not exist as "+TextVal , "Failed", driver);
+				}			
+			}else{
+
+				Extent_Reporting.Log_Fail("Respective text Does not exist" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+
+	public void InputValue(String Xpath,String HardCodeVal) throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, Xpath, "Respective Text Xpath"))
+			{	
+				Assert.inputText(driver, Xpath, HardCodeVal, "Value entered");		
+			}else{
+
+				Extent_Reporting.Log_Fail("Respective Input field Does not exist" , "Failed", driver);
+			}				
+		}catch(Exception t){
+			t.printStackTrace();
+			Extent_Reporting.Log_Fail("Respective menu does not exost", "Failed", driver);
+			throw new Exception("Serch filter does not exist");
+
+		}
+	}
+
+	
+	
 	public void DetailsLinkClicked(String Xpath, String Deatils) throws Exception{
 		try{
 			if(Assert.isElementDisplayed(driver, Xpath, Deatils+" is"))

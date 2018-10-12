@@ -218,7 +218,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			{
 				WebElement ChannelsName = Channels.get(i);
 				String name = ChannelsName.getText();
-				System.out.println(name);
+				System.out.println("Channel Name: "+name);
 				if(name.equalsIgnoreCase(Card)){					
 					ChannelsName.click();
 					Extent_Reporting.Log_report_img(" payment mode option choosen as: "+name, "Passed", driver);
@@ -267,6 +267,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 					Extent_Reporting.Log_report_img(bankName+"Bank Selected", "Passed", driver);
 					NetBanking_Makepaymentbtn();
 					BankPage_validation();
+					
 					NavigateToLocalHostPage();	
 
 				}   		
@@ -477,7 +478,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			Thread.sleep(2000);
 			if(Assert.isElementDisplayed(driver, LogoPaymentPage, "Logo payment page" ))
 			{         	
-				//Assert.Verify_Image(driver, ImgLogo, "Airpay Logo");
+			//	Assert.Verify_Image(driver, ImgLogo, "Airpay Logo");
 				Assert.isElementDisplayed(driver, airPayFavIcon, "Airpay Fav icon");
 				Extent_Reporting.Log_report_img("Respective Details is exist", "Passed", driver);
 			}else{
@@ -613,7 +614,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 
 	public void NavigateToLocalHostPage() throws Exception {
 		try{ 
-			Log.info("Navigating To Net Banking Page");	
+			Log.info("Navigating To Net BankingPage");	
 			Assert.waitForPageToLoad(driver);
 			driver.get(Excel_Handling.Get_Data(TC_ID, "PaymentPage_URL").trim());
 			Assert.waitForPageToLoad(driver);

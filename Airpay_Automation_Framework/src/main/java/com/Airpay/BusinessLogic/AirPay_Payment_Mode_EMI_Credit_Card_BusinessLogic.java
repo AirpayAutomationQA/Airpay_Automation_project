@@ -196,7 +196,7 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			Extent_Reporting.Log_report_img("Amazon_pay is exist as expected", "Passed", driver);
 			Assert.Clickbtn(driver, AmazonMakePaymentBtn, "make payment");	
 			Assert.waitForPageToLoad(driver);
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 		}catch(Exception e)	
 		{
 			Extent_Reporting.Log_Fail("Amazon_pay does not disp", "Failed", driver);   
@@ -322,6 +322,7 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 	
 	public void AmexeZeClickNavigation_page() throws Exception {
 		try{ 
+			Thread.sleep(10000);
 			Log.info("Navigating To Net Banking Page");	
 			Assert.waitForPageToLoad(driver);
 			JavascriptExecutor js = (JavascriptExecutor) driver;

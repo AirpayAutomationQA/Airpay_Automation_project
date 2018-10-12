@@ -235,7 +235,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			Assert.inputText(driver, CreditCardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "Credit card Number Exp Date");
 			Assert.inputText(driver, CreditCardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), "Credit card Number CVVCode");
 			Extent_Reporting.Log_report_img("All details has been Entered", "Passed", driver);
-			Assert.Clickbtn(driver, CreditCardMakePaymtBtn, "Credit Card make payment button");		   
+			Assert.Clickbtn(driver, CreditCardMakePaymtBtn, "Credit Card make payment button");	
+			Thread.sleep(20000);
 		}catch(Exception e)	
 		{
 			Extent_Reporting.Log_Fail("Some fields or else data issue is exist", "Failed", driver);   
@@ -358,7 +359,35 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			e.printStackTrace();
 			throw new Exception("Test failed due to local host page not displayed");
 		}
+	}
+	
+	public void Cancel_TransactionPayment_CreditCard() throws Exception{
+		try{	
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplay(driver, CancelCreditPayment))
+			{
+				
+					Thread.sleep(20000);
+					System.out.println(driver.getTitle());
+					Extent_Reporting.Log_report_img("Respective Bank transaction Page is exist", "Passed", driver);
+					Assert.Clickbtn(driver, CancelCreditPayment, "Cancel btton");
+					Assert.acceptAlert(driver);
+							
+			}else{
+
+				Extent_Reporting.Log_Fail("Please choose another payment method", "Failed", driver);
+
+			}
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Some fields are not disp", "Failed", driver);   
+			Log.error("Test failed due to page is navigating to payment page");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
 	}	
+	
+	
 
 
 
@@ -450,7 +479,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	public void sessionCancel_errMsg() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 			if(Assert.isElementDisplayed(driver, SessionTimer, "Session timer")){
 				Extent_Reporting.Log_report_img("Session timer popup is exist", "Passed", driver);	
 				Assert.Clickbtn(driver, UPICrossCancelBtn, "Cross cance button");	
@@ -459,7 +488,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 				if(errMsg.contains("REJECTED. Please try paying using another method?")
 						||errMsg.contains("We are sorry but the transaction failed. Try paying using another method?") 		                    
 						||errMsg.contains("Please use a valid debit card issued in india")|| errMsg.contains("Improper Card Name Entered")
-						||errMsg.contains("FAILED. Please try paying using another method?")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method"))
+						||errMsg.contains("FAILED. Please try paying using another method?")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method")
+						||errMsg.contains("Payment Failed. Please try paying using another method?"))
 				{
 					Extent_Reporting.Log_Pass("Repective Error Message is exist", "Error Msg is:"+errMsg);
 					Extent_Reporting.Log_report_img("Respective Error Message is exist", "Passed", driver);	
