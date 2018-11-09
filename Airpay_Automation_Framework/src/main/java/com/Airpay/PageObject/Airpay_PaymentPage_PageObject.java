@@ -51,7 +51,7 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String SummerySecOrdID = "//*[@class='odrID']/strong";
 		public static final String MerchantName = "//*[@class='merName']";
 		public static final String AmtValueBlock = "//div[contains(@class,'default-amount-block')]";
-		public static final String footerVerifyLink = "//div[@class='tnc']/p";
+		public static final String footerVerifyLink = "//div[@class='tnc']";
 		public static final String CancelpaymentPage = "//div[@class='tnc']//a";
 		
     //********************************** debit card payment page locators***************************************

@@ -333,7 +333,7 @@ public class ElementAction {
 		try
 		{
 			WebElement inputText = screenName.findElement(By.xpath(ObjectxPath));
-			Extent_Reporting.Log_Pass(Element_Name+" exist",Element_Name+" has "+ inputText.getText());
+			Extent_Reporting.Log_Pass(Element_Name+" exist",Element_Name+" has "+ inputText.getText().trim());
 			return inputText.getText();
 		}
 		 catch(Throwable t)
@@ -1079,6 +1079,7 @@ public class ElementAction {
 		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameName));
 		
 	}
+	
 	public void waitForElementVisible(WebDriver driver, String element,String Element_Name) throws Throwable {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 30);

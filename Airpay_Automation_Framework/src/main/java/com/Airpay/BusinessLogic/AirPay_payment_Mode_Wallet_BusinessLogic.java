@@ -146,6 +146,44 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 		}
 	}
 
+	public void WalletDropDown_Select_Inline_kit() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, "(//*[@class='form-control wallet-options']/option)", "SelectBank Drop Down" ))
+			{         	
+				List<WebElement> selectDropBox = driver.findElements(By.xpath("(//*[@class='form-control wallet-options']/option)"));
+				System.out.println(selectDropBox);		
+				for(int i =1;i<selectDropBox.size();i++)
+				{	
+					Assert.Clickbtn(driver, "(//*[@class='form-control wallet-options']/option)", "Wallet Drop down select");	
+					Assert.Clickbtn(driver, "(//*[@class='form-control wallet-options']/option)["+(i+1)+"]", "DropDown selected");
+					WebElement selectDropBox1 = driver.findElement(By.xpath("//*[@class='form-control wallet-options']/option[@checked='checked']"));					
+					bankName =  selectDropBox1.getText();
+					System.out.println(bankName);
+					Extent_Reporting.Log_report_img(bankName+"Bank Selected", "Passed", driver);
+					Assert.Clickbtn(driver, WalletMakePaymtBtn, "Wallet Make payement button");
+					Assert.waitForPageToLoad(driver);
+					BankPage_validation();
+					NavigateToLocalHostPageInline_kit();						
+				}   		
+				Assert.waitForPageToLoad(driver);
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
 	
 	public void WalletDropDown_Selecting_Email_and_MobileVerifying() throws Exception {
 		try{ 
@@ -212,6 +250,15 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 
 					  Log.error("Its not navigated to Respective Bank as :"+bankName);
 				  }
+				  String errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();
+					if(errMsg.contains("REJECTED. Please try paying using another method?")
+							||errMsg.contains("We are sorry but the transaction failed. Try paying using another method?") 		                    
+							||errMsg.contains("Please use a valid debit card issued in india")|| errMsg.contains("Improper Card Name Entered")
+							||errMsg.contains("FAILED. Please try paying using another method?")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method")
+							||errMsg.contains("Payment Failed. Please try paying using another method?"))
+					{
+						Extent_Reporting.Log_Fail("Repective Error Message does not exist", "Error Msg is:"+errMsg, driver);
+					}
 				//throw new Exception("Net Banking page issue");
 			  }else{
 				  Extent_Reporting.Log_Pass("Its Navigated to :"+bankName, "Passed");
@@ -220,7 +267,6 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 			}
 		}catch(Exception e)	
 			{
-				Extent_Reporting.Log_Fail(" Make payment button does not exist for net banking",	"Failed",driver);
 				Log.error("Test failed due to card does not exist");
 				e.printStackTrace();
 				//throw new Exception("Test failed due to local host page not displayed");
@@ -326,6 +372,25 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
+	
+	public void NavigateToLocalHostPageInline_kit() throws Exception {
+		try{ 
+				Log.info("Navigating To Net Banking Page");	
+				Assert.waitForPageToLoad(driver);
+				driver.get(Excel_Handling.Get_Data(TC_ID, "PaymentPage_URL").trim());
+				Assert.waitForPageToLoad(driver);
+				AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
+				AirPay_Local.NavigateToInlineKit();	
+				Card_Details_Options();
+		}catch(Exception e){
+			Extent_Reporting.Log_Fail(" Make payment button does not exist for net banking",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
 	
 	
 	/**

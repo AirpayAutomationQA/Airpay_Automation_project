@@ -88,8 +88,6 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
-
-	
 	
 	/**
 	 * @author parmeshwar Sakole
@@ -234,7 +232,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			Assert.inputText(driver, CreditCardNoInput, Excel_Handling.Get_Data(TC_ID, "ValidCardNumber").trim(), "Credit card Number input field");
 			Assert.inputText(driver, CreditCardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "Credit card Number Exp Date");
 			Assert.inputText(driver, CreditCardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), "Credit card Number CVVCode");
-			Extent_Reporting.Log_report_img("All details has been Entered", "Passed", driver);
+			Extent_Reporting.Log_report_img("All details has been Entered", "Passed s", driver);
 			Assert.Clickbtn(driver, CreditCardMakePaymtBtn, "Credit Card make payment button");	
 			Thread.sleep(20000);
 		}catch(Exception e)	
@@ -246,7 +244,45 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
-
+	public static String confFees = null;
+	public static String PassedAmt = null;
+	public static String TotAmt =null;
+	public void Credit_cardProvidingSurchargeValuesWithValidCardNumber() throws Exception{
+		try{		   		   
+			Assert.inputText(driver, CreditCardNoInput, Excel_Handling.Get_Data(TC_ID, "ValidCardNumber").trim(), "Credit card Number input field");
+			Assert.inputText(driver, CreditCardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "Credit card Number Exp Date");
+			Assert.inputText(driver, CreditCardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), "Credit card Number CVVCode");
+			Extent_Reporting.Log_report_img("All details has been Entered", "Passed s", driver);
+			Assert.Clickbtn(driver, "//div[@class='sumbtn desksumbtn iplus']", "Amount Plus button");			
+			PassedAmt = driver.findElement(By.xpath("//div[@class='main-amount-block show-amnt']//following::span[@id='total_amount']")).getText().trim();
+			confFees = driver.findElement(By.xpath("(//*[@class='surcharge_amount'])[1]")).getText().trim();
+			TotAmt = driver.findElement(By.xpath("//span[@class='amount-value-block']")).getText().trim();
+			Assert.Clickbtn(driver, CreditCardMakePaymtBtn, "Credit Card make payment button");	
+			Thread.sleep(10000);
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Some fields or else data issue is exist", "Failed", driver);   
+			Log.error("Test failed due Some fields or else data issue is exist");
+			e.printStackTrace();
+			throw new Exception("Some fields or else data issue is exist");
+		}
+	}
+	
+	
+	public void AmountBlockFetchData() throws Exception{
+		try{
+			PassedAmt = driver.findElement(By.xpath("//div[@class='main-amount-block show-amnt']//following::span[@id='total_amount']")).getText().trim();
+			confFees = driver.findElement(By.xpath("(//*[@class='surcharge_amount'])[1]")).getText().trim();
+			TotAmt = driver.findElement(By.xpath("//span[@class='amount-value-block']")).getText().trim();
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Some fields or else data issue is exist", "Failed", driver);   
+			Log.error("Test failed due Some fields or else data issue is exist");
+			e.printStackTrace();
+			throw new Exception("Some fields or else data issue is exist");
+		}
+	}
+	
 	public void Credit_cardholderNameCopyPaste() throws Throwable{
 		try{		   		   
 			Assert.inputText(driver, CreditCardNoInput, Excel_Handling.Get_Data(TC_ID, "InvalidCardNumber").trim(), "Credit card Number input field");						  
@@ -337,20 +373,14 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			Assert.waitForPageToLoad(driver);
 			if(Assert.isElementDisplay(driver, CancelCreditPayment))
 			{
-				for(int i=1;i<=3;i++){	
+				   Thread.sleep(20000);
+					Assert.Clickbtn(driver, CancelCreditPayment, "Cancel btton");
 					Thread.sleep(20000);
-					System.out.println(driver.getTitle());
-					Thread.sleep(20000);
-					System.out.println(driver.getTitle());
-					Thread.sleep(20000);
-				}
 				/*Extent_Reporting.Log_report_img("Respective Bank transaction Page is exist", "Passed", driver);
-				Assert.Clickbtn(driver, CancelCreditPayment, "Cancel btton");
 				Assert.acceptAlert(driver);*/
 			}else{
 
 				Extent_Reporting.Log_Fail("Please choose another payment method", "Failed", driver);
-
 			}
 		}catch(Exception e)	
 		{
@@ -365,8 +395,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		try{	
 			Assert.waitForPageToLoad(driver);
 			if(Assert.isElementDisplay(driver, CancelCreditPayment))
-			{
-				
+			{				
 					Thread.sleep(20000);
 					System.out.println(driver.getTitle());
 					Extent_Reporting.Log_report_img("Respective Bank transaction Page is exist", "Passed", driver);
@@ -873,6 +902,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			{
 				Assert.inputText(driver, CashPinCode, Excel_Handling.Get_Data(TC_ID, "Pin_Code").trim(), "Cash payment pin code");
 				Extent_Reporting.Log_report_img("PinCode Entered", "Passed", driver);
+				AmountBlockFetchData();
 				Assert.Clickbtn(driver, CashMakePayment, "Credit Card make payment button");  
 			}else{
 				Extent_Reporting.Log_Fail("Cash Pincode field does not exist", "Failed", driver);
@@ -895,9 +925,10 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			keyboard.pressKey(Keys.F12);
 			keyboard.releaseKey(Keys.F12);
 			Assert.inputText(driver, UTRCode, Excel_Handling.Get_Data(TC_ID, "UTRCode").trim(), "UTR Unique code ");
+			AmountBlockFetchData();
 			Assert.Clickbtn(driver, UTRCashMakePayment, "UTR make payment");    
 			Assert.analyzeLog(driver);
-
+			
 		}catch(Exception e) 
 		{
 			Extent_Reporting.Log_Fail("Some fields are not disp", "Failed", driver);   
@@ -961,7 +992,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 					if(tblrowVal.equalsIgnoreCase("AMOUNT:")){
 						//Extent_Reporting.Log_Pass("Actual Amount field Name Is: "+tblrowVal, "Expected Amount field Name is: "+"AMOUNT:");
 						String TxnAmt = driver.findElement(By.xpath("(//table[2]/tbody/tr/td[2])["+i+"]")).getText().trim();
-						if(TxnAmt.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "Amount").trim())||TxnAmt.contains(AirPay_MA_Panel_Select_Merchant_BusinessLogic.MINADDONE)){
+						if(TxnAmt.equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "Amount").trim())||TxnAmt.contains(AirPay_MA_Panel_Select_Merchant_BusinessLogic.MINADDONE)
+								||TxnAmt.contains(TotAmt)){
 							Extent_Reporting.Log_Pass("Actual Transaction Amount is: "+TxnAmt, "Passed");
 							Extent_Reporting.Log_report_img("Success payment Transaction Amount is as expected", "Passed", driver);
 							break;
@@ -1149,10 +1181,10 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 
 	public void Card_InvalidMesgVerify() throws Exception{
 		try{	
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 			String errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();
 			System.out.println(errMsg);
-			if(errMsg.contains("Transaction Operation Failed - Card No, not valid. Card Number is Invalid")
+			if(errMsg.contains("Transaction Operation Failed - Card No, not valid. Card Number is Invalid")					            
 					||errMsg.contains("Transaction Operation Failed - Card No, not valid. Card Number Verification Failed") 		                    
 					||errMsg.contains("Please use a valid debit card issued in india")|| errMsg.contains("Improper Card Name Entered")
 					||errMsg.contains("Credit Card Number is Empty")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method")

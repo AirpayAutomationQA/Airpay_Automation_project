@@ -27,7 +27,7 @@ public class TC_PP_07 extends Driver_Setup{
 			Log.info("Script Starts..");
 			AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
 				AirPay_Local.LocalHostDetailPage();	
-				AirPay_Local.Verify_PaymentPageFields();
+				//AirPay_Local.Verify_PaymentPageFields();
 				AirPay_Local.FooterVerify();
 				
 			Log.info("Scripts Ends....");

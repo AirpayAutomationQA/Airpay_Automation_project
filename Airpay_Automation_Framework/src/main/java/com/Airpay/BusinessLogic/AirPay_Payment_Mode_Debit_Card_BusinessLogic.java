@@ -74,8 +74,9 @@ public class AirPay_Payment_Mode_Debit_Card_BusinessLogic extends Airpay_Payment
 			Assert.inputText(driver, DebitCardHolderName,Excel_Handling.Get_Data(TC_ID, "CardHolderName").trim(), "Debit card Holder Name Field");		   
 			Assert.inputText(driver, DebitCardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "Debit card Number Exp Date");
 			Assert.inputText(driver, DebitCardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), "Debit card Number CVVCode");
-			Assert.Clickbtn(driver, DebitCardMakePaymtBtn, "Debit Card make payment button");		   
-
+			if(Assert.isElementDisplay(driver, DebitCardMakePaymtBtn)){
+			Assert.Clickbtn(driver, DebitCardMakePaymtBtn, "Debit Card make payment button");	
+			}
 		}catch(Exception e)	
 		{
 			Extent_Reporting.Log_Fail("Some fields are not disp", "Failed", driver);   
@@ -85,6 +86,24 @@ public class AirPay_Payment_Mode_Debit_Card_BusinessLogic extends Airpay_Payment
 		}
 	}
 	
+	
+	public void Debit_cardProvidingValuesNotIndiaCard() throws Exception{
+		try{		   		   
+			Assert.inputText(driver, DebitCardNoInput, Excel_Handling.Get_Data(TC_ID, "InvalidCardNumber").trim(), "Debit card Number input field");
+			//Assert.inputText(driver, DebitCardNoInput, "9809808!13", "Debit card Number input field");
+
+			Assert.inputText(driver, DebitCardHolderName,Excel_Handling.Get_Data(TC_ID, "CardHolderName").trim(), "Debit card Holder Name Field");		   
+			Assert.inputText(driver, DebitCardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "Debit card Number Exp Date");
+			Assert.inputText(driver, DebitCardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), "Debit card Number CVVCode");
+			
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Some fields are not disp", "Failed", driver);   
+			Log.error("Test failed due to page is navigating to payment page");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
 	public void Debit_cardProvidingWithoutName() throws Exception{
 		try{		   		   
 			Assert.inputText(driver, DebitCardNoInput, Excel_Handling.Get_Data(TC_ID, "InvalidCardNumber").trim(), "Debit card Number input field");
@@ -135,4 +154,30 @@ public class AirPay_Payment_Mode_Debit_Card_BusinessLogic extends Airpay_Payment
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
+	
+	
+	public static String confFees = null;
+	public static String PassedAmt = null;
+	public static String TotAmt =null;
+	public void Debit_SurchargeValuesWithValidCardNumber() throws Exception{
+		try{		   		   
+			Assert.inputText(driver, DebitCardNoInput, Excel_Handling.Get_Data(TC_ID, "ValidCardNumber").trim(), "Debit card Number input field");
+			Assert.inputText(driver, DebitCardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "Debit card Number Exp Date");
+			Assert.inputText(driver, DebitCardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), "Debit card Number CVVCode");
+			Extent_Reporting.Log_report_img("All details has been Entered", "Passed s", driver);
+			Assert.Clickbtn(driver, "//div[@class='sumbtn desksumbtn iplus']", "Amount Plus button");			
+			PassedAmt = driver.findElement(By.xpath("//div[@class='main-amount-block show-amnt']//following::span[@id='total_amount']")).getText().trim();
+			confFees = driver.findElement(By.xpath("(//*[@class='surcharge_amount'])[1]")).getText().trim();
+			TotAmt = driver.findElement(By.xpath("//span[@class='amount-value-block']")).getText().trim();
+			Assert.Clickbtn(driver, DebitCardMakePaymtBtn, "Debit Card make payment button");	
+			Thread.sleep(10000);
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Some fields or else data issue is exist", "Failed", driver);   
+			Log.error("Test failed due Some fields or else data issue is exist");
+			e.printStackTrace();
+			throw new Exception("Some fields or else data issue is exist");
+		}
+	}
+
 }

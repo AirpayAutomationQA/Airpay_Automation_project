@@ -209,6 +209,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			Assert.waitForPageToLoad(driver);
 			Thread.sleep(2000);
 			Log.info("Navigating To Payment Page");	 
+			//Assert.waitForFrameAndSwitch(driver, "tranframe");
 			String Card = Excel_Handling.Get_Data(TC_ID, "Payment_Mode").trim();
 			Assert.waitForPageToLoad(driver);		
 			List<WebElement> Channels = driver.findElements(By.xpath(AirpayChannals));
@@ -256,6 +257,88 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 				Select select =new Select(selectDropBox);
 				List<WebElement> optionValue = select.getOptions();
 				for(int i =1;i<optionValue.size()-1;i++)
+				{				
+					WebElement selectDropBox1 = driver.findElement(By.xpath(Netbank_DropDown));
+					Select select1 =new Select(selectDropBox1);
+					Assert.selectDropBoxValue(driver, Netbank_DropDown, i, " Bank Name");//(driver, Netbank_DropDown, value[i], value[i+1]+" Bank ");			
+					//Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, Netbank_DropDown, "LAXMI VILAS BANK", " Bank Name");//(driver, Netbank_DropDown, value[i], value[i+1]+" Bank ");			
+					bankName =  select1.getFirstSelectedOption().getText();
+					Extent_Reporting.Log_report_img(bankName+"Bank Selected", "Passed", driver);
+					NetBanking_Makepaymentbtn();
+					BankPage_validation();				
+					NavigateToLocalHostPage();	
+				}   		
+				Assert.waitForPageToLoad(driver);
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+
+	
+	public void Select_Specific_Bank_DropDown_Selection() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, SelectBank_DropDown, "Select Bank Drop Down" ))
+			{         	
+				String BankName[] =   Excel_Handling.Get_Data(TC_ID, "specificBank").split(";");
+				for(int i =0;i<BankName.length;i++)
+				{				
+					WebElement selectDropBox1 = driver.findElement(By.xpath(Netbank_DropDown));
+					Select select1 =new Select(selectDropBox1);
+					Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, Netbank_DropDown, BankName[i].trim(), " Bank Name");//(driver, Netbank_DropDown, value[i], value[i+1]+" Bank ");			
+					bankName =  select1.getFirstSelectedOption().getText();
+					Extent_Reporting.Log_report_img(bankName+"Bank Selected", "Passed", driver);
+					NetBanking_Makepaymentbtn();
+					BankPage_validation();	
+					if(i==BankName.length-1)
+					{
+						Extent_Reporting.Log_Pass("NetBanking page validation has been done!", "Passed");
+						break;
+					}else{
+						NavigateToLocalHostPage();	
+					}
+				}   		
+				Assert.waitForPageToLoad(driver);
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
+	
+	
+	
+	public void Select_Bank_DropDown_SelectionInlineKit() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, SelectBank_DropDown, "Select Bank Drop Down" ))
+			{         	
+				WebElement selectDropBox = driver.findElement(By.xpath(Netbank_DropDown));
+				Select select =new Select(selectDropBox);
+				List<WebElement> optionValue = select.getOptions();
+				for(int i =1;i<optionValue.size()-1;i++)
 					//for(int i =1;i<2;i++)
 				{				
 					WebElement selectDropBox1 = driver.findElement(By.xpath(Netbank_DropDown));
@@ -268,7 +351,7 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 					NetBanking_Makepaymentbtn();
 					BankPage_validation();
 					
-					NavigateToLocalHostPage();	
+					NavigateToLocalHostPageNetBank();	
 
 				}   		
 				Assert.waitForPageToLoad(driver);
@@ -532,16 +615,15 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 				System.out.println("amtone:"+ Amt);
 				String Amtval[] = Amt.split("₹");
 				//String MerchanName = driver.findElement(By.xpath(MerchantName)).getText();			
-				System.out.println("Amount Value:"+ Amtval[1]);				
+			  System.out.println("Amount Value:"+ Amtval[1]);				
 				if(OrderID.trim().equalsIgnoreCase(GetOrderID)
 						&& Amtval[1].trim().equalsIgnoreCase(Excel_Handling.Get_Data(TC_ID, "Amount").trim())){
-
-					Extent_Reporting.Log_Pass("Actual Order id is:"+OrderID, "Expected Order ID Is :"+Excel_Handling.Get_Data(TC_ID, "Order_Id"));
+					Extent_Reporting.Log_Pass("Actual Order id is:"+OrderID, "Expected Order ID Is :"+GetOrderID);
 					Extent_Reporting.Log_Pass("Actual Amount is :"+Amtval[1], "Expected Amount Is :"+Excel_Handling.Get_Data(TC_ID, "Amount"));				
 					//Assert.isElementDisplayed(driver, MerchantName, "Merchant name is exist as :"+MerchanName); //Removed this functionality
 					Extent_Reporting.Log_report_img("Summery Section is exist as expected", "Passed", driver);        
 				}else{				
-					Extent_Reporting.Log_Fail("Actual Order id is:"+OrderID, "Expected Order ID Is :"+Excel_Handling.Get_Data(TC_ID, "Order_Id"),driver);
+					Extent_Reporting.Log_Fail("Actual Order id is:"+OrderID, "Expected Order ID Is :"+GetOrderID,driver);
 					Extent_Reporting.Log_Fail("Actual Amount is :"+Amtval[1], "Expected Amount Is :"+Excel_Handling.Get_Data(TC_ID, "Amount"),driver);
 					throw new Exception("There is an something issue with order id and amount summery");
 				}						
@@ -571,7 +653,9 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 				String textFooter = Assert.getInputTextValue(driver, footerVerifyLink, "");
 				Extent_Reporting.Log_Pass("Footer Message is :"+textFooter, "Passed");
 				Assert.isElementDisplayed(driver, CancelpaymentPage, "Cancel link");
+				Extent_Reporting.Log_report_img("Cancel link is exist as expected", "Passed", driver);
 				Assert.Clickbtn(driver, CancelpaymentPage, "Cancel link");
+				Extent_Reporting.Log_report_img("Footer is exist as expected", "Passed", driver);
 			}else{
 				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
 				Log.error("Local Host page not successfully displayed");
@@ -620,6 +704,43 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			Assert.waitForPageToLoad(driver);
 			LocalHostDetailPage();	
 			Card_Details_Options();
+		}catch(Exception e){
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
+	public void NavigateToLocalHostPageNetBank() throws Exception {
+		try{ 
+			Log.info("Navigating To Net BankingPage");	
+			Assert.waitForPageToLoad(driver);
+			driver.get(Excel_Handling.Get_Data(TC_ID, "PaymentPage_URL").trim());
+			Assert.waitForPageToLoad(driver);
+			LocalHostDetailPage();	
+			Thread.sleep(2000);
+			Log.info("Navigating To Payment Page");	 
+			Assert.waitForFrameAndSwitch(driver, "tranframe");
+			Card_Details_Options();
+		}catch(Exception e){
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	public void NavigateToInlineKit() throws Exception {
+		try{ 
+			Log.info("Navigating To Net BankingPage");	
+			Assert.waitForPageToLoad(driver);
+			driver.get(Excel_Handling.Get_Data(TC_ID, "PaymentPage_URL").trim());
+			Assert.waitForPageToLoad(driver);
+			LocalHostDetailPage();
+			Thread.sleep(2000);
+			Log.info("Navigating To Payment Page");	 
+			Assert.waitForFrameAndSwitch(driver, "tranframe");
+			Extent_Reporting.Log_report_img("Airpay payment page is exist as expected", "Passed", driver);
+			//Card_Details_Options();
 		}catch(Exception e){
 			Log.error("Test failed due to card does not exist");
 			e.printStackTrace();

@@ -53,6 +53,7 @@ public class TC_MA_panel_RTGS_NEFT_Successfull_Transaction_With_MATransactionDet
 			MA_panel.SummaryAmtVerify(AirPay_MA_Panel_Select_Merchant_BusinessLogic.MINADDONE);
 			AirPay_Payment_Mode_CreditCard_BusinessLogic CreditCard = new AirPay_Payment_Mode_CreditCard_BusinessLogic(driver, TC_ID);				
 			//CreditCard.Cash_payment_Success();
+			
 			CreditCard.UTR_payment();
 			CreditCard.Cash_paymentSuccess();
 			CreditCard.Cash_paymentSuccessMesg();
@@ -63,6 +64,7 @@ public class TC_MA_panel_RTGS_NEFT_Successfull_Transaction_With_MATransactionDet
 			MA_panel.MerchantTransactionID();
 			MA_panel.TransactionRecords();
 			MA_panel.TransactionHistory();
+			MA_panel.TransactionHistoryWithSurchagre();
 			Log.info("Scripts Ends....");
 		
 		} catch (Exception e) {

@@ -60,8 +60,14 @@ public class Create_TestNGXML {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}	
+		excel.ExcelReader(Constants.datasheetPath+"Datasheet.xlsx", "InlineKit", Constants.datasheetPath+"Datasheet_Result.xlsx", "InlineKit");
+		try {
+			excel.getExcelDataAll("InlineKit", "Execute", "Y", "TC_ID");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 
         @SuppressWarnings({ "rawtypes", "static-access" })
 		Map<String, HashMap> map = excel.TestData;

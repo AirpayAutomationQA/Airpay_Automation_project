@@ -62,6 +62,7 @@ public class TC_MA_panel_Cash_Successfull_Transaction_With_MATransactionDetails 
 			MA_panel.MerchantTransactionID();
 			MA_panel.TransactionRecords();
 			MA_panel.TransactionHistory();
+			MA_panel.TransactionHistoryWithSurchagre();
 			Log.info("Scripts Ends....");
 		
 		} catch (Exception e) {

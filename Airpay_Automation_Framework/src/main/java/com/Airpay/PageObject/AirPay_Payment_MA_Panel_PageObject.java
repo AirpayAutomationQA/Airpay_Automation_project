@@ -27,6 +27,13 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	public static final String MM_Merchant_SelectBtn ="(//span[contains(@class,'btnlink radius')])";
 	public static final String MM_SaveCardFieldName ="(//label[@for='defaultsingleclick_flag'])[1]";
 	public static final String MM_CheckbxColor ="(//label[@for='defaultsingleclick_flag' and @class='onoffswitch-label']/span//following::span)[1]";
+	public static final String MM_SurchagreCheckbxColor ="(//label[contains(@for,'radioonusoffus') and @class='onoffswitch-label']/span//following::span)[1]";
+	public static final String MM_Update_surchagrebtn ="//button[@type='button' and @id='confirm-status-update']";
+
+	
+	
+	
+	
 	public static final String MM_SelectMerchantSymbol ="//*[@class='pull-right merchant-change']/a";
 	
 	public static final String MM_SigleSubmitBtn ="//*[@id='singlebutton']";
@@ -46,10 +53,12 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	
 	public static final String MM_URLDetails ="//a[@href='#collapseTwo']";
 	public static final String MM_GlobalSurchargeRulePage ="//*[text()='Add global surcharge rule']";
+	public static final String MM_GlobalSurchargeRules="//*[text()='global surcharge rules']";
+
 	public static final String MM_ConvenienceFeeField ="//*[text()='Convenience Fee']";
 	public static final String MA_PTCField ="//*[text()='PTC']";
 	public static final String MA_MSFField ="//*[text()='MSF (%)']";
-	public static final String MA_AddNewRuleBtn ="//*[@href='add_global_surcharge_rule.php']";
+	public static final String MA_AddNewRuleBtn ="//*[@href='add_global_surcharge_rule.php' or @href='add_merchant_surcharge_rule.php']";
 	
 	public static final String MA_MCCField ="//*[text()='MCC ']";
 	public static final String MA_ChannelField ="//*[text()='Channel ']";
@@ -83,10 +92,11 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	public static final String MMTransacionIssuingBankCardType ="//*[text()='Card Type']/following-sibling::td";
 	public static final String MMTransacionCardCategory ="//*[text()='Card Category']/following-sibling::td";
 	public static final String MMApTransacionCardCategory ="//*[text()='PG Transaction Id']/following-sibling::td";
-
 	
-	
-	
+	public static final String MMTotalAmount = "//*[text()='Amount']/following-sibling::td";
+	public static final String MMSurchagerAmt ="//*[text()='Surcharge Amount']/following-sibling::td";
+	public static final String MMTransactionStatus ="//*[text()='Transaction Status']/following-sibling::td";
+		
 	public static final String MMTransacionAirapyMerchantID ="//*[text()='Airpay Merchant Id']/following-sibling::td";
 	public static final String MMBankdetailsPage ="//*[contains(text(),'Bank Details')]";
 	public static final String MMURLdetailsPage ="//*[contains(text(),'edit url bank mapping')]";
@@ -103,12 +113,12 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	//****************************************** Surcharge *****************************************
 	
 	public static final String SurchargeSubmitBtn ="//div[@class='btnlink']/button";
-	public static final String TitleErrMsg ="//*[@class='error' and @id='titleadd-error']";
-	public static final String MccErrorMsg ="//*[@class='error' and @id='mcc-error']";
+	public static final String TitleErrMsg ="//*[@id='titleadd-error']";
+	public static final String MccErrorMsg ="//*[@id='mcc-error']";
 	public static final String ChannelErrMsg ="//*[@class='error' and @id='channel-error']";
-	public static final String AmonutErrMsg ="//*[@class='error' and @id='amount-error']";
-	public static final String PTCErrMsg ="//*[@id='convenience_percentage-error' and @class='error']";  // id got exchanged from developer side
-	public static final String MSFErrMsg ="//*[@id='convenience_amount-error' and @class='error']";
+	public static final String AmonutErrMsg ="//*[@id='amount-error']";
+	public static final String PTCErrMsg ="//*[@id='convenience_percentage-error']";  // id got exchanged from developer side
+	public static final String MSFErrMsg ="//*[@id='convenience_amount-error']";
 
 	
 	
@@ -139,10 +149,58 @@ public class AirPay_Payment_MA_Panel_PageObject {
 
 	public static final String BankNameDropBox = "(//select[@class='card_scheme'])";
 	public static final String EditGlobalSurchagrePage ="//*[text()='Edit global surcharge rule']";
+	public static final String EditMerchantSurchagrePage ="//*[text()='edit merchant surcharge rule']";
+
+	
 	
 	public static final String RuleEditPopErrorMsg ="//*[text()='No']";
 
+
+//************************************* Merchant Add surcharge rules ********************************
 	
+	public static final String MA_AssignSurchargeRuleLink =   "//a[@href='list_merchant_surcharge_rules.php']"; 
+	public static final String MA_MerchantSurchageRule     ="//*[text()='Add merchant surcharge rule']";
+	public static final String MA_DomesticRadioBtn = "//input[@name='card_country' and @id='radios-0']";
+	public static final String MA_InternaltionRadioBtn = "//input[@name='card_country' and @id='radios-1']";
+	public static final String MA_CardTypeDropDown ="//select[@id='card_type']";
+	public static final String MA_SchemeTypeDropDown ="//select[@id='card-scheme']";
+	
+	public static final String MA_MerchantEditbtn ="(//table[@id='rulelisting']/tbody/tr[@id])[1]/td/span/a";
+	
+	
+	public static final String MA_AccountDetailsPage =   "//*[text()='accounts details']"; 	
+	public static final String MA_MerchantSettingLink =   "//a[@href='setting.php']";
+	public static final String MA_MerchantMCCName = "//*[text()='Merchant Category']//following::td[1]";
+	public static final String MA_AdvanceSerchBtn = "//*[contains(@class,'radius-5') and @aria-expanded='false']";
+	
+	
+	public static final String MA_FilterCardTypeDropDown = "//select[@class='card_type valid']";
+	public static final String MA_FilterChannelDropDown = "//select[@class='channelsearch valid']";
+	public static final String MA_FilterMCCDropDown = "//select[@class='mcc valid']";
+	public static final String MA_AmountLessGreaterDropDown ="//*[@class='amount valid']";
+	public static final String MA_FilterSearchBtn = "//*[@class='btnlink adv-search-btn']";
+	
+	public static final String OnOffchkboxBtn ="(//*[@class='onoffswitch-switch'])";
+		
+	/*((//table[@id='rulelisting']/tbody/tr[@id])[1]/td[5]//following::span[@class='onoffswitch-switch'])[1]	
+	(//table[@id='rulelisting']/tbody/tr[@id])[1]/td/div[@class='btnlink']
+	(//table[@id='rulelisting']/tbody/tr[@id])[2]/td/div[@class='btnlink']//following::span[@class='btnlink radius-5'][1]
+*/
+	
+	//********************************  Surcharge Rule *************************************************
+	
+	public static final String DisableMCCDropDown = "//select[@id='mcc']/option[@selected]";
+	public static final String DisableChannelropDown = "//select[@id='channel']/option[@selected]";
+	public static final String DisableCardTypeDropDown = "//select[@id='card_type']/option[@selected]";
+	public static final String DisableCardSchemaDropDown = "//select[@id='card-scheme']/option[@selected]";
+	public static final String DisableAmountSelectDropDown = "//select[@id='amountSelect']/option[@selected]";
+	public static final String DisableAmountfetchData= "//input[@id='amount']";
+
+	
+	
+	
+	
+
 	
 	
 	
