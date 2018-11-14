@@ -738,7 +738,8 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			LocalHostDetailPage();
 			Thread.sleep(2000);
 			Log.info("Navigating To Payment Page");	 
-			Assert.waitForFrameAndSwitch(driver, "tranframe");
+			Assert.waitForFrameAndSwitch(driver, Excel_Handling.Get_Data(TC_ID, "FrameName").trim());
+			
 			Extent_Reporting.Log_report_img("Airpay payment page is exist as expected", "Passed", driver);
 			//Card_Details_Options();
 		}catch(Exception e){

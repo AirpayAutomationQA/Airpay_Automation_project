@@ -499,7 +499,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 				}	
 			}
 		}catch(Exception e){
-			Extent_Reporting.Log_Fail("Repective Error Message does not exist", "Error Msg is:"+errMsg, driver);
+			Extent_Reporting.Log_Fail("Repective Error Message is exist", "Error Msg is:"+errMsg, driver);
 
 		}
 
@@ -814,7 +814,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 
 	public void Credit_CardExpiryDateErrorRedLine(String xobject,String makebtn) throws Exception{
 		try{
-			if(Assert.isElementDisplayed(driver, xobject, "cvv"))
+			Thread.sleep(2000);
+			if(Assert.isElementDisplayed(driver, makebtn, "cvv"))
 			{
 				Assert.inputText(driver, xobject, "1111", "Eneterd Past date");				
 				Assert.Clickbtn(driver, makebtn, "Credit Make Paymnet button");
