@@ -5,7 +5,7 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
 import com.Airpay.BusinessLogic.AirPay_PaymentPage_BusinessLogic;
-import com.Airpay.BusinessLogic.AirPay_Payment_Mode_CreditCard_BusinessLogic;
+//import com.Airpay.BusinessLogic.AirPay_Payment_Mode_CreditCard_BusinessLogic;
 import com.Airpay.BusinessLogic.AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic;
 import com.Airpay.InitialSetup.Driver_Setup;
 import com.Airpay.Utilities.Log;
@@ -28,7 +28,7 @@ public class TC_PP_EMI_Bank_Type_Verification extends Driver_Setup{
 		try {
 			Log.info("Script Starts..");
 			AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
-			AirPay_Payment_Mode_CreditCard_BusinessLogic CreditCard = new AirPay_Payment_Mode_CreditCard_BusinessLogic(driver, TC_ID);
+			//AirPay_Payment_Mode_CreditCard_BusinessLogic CreditCard = new AirPay_Payment_Mode_CreditCard_BusinessLogic(driver, TC_ID);
 			AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic EMI = new AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic(driver, TC_ID);
 				AirPay_Local.LocalHostDetailPage_ErrorVerify();	
 				AirPay_Local.Verify_PaymentPageFields();

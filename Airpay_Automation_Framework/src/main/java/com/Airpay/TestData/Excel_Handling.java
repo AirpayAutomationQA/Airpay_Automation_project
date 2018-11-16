@@ -29,8 +29,7 @@ public class Excel_Handling {
 	private static XSSFSheet sheet;
 	@SuppressWarnings("unused")
 	private static XSSFSheet sheet2;
-	private static XSSFCell cell;
-	
+	private static XSSFCell cell;	
 	private static XSSFRow row;
 	private static FileInputStream fis = null;
 	private static FileInputStream fis2 = null;
