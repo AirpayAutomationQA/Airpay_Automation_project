@@ -11,7 +11,8 @@ import com.Airpay.Utilities.Log;
 
 public class TC_ID_012_To_check_the_process_of_Title_text_field_for_Surcharge extends Driver_Setup{
 	public static WebDriver webDriver = null;
-	public static String tcID = null;	
+	public static String tcID = null;
+	
 	//Business Logic Class Object list	
 	@Test(priority=1)
 	public void setup()
@@ -25,8 +26,7 @@ public class TC_ID_012_To_check_the_process_of_Title_text_field_for_Surcharge ex
 	public void TC_TestCaseName() throws Throwable {
 		try {
 			Log.info("Script Starts..");
-			AirPay_MA_Panel_Select_Merchant_BusinessLogic MA_panel = new AirPay_MA_Panel_Select_Merchant_BusinessLogic(driver, TC_ID);
-				
+			AirPay_MA_Panel_Select_Merchant_BusinessLogic MA_panel = new AirPay_MA_Panel_Select_Merchant_BusinessLogic(driver, TC_ID);				
 			MA_panel.MA_Panel_Login();
 			/*MA_panel.Select_Merchant();
 			MA_panel.Filter_Merchant();

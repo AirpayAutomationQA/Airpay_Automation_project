@@ -86,6 +86,22 @@ public class AirPay_Payment_Mode_Debit_Card_BusinessLogic extends Airpay_Payment
 		}
 	}
 	
+	public void Debit_cardProvidingValuesTest() throws Exception{
+		try{		   		   
+			Assert.inputText(driver, DebitCardNoInput, Excel_Handling.Get_Data(TC_ID, "InvalidCardNumber").trim(), "Debit card Number input field");
+			//Assert.inputText(driver, DebitCardNoInput, "9809808!13", "Debit card Number input field");
+
+			Assert.inputText(driver, DebitCardHolderName,Excel_Handling.Get_Data(TC_ID, "CardHolderName").trim(), "Debit card Holder Name Field");		   
+			
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Some fields are not disp", "Failed", driver);   
+			Log.error("Test failed due to page is navigating to payment page");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
 	
 	public void Debit_cardProvidingValuesNotIndiaCard() throws Exception{
 		try{		   		   
@@ -179,5 +195,51 @@ public class AirPay_Payment_Mode_Debit_Card_BusinessLogic extends Airpay_Payment
 			throw new Exception("Some fields or else data issue is exist");
 		}
 	}
+	
+	public void SurchargeForCommonFunction() throws Exception{
+		try{
+			if(Assert.isElementDisplay(driver, "//div[@class='sumbtn desksumbtn iplus']"))
+			{
+				Extent_Reporting.Log_report_img("All details has been Entered", "Passed", driver);
+				Assert.Clickbtn(driver, "//div[@class='sumbtn desksumbtn iplus']", "Amount Plus button");			
+				PassedAmt = driver.findElement(By.xpath("//div[@class='main-amount-block show-amnt']//following::span[@id='total_amount']")).getText().trim();
+				confFees = driver.findElement(By.xpath("(//*[@class='surcharge_amount'])[1]")).getText().trim();
+				TotAmt = driver.findElement(By.xpath("//span[@class='amount-value-block']")).getText().trim();
+				Extent_Reporting.Log_report_img("Surcharge filed snap", "Passed", driver);
+				Extent_Reporting.Log_Pass("Surcharge Amount: "+confFees, "Total Amount: "+TotAmt);
+			}
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Surcharge Amount field does not exist", "Failed", driver);   
+			Log.error("Surcharge Amount field does not exist");
+			e.printStackTrace();
+			throw new Exception("Some fields or else data issue is exist");
+		}
+	}
+	
+	public void SurchargeForCommonFunctionNotclickplus() throws Exception{
+		try{
+			if(Assert.isElementDisplay(driver, "//div[@class='sumbtn desksumbtn iplus']"))
+			{
+				Extent_Reporting.Log_report_img("All details has been Entered", "Passed s", driver);
+				Assert.Clickbtn(driver, "//div[@class='sumbtn desksumbtn iplus']", "Amount Plus button");			
+				PassedAmt = driver.findElement(By.xpath("//div[@class='main-amount-block show-amnt']//following::span[@id='total_amount']")).getText().trim();
+				confFees = driver.findElement(By.xpath("(//*[@class='surcharge_amount'])[1]")).getText().trim();
+				TotAmt = driver.findElement(By.xpath("//span[@class='amount-value-block']")).getText().trim();
+				Extent_Reporting.Log_report_img("Surcharge filed snap", "Passed s", driver);
+				Extent_Reporting.Log_Pass("Surcharge Amount: "+confFees, "Total Amount: "+TotAmt);
+				Assert.Clickbtn(driver, "//div[@class='sumbtn desksumbtn imins']", "Amount minus button");			
+			}
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Surcharge Amount field does not exist", "Failed", driver);   
+			Log.error("Surcharge Amount field does not exist");
+			e.printStackTrace();
+			throw new Exception("Some fields or else data issue is exist");
+		}
+	}
+	
+	
+	
 
 }

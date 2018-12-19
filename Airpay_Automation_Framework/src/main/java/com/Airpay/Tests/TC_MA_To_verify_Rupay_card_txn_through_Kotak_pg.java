@@ -14,7 +14,6 @@ import com.Airpay.Utilities.Log;
 public class TC_MA_To_verify_Rupay_card_txn_through_Kotak_pg extends Driver_Setup{
 	public static WebDriver webDriver = null;
 	public static String tcID = null;
-	
 	//Business Logic Class Object list	
 	@Test(priority=1)
 	public void setup()
@@ -28,8 +27,7 @@ public class TC_MA_To_verify_Rupay_card_txn_through_Kotak_pg extends Driver_Setu
 	public void TC_TestCaseName() throws Throwable {
 		try {
 			Log.info("Script Starts..");
-			AirPay_MA_Panel_Select_Merchant_BusinessLogic MA_panel = new AirPay_MA_Panel_Select_Merchant_BusinessLogic(driver, TC_ID);
-				
+			AirPay_MA_Panel_Select_Merchant_BusinessLogic MA_panel = new AirPay_MA_Panel_Select_Merchant_BusinessLogic(driver, TC_ID);				
 			MA_panel.MA_Panel_Login();
 			MA_panel.Select_Merchant();
 			MA_panel.Filter_Merchant();
@@ -45,7 +43,6 @@ public class TC_MA_To_verify_Rupay_card_txn_through_Kotak_pg extends Driver_Setu
 			MA_panel.BANK_DetailsFindOut();			
 		   	AirPay_PaymentPage_BusinessLogic PAymentPage = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);		
 			AirPay_Payment_Mode_CreditCard_BusinessLogic CreditCard = new AirPay_Payment_Mode_CreditCard_BusinessLogic(driver, TC_ID);
-
 		   	PAymentPage.NavigateToLocalHostPage();
 		   	PAymentPage.Card_Details_Options();
 		   	CreditCard.Credit_cardProvidingValuesWithValidCardNumber();	
@@ -53,15 +50,11 @@ public class TC_MA_To_verify_Rupay_card_txn_through_Kotak_pg extends Driver_Setu
 		   	MA_panel.MA_Panel_Login();
 			MA_panel.Home_LHS_Dashboard(AirPay_Payment_MA_Panel_PageObject.MA_HomeMenu);
 			MA_panel.Home_LHS_Dashboard(AirPay_Payment_MA_Panel_PageObject.MM_Transaction_History);
-			MA_panel.MerchantTransactionID();
-			
-		   
-			
-			
-			
-			
-			MA_panel.Enable_Disable_SaveCardChkBox();
-		   	
+			MA_panel.MerchantTransactionID();	
+			MA_panel.TransactionRecords();
+			/*MA_panel.TransactionHistory();
+			MA_panel.TransactionHistoryWithSurchagre();*/
+			//MA_panel.Enable_Disable_SaveCardChkBox();		   	
 			Log.info("Scripts Ends....");
 		} catch (Exception e) {
 			Log.error(e.getMessage());

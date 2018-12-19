@@ -368,13 +368,24 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
-	public void Cancel_TransactionPayment() throws Exception{
+	public void Cancel_TransactionPayment() throws Throwable{
 		try{	
 			Assert.waitForPageToLoad(driver);
+			Thread.sleep(20000);
 			if(Assert.isElementDisplay(driver, CancelCreditPayment))
-			{
-				   Thread.sleep(20000);
-					Assert.Clickbtn(driver, CancelCreditPayment, "Cancel btton");
+			{				   
+				   List<WebElement> cancel = driver.findElements(By.xpath(CancelCreditPayment));
+				   for(int i=1;i<=cancel.size();i++)
+				   {
+					   WebElement cancelDisplay = driver.findElement(By.xpath(CancelCreditPayment+"["+i+"]"));
+					   if(cancelDisplay.isDisplayed()==true)
+					   {
+							Assert.Javascriptexecutor_forClick(driver, CancelCreditPayment+"["+i+"]", "Cancel btton");
+							Thread.sleep(2000);
+							Assert.acceptAlert(driver);
+							break;
+					   }
+				   }			   
 					Thread.sleep(20000);
 				/*Extent_Reporting.Log_report_img("Respective Bank transaction Page is exist", "Passed", driver);
 				Assert.acceptAlert(driver);*/
@@ -878,6 +889,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			keyboard.pressKey(Keys.F12);
 			keyboard.releaseKey(Keys.F12);
 			Assert.inputText(driver, CashPinCode, Excel_Handling.Get_Data(TC_ID, "Pin_Code").trim(), "Cash payment pin code");
+			AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+			obj.SurchargeForCommonFunctionNotclickplus();
 			Assert.Clickbtn(driver, CashMakePayment, "Credit Card make payment button");  
 			URL connectURL = new URL("http://localhost/airpay_php/responsefromairpay.php");
 			BufferedReader in = new BufferedReader(
@@ -926,10 +939,11 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			keyboard.pressKey(Keys.F12);
 			keyboard.releaseKey(Keys.F12);
 			Assert.inputText(driver, UTRCode, Excel_Handling.Get_Data(TC_ID, "UTRCode").trim(), "UTR Unique code ");
-			AmountBlockFetchData();
+			//AmountBlockFetchData();
+			AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+			obj.SurchargeForCommonFunctionNotclickplus();
 			Assert.Clickbtn(driver, UTRCashMakePayment, "UTR make payment");    
-			Assert.analyzeLog(driver);
-			
+			Assert.analyzeLog(driver);			
 		}catch(Exception e) 
 		{
 			Extent_Reporting.Log_Fail("Some fields are not disp", "Failed", driver);   

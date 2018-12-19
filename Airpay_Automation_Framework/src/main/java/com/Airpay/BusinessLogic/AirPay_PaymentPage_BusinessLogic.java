@@ -13,6 +13,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import com.Airpay.PageObject.AirPay_Payment_MA_Panel_PageObject;
 import com.Airpay.PageObject.Airpay_PaymentPage_PageObject;
 import com.Airpay.Reporting.Extent_Reporting;
 import com.Airpay.TestData.Excel_Handling;
@@ -102,6 +103,172 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 				Extent_Reporting.Log_report_img("Local Host page required field filled", "Passed", driver);
 				Assert.Clickbtn(driver, payHerebtn, "Pay Here");
 				Assert.waitForPageToLoad(driver);
+			}
+			else{
+				Extent_Reporting.Log_Fail("Local Host page not exist ", "Local Host page not displayed", driver);   
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception(" Test failed due to local host page not displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Log.error("Test failed due to local host page not displayed");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * Following method is used for Filling up the local host details page.
+	 * @throws Throwable
+	 */
+	public void ExpressPaymentLink() throws Exception {
+		try{ 
+			Log.info("Navigating To Local Host page of Payment");	   
+			if(Assert.isElementDisplay(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentPwdLink))
+			{ 
+				Log.debug("Local Host page");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentPwdLink, "Express PWD Link");
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.ExppressPaymentpwdEdit, Excel_Handling.Get_Data(TC_ID, "ExpressPaymentPwd"), "Express payment");				
+				Extent_Reporting.Log_report_img("Express Payment password entered", "Passed", driver);
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.ExpresspaymentSubmitBtn, "submit button");
+				Assert.waitForPageToLoad(driver);
+			}
+			else{
+				Extent_Reporting.Log_Fail("Local Host page not exist ", "Local Host page not displayed", driver);   
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception(" Test failed due to local host page not displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Log.error("Test failed due to local host page not displayed");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * Following method is used for Filling up the local host details page.
+	 * @throws Throwable
+	 */
+	public void ExpressPaymentPWDRedLineErrorVerify() throws Exception {
+		try{ 
+			Log.info("Navigating To Local Host page of Payment");	   
+			if(Assert.isElementDisplay(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentPwdLink))
+			{ 
+				Log.debug("Local Host page");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentPwdLink, "Express PWD Link");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.ExpresspaymentSubmitBtn, "submit button");
+				if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentsPWDErrorcode, "PWD Red Line Error"))
+				{
+					 Extent_Reporting.Log_Pass("Red line error is exist as expected", "Passed");
+					 Extent_Reporting.Log_report_img("Redline error is exist", "Snap", driver);
+				}else{
+					Extent_Reporting.Log_Fail("Red line error is not exist", "Fail", driver);
+				}
+				Assert.inputText(driver, AirPay_Payment_MA_Panel_PageObject.ExppressPaymentpwdEdit, "00000000", "Invalid PWD");				
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.ExpresspaymentSubmitBtn, "submit button");
+				if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentsPWDErrorcode, "PWD Red Line Error"))
+				{
+					 Extent_Reporting.Log_Pass("Red line error is exist as expected", "Passed");
+					 Extent_Reporting.Log_report_img("Redline error is exist", "Snap", driver);
+				}else{
+					Extent_Reporting.Log_Fail("Red line error is not exist", "Fail", driver);
+				}
+			}
+			else{
+				Extent_Reporting.Log_Fail("Local Host page not exist ", "Local Host page not displayed", driver);   
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception(" Test failed due to local host page not displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Log.error("Test failed due to local host page not displayed");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * Following method is used for Filling up the local host details page.
+	 * @throws Throwable
+	 */
+	public void ExpressPaymentForgotPWDLinkSent() throws Exception {
+		try{ 
+			Log.info("Navigating To Local Host page of Payment");	   
+			if(Assert.isElementDisplay(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentPwdLink))
+			{ 
+				Log.debug("Local Host page");
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentPwdLink, "Express PWD Link");
+				Thread.sleep(10000);
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentForgetPWDLink, "submit button");
+				Assert.waitForPageToLoad(driver);
+				Thread.sleep(10000);
+				WebElement hiddenDiv = driver.findElement(By.xpath(GenericSuccessMessage));
+				String errMsg = hiddenDiv.getText(); 
+				String script = "return arguments[0].innerText";
+				errMsg = (String) ((JavascriptExecutor) driver).executeScript(script, hiddenDiv);			
+				System.out.println(errMsg);
+				if(errMsg.contains("Password verification link sent to your registered email id."))
+				{
+					Extent_Reporting.Log_Pass("Repective Error Message is exist", "Error Msg is:"+errMsg);
+					Extent_Reporting.Log_report_img("Respective Error Message is exist", "Passed", driver);	
+					
+				}else
+				{	
+					Extent_Reporting.Log_Fail("Repective Error Message does not exist", "Error Msg is:"+errMsg, driver);
+				}			
+			}else{
+				Extent_Reporting.Log_Fail("Local Host page not exist ", "Local Host page not displayed", driver);   
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception(" Test failed due to local host page not displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Log.error("Test failed due to local host page not displayed");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+
+	
+	
+	
+	
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * Following method is used for Filling up the local host details page.
+	 * @throws Throwable
+	 */
+	public void ExpressPaymentInvalidOTPErrorMsg() throws Exception {
+		try{ 
+			Log.info("Navigating To Local Host page of Payment");	   
+			if(Assert.isElementDisplay(driver, AirPay_Payment_MA_Panel_PageObject.ExpressPaymentPwdLink))
+			{ 
+				Log.debug("Local Host page");
+				Assert.inputText(driver, "//input[@class='form-control valid-otp']","000000", "Invalid OTP Entered");				
+				Extent_Reporting.Log_report_img("Express Payment password entered", "Passed", driver);
+				Assert.Clickbtn(driver, AirPay_Payment_MA_Panel_PageObject.ExpresspaymentOTPsubmitbtn, "submit button");
+				Thread.sleep(2000);
+				String InvalidOTP = driver.findElement(By.xpath(Airpay_PaymentPage_PageObject.CardInvalidErrMsgVerify)).getText().trim();
+				if(InvalidOTP.equalsIgnoreCase("OTP does not match."))
+				{
+					Extent_Reporting.Log_report_img("Error Message is exist as expected", "Passed", driver);
+					Extent_Reporting.Log_Pass("OTP does not matched", "Passed");
+				}else{
+					Extent_Reporting.Log_Fail("OTP is matched as expected", "Failed", driver);
+				}		
 			}
 			else{
 				Extent_Reporting.Log_Fail("Local Host page not exist ", "Local Host page not displayed", driver);   
@@ -239,6 +406,40 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			throw new Exception("Test failed due to local host page not displayed");
 		}
 	}
+	
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * @Method Name: Card Selection method.
+	 * Following method is used Handling Multiple Card options
+	 * @throws Exception
+	 */
+	public void expressSaveCardsDisplay() throws Exception {
+		try{ 
+			Assert.waitForPageToLoad(driver);
+			Thread.sleep(2000);
+			Log.info("Navigating To Payment Page");	 
+			//Assert.waitForFrameAndSwitch(driver, "tranframe");
+			String Card = Excel_Handling.Get_Data(TC_ID, "Payment_Mode").trim();
+			Assert.waitForPageToLoad(driver);		
+			List<WebElement> Channels = driver.findElements(By.xpath(AirPay_Payment_MA_Panel_PageObject.ExpressPaymentCardSaves));
+			int ChannelsCnt = Channels.size();
+			System.out.println("Channels count is:"+ChannelsCnt);
+			for(int i=0; i<ChannelsCnt;i++)
+			{
+				WebElement ChannelsName = Channels.get(i);
+				String name = ChannelsName.getText();
+				System.out.println("Channel Name: "+name);
+			}
+			Extent_Reporting.Log_report_img("Save card(s) is dispayed", "Passed", driver);  
+		}                     
+		catch(Exception e)	
+		{
+			Log.error("Test failed due to save card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to save card does not exist");
+		}
+	}
 	/**
 	 * @author parmeshwar Sakole
 	 * @Method Name: Card Selection method.
@@ -297,11 +498,14 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 					Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, Netbank_DropDown, BankName[i].trim(), " Bank Name");//(driver, Netbank_DropDown, value[i], value[i+1]+" Bank ");			
 					bankName =  select1.getFirstSelectedOption().getText();
 					Extent_Reporting.Log_report_img(bankName+"Bank Selected", "Passed", driver);
+					AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+					obj.SurchargeForCommonFunction();
 					NetBanking_Makepaymentbtn();
 					BankPage_validation();	
 					if(i==BankName.length-1)
 					{
 						Extent_Reporting.Log_Pass("NetBanking page validation has been done!", "Passed");
+						
 						break;
 					}else{
 						NavigateToLocalHostPage();	

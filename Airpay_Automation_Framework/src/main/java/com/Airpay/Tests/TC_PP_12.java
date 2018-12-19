@@ -34,7 +34,7 @@ public class TC_PP_12 extends Driver_Setup{
 				AirPay_Local.LocalHostDetailPage_ErrorVerify();	
 				AirPay_Local.Verify_PaymentPageFields();
 				AirPay_Local.Card_Details_Options();
-				DebitCard.Debit_cardProvidingValues();	
+				DebitCard.Debit_cardProvidingValuesTest();	
 				CreditCard.Card_InvalidMesgVerify();
 			Log.info("Scripts Ends....");
 		} catch (Exception e) {

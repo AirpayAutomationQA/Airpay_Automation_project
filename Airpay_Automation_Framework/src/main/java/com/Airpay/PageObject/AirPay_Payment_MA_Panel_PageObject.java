@@ -195,6 +195,26 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	public static final String DisableCardSchemaDropDown = "//select[@id='card-scheme']/option[@selected]";
 	public static final String DisableAmountSelectDropDown = "//select[@id='amountSelect']/option[@selected]";
 	public static final String DisableAmountfetchData= "//input[@id='amount']";
+	
+ //*******************************************	express payment channel ************************
+	
+	public static final String ExpressPaymentPwdLink = "//*[@class='tab-link passwordSection']";
+	public static final String ExppressPaymentpwdEdit ="//*[@type='password' and @class ='form-control newPassword signin-password']";
+	public static final String ExpresspaymentSubmitBtn = "//*[@class='btn exp-pay-submit']";
+	public static final String ExpresspaymentOTPsubmitbtn = "//*[@class='btn verify-otp']";
+
+	
+	public static final String ExpressPaymentCardSaves ="//*[@class='mobsvdcard dsksvdcard svdslider']//following::div[contains(@class,'saved-card-wrap')]";
+	
+	public static final String ExpressPaymentsPWDErrorcode ="//*[contains(@class,'formDom form-group errorvalue')]";
+	public static final String ExpressPaymentForgetPWDLink ="//a[@class='float-right frgt-pswd']";
+	//public static final String ExpressPaymentForgetPWDLinkSent
+
+	
+	
+	
+	
+	
 
 	
 	

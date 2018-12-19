@@ -107,9 +107,12 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 					WebElement selectDropBox1 = driver.findElement(By.xpath(EmiBankNameSelectDropDown));
 					Select select1 =new Select(selectDropBox1);
 					Assert.selectDropBoxValue(driver, EmiBankNameSelectDropDown, i, " Bank Name");//(driver, Netbank_DropDown, value[i], value[i+1]+" Bank ");			
+					//Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, EmiBankNameSelectDropDown, Excel_Handling.Get_Data(TC_ID, "BankName").trim(), "EMI surcharge");
 					bankName =  select1.getFirstSelectedOption().getText();
 					Extent_Reporting.Log_report_img(bankName+" Bank Selected", "Passed", driver);					
-				}   		
+				}   
+				AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+				obj.SurchargeForCommonFunction();
 				Assert.waitForPageToLoad(driver);
 			}
 			else{
@@ -193,7 +196,9 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 	
 	public void Amazon_pay() throws Exception{
 		try{		   		   			
-			Extent_Reporting.Log_report_img("Amazon_pay is exist as expected", "Passed", driver);
+			Extent_Reporting.Log_report_img("Amazon_pay is exist as expected", "Passed", driver);			
+			AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+			obj.SurchargeForCommonFunctionNotclickplus();
 			Assert.Clickbtn(driver, AmazonMakePaymentBtn, "make payment");	
 			Assert.waitForPageToLoad(driver);
 			Thread.sleep(10000);
@@ -351,6 +356,8 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 	public void VirtualmakePaymentBtnClick() throws Exception{
 		try{		   		   			
 			Extent_Reporting.Log_report_img("AmexeZeClick is exist as expected", "Passed", driver);
+			AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+			obj.SurchargeForCommonFunctionNotclickplus();
 			Assert.Clickbtn(driver, virtualAccounttBtn, "make payment");	
 			Thread.sleep(2000);
 			Assert.waitForPageToLoad(driver);

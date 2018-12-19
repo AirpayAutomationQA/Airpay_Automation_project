@@ -277,6 +277,7 @@ public class ElementAction {
 			actions.sendKeys(sValue);
 			actions.build().perform();
 			Extent_Reporting.Log_Pass(Element_Name+" Entered",sValue + " entered in "+ Element_Name);
+			
 		}  catch(Throwable t)
 		{ 
 			Extent_Reporting.Log_Fail(Element_Name+" does not Exist",Element_Name+" does not Exist", screenName);

@@ -36,11 +36,12 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String CreditCardErrField = "//div[@class='formDom form-group errorvalue']//label";
 		public static final String CardInvalidErrMsgVerify = "(//*[@class='generic-error'])[1]";
 		public static final String GenericSuccessMessage = "(//*[@class='generic-success'])[1]";
-
 		
 		
 		
-		public static final String CancelCreditPayment = "//*[text()='CANCEL' or text()='Cancel']";
+		
+		
+		public static final String CancelCreditPayment = "(//*[text()='CANCEL' or text()='Cancel'])";
 					
 	//******************************** Payment page ****************************************************
 		

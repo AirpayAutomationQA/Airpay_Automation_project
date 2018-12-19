@@ -124,6 +124,8 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 					bankName =  selectDropBox1.getText();
 					System.out.println(bankName);
 					Extent_Reporting.Log_report_img(bankName+"Bank Selected", "Passed", driver);
+					AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+					obj.SurchargeForCommonFunctionNotclickplus();				
 					Assert.Clickbtn(driver, WalletMakePaymtBtn, "Wallet Make payement button");
 					Assert.waitForPageToLoad(driver);
 					BankPage_validation();
@@ -416,6 +418,8 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 					if(popularbackName.contains(bankName)){					
 						Extent_Reporting.Log_Pass("Popular Bank Logo is exist as "+bankName, "Drop Down Name is exist as "+popularbackName);												
 						Extent_Reporting.Log_report_img("Bank Name Drop Down and Popular Logo name is exist", "Passed", driver);
+						AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+						obj.SurchargeForCommonFunctionNotclickplus();
 					}else{
 						Extent_Reporting.Log_Fail("Popular bank name does not exist", "Failed", driver);					
 					}

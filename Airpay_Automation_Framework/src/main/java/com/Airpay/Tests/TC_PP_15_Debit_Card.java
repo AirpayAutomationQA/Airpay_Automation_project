@@ -30,7 +30,7 @@ public class TC_PP_15_Debit_Card extends Driver_Setup{
 			AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
 			AirPay_Payment_Mode_CreditCard_BusinessLogic CreditCard = new AirPay_Payment_Mode_CreditCard_BusinessLogic(driver, TC_ID);
 			AirPay_Payment_Mode_Debit_Card_BusinessLogic DebitCard = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID);	
-
+				
 				AirPay_Local.LocalHostDetailPage_ErrorVerify();	
 				AirPay_Local.Verify_PaymentPageFields();
 				AirPay_Local.Card_Details_Options();
