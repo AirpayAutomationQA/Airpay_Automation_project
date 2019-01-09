@@ -1669,7 +1669,7 @@ public boolean CheckTableHeaderContains(WebDriver driver,String xapth,String val
 		try
 		{
 				WebElement e=driver.findElement(By.xpath(XpathObject));
-		
+				
 				JavascriptExecutor js = (JavascriptExecutor)driver;
 				
 				

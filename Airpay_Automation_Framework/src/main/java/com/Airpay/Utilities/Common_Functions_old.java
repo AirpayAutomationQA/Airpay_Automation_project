@@ -27,8 +27,7 @@ public class Common_Functions_old {
 	static String snappath=null;	
 	public String GetXMLTagValue(String xmlpath, String tagname){		
 		String val=null;		
-		try {
-			
+		try {			
 			// Method to get the xml tag value from any given xml			
 			File f = new File(xmlpath);
 			DocumentBuilder docBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();

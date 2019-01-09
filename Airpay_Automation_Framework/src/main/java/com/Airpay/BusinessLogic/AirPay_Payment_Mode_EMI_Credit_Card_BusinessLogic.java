@@ -17,16 +17,17 @@ import com.Airpay.Utilities.ElementAction;
 import com.Airpay.Utilities.Log;
 
 public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_PaymentPage_PageObject {
-
+	
 	public WebDriver driver;
 	public String TC_ID = "";
 	ElementAction Assert = new ElementAction();
-	Log log = new Log();	
+	//Log log = new Log();	
 	public AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic(WebDriver driver, String TC_ID)
 	{
+		Log.info("AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic");
 		this.driver = driver;
 		this.TC_ID=TC_ID;
-		log = new Log();
+		//log = new Log();
 	}
 	
 	public void EMI_CardHolderName() throws Exception{
@@ -413,6 +414,32 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			Thread.sleep(2000);
 			if(Assert.isElementDisplayed(driver, TezIDMakepayment, "Tez Id field"))
 			{
+				Assert.clickButton(driver, TezIDField,  "UPI Id field");
+				Assert.inputText(driver, TezIDField, Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim(), "UPI Id field");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, TezDomainName, Excel_Handling.Get_Data(TC_ID, "TezDomain").trim(), "Bank Domain name");
+				errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();
+				System.out.println(errMsg);
+				Extent_Reporting.Log_report_img("Tez details entered as expectedd", "Passed", driver);
+				Assert.waitForPageToLoad(driver);			
+			}else{
+				Extent_Reporting.Log_Fail("Tez details fields does not exist", "Failed", driver);
+			}		
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("Tez details fields does not exist", "Failed", driver);
+			Log.error("Tez details option issue");
+			e.printStackTrace();
+			throw new Exception("Tez details");
+		}
+	}
+	
+	public void TezFieldOld() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			Thread.sleep(2000);
+			if(Assert.isElementDisplayed(driver, TezIDMakepayment, "Tez Id field"))
+			{
+
 				Assert.inputText(driver, TezIDField, Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim(), "UPI Id field");
 				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, TezDomainName, Excel_Handling.Get_Data(TC_ID, "TezDomain").trim(), "Bank Domain name");
 				errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();

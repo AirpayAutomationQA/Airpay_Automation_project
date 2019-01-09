@@ -20,6 +20,9 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String MakePaymentBtnForNetBankning = "(//input[@name='bankName']//following::div/input[@value='Make Payment'])[1]";
 		public static final String NetbankingErrDropDropRedLine = "//*[@class='formDom form-group select-group errorvalue']";	
 		public static final String Popularbanks ="(//*[@class='blocklist popularBanks'])/li";	
+		public static final String PopulaUPIWallets ="(//*[@class='blocklist upilist'])/li";	
+
+		
 		
 		
 	//***************************Local Host Email Id error verify ************************************
@@ -36,7 +39,8 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String CreditCardErrField = "//div[@class='formDom form-group errorvalue']//label";
 		public static final String CardInvalidErrMsgVerify = "(//*[@class='generic-error'])[1]";
 		public static final String GenericSuccessMessage = "(//*[@class='generic-success'])[1]";
-		
+		public static final String PopupErrmShbBtn = "(//*[@class='msgclosebtn'])[1]";
+
 		
 		
 		
@@ -75,9 +79,13 @@ public class Airpay_PaymentPage_PageObject {
 		
 	//********************************* Cash Test case ***********************************************
 		public static final String CashPinCode = "//*[@class='form-control cash_pincode']";
-		public static final String CashPincodeErrLine ="//*[contains(@class,'formDom form-group errorvalue')]";
+		public static final String CashPincodeErrLine ="(//*[contains(@class,'formDom form-group errorvalue')])[1]";
+		public static final String UPICommoneErrLine ="(//*[contains(@class,'formDom form-group errorvalue')])[2]";
+
 		public static final String CashMakePayment = "//*[@class='btn cash-submit' and @data-sub-form-id='cash-form']";
-        public static final String UPIMakePayment ="//*[@class='btn' and @data-sub-form-id='upi-form']";
+        public static final String UPIMakePayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[1]";
+        public static final String UPICommonPayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[2]";
+
 		public static final String CashSuccessTransaction = "//*[text()='Success Transaction']";	
 		
 	//********************************* RTGS and NEFT **************************************************
@@ -99,6 +107,9 @@ public class Airpay_PaymentPage_PageObject {
 		
    //************************************** UPI Channel Locators **********************************
 		public static final String UPIAddressField ="//input[contains(@class,'form-control upi-validation')]";
+		public static final String UPIAddressCommonField ="//input[contains(@class,'form-control other-upi-validation')]";
+
+		
 		public static final String SessionTimer ="//*[@class='timer']";
 		public static final String UPIAddIcon ="//*[@class='input-group-addon icon iupi']";
 		public static final String UPICrossCancelBtn ="//a[@class='cls-popup upibtnclose']";

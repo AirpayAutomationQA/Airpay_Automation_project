@@ -18,21 +18,16 @@ import com.Airpay.Utilities.Log;
 
 public class AirPay_Payment_Mode_Debit_Card_BusinessLogic extends Airpay_PaymentPage_PageObject {
 	
-
-
-
 	public WebDriver driver;
 	public String TC_ID = "";
 	ElementAction Assert = new ElementAction();
-	Log log = new Log();	
+	//Log log = new Log();	
 	public AirPay_Payment_Mode_Debit_Card_BusinessLogic(WebDriver driver, String TC_ID)
 	{
+		Log.info("AirPay_Payment_Mode_Debit_Card_BusinessLogic");
 		this.driver = driver;
 		this.TC_ID=TC_ID;
-		log = new Log();
 	}
-	
-	
 	
 	public void Debit_cardholderNameCopyPaste() throws Throwable{
 		try{		   		   

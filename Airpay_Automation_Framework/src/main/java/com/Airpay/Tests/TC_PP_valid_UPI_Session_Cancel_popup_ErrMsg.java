@@ -31,9 +31,9 @@ public class TC_PP_valid_UPI_Session_Cancel_popup_ErrMsg extends Driver_Setup{
 				AirPay_Local.LocalHostDetailPage_ErrorVerify();	
 				AirPay_Local.Verify_PaymentPageFields();				
 				AirPay_Local.Card_Details_Options();
-				//CreditCard.Cash_RTGS_And_NEFT();
-				CreditCard.Invalid_UPIAddress();
-				CreditCard.sessionCancel_errMsg();
+				CreditCard.Popular_UPI_Wallet_TimeOutSessionCancelBtnClickErrMsg();
+				//CreditCard.Invalid_UPIAddress();
+				//CreditCard.sessionCancel_errMsg();
 				//CreditCard.UPI_Invalid_ErrMessages();
 			Log.info("Scripts Ends....");
 		} catch (Exception e) {

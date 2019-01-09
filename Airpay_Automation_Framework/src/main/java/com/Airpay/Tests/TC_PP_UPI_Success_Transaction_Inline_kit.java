@@ -29,7 +29,6 @@ public class TC_PP_UPI_Success_Transaction_Inline_kit extends Driver_Setup{
 			AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
 			AirPay_Payment_Mode_CreditCard_BusinessLogic CreditCard = new AirPay_Payment_Mode_CreditCard_BusinessLogic(driver, TC_ID);				
 				AirPay_Local.NavigateToInlineKit();	
-				//AirPay_Local.Verify_PaymentPageFields();				
 				AirPay_Local.Card_Details_Options();
 				CreditCard.Invalid_UPIAddress();
 				CreditCard.UPI_SuccessTransaction();

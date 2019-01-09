@@ -7,8 +7,6 @@ public class AirPay_Payment_MA_Panel_PageObject {
 	public static final String MA_UserID = "//*[contains(@class,'sign-user')]";
 	public static final String MA_PWD ="//*[contains(@class,'sign-password')]";
 	public static final String MA_SubmitBtn ="//*[@class='login-submit']";
-	
-	
 	public static final String MA_HomeMenu ="//*[@class='home-menu']";
 	public static final String MerchantMember_NextBtn ="//*[@class='mm-next' and @href='#mm-1']";
 	

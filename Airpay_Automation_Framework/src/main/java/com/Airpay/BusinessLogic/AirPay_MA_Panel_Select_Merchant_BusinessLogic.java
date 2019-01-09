@@ -25,12 +25,13 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 	public static String MA_URL = null;
 	ElementAction Assert = new ElementAction();
 	//AirPay_Payment_MA_Panel_PageObject MA = new AirPay_Payment_MA_Panel_PageObject();
-	Log log = new Log();	
+	//Log log = new Log();	
 	public AirPay_MA_Panel_Select_Merchant_BusinessLogic(WebDriver driver, String TC_ID)
 	{
+		Log.info("AirPay_MA_Panel_Select_Merchant_BusinessLogic");
+
 		this.driver = driver;
 		this.TC_ID=TC_ID;
-		log = new Log();
 	}
 	/**
 	 * @author sakole
@@ -106,7 +107,6 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			t.printStackTrace();
 			Extent_Reporting.Log_Fail("Merchant ID search field does not exost", "Failed", driver);
 			throw new Exception("Serch filter does not exist");
-
 		}
 	}
 
@@ -157,7 +157,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 
 		}
 	}
-	
+
 
 	public void CLickbtn(String MenuOption, String Option ) throws Throwable{
 		try{
@@ -199,6 +199,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 
 		}
 	}
+
 
 	public void VerifyText(String Xpath, String TextVerify) throws Exception{
 		try{
@@ -649,10 +650,6 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 	}
 
 
-
-
-
-
 	public void ErrorNotifications(String xpath, String ErrXpath, String passVal,String ExpectedVal) throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
@@ -1066,9 +1063,6 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 	}
 
 
-
-
-
 	public static int Maxval=1;
 	public static int Minval=1;
 	public void BANK_DetailsFindOut() throws Exception{
@@ -1158,13 +1152,6 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 		}
 	}
 
-
-
-
-
-
-
-
 	public void TransactionRecords() throws Throwable{
 		try{
 			if(Assert.isElementDisplayed(driver, AirPay_Payment_MA_Panel_PageObject.MM_TransactionRecords, "Transaction records")){
@@ -1186,7 +1173,6 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 			throw new Exception("Submit buttondoes not exist");			
 		}
 	}
-
 
 	public void Bank_DetailsURL(String active, String inactive ) throws Exception{
 		try{
@@ -1270,8 +1256,6 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 
 		}
 	}
-
-
 
 	public void BankDetails_Page() throws Exception{
 		try{
@@ -1637,7 +1621,7 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 					{
 						Extent_Reporting.Log_Pass("Total amount on payment page :"+AirPay_Payment_Mode_CreditCard_BusinessLogic.TotAmt, "Total amount on MA panel page as: "+TransactionBank);
 						Extent_Reporting.Log_report_img("Surcharge amount Transaction is showing as expected ", "Passed", driver);
-						
+
 					}else{
 						Extent_Reporting.Log_Fail("Total amount not matched", "Failed", driver);
 					}

@@ -2,14 +2,14 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Airpay]">
   <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
-  <parameter name="tcID" value="TC_PP_BharatOR_BarCode_Cross_btn_errVerification"/>
+  <parameter name="tcID" value="TC_PP_UPI_Session_Cancel_Popup_ErrorMessage_NewDesign"/>
   <parameter name="browserType" value="CHROME"/>
-  <test name="TC_PP_BharatOR_BarCode_Cross_btn_errVerification">
+  <test name="TC_PP_UPI_Session_Cancel_Popup_ErrorMessage_NewDesign">
     <parameter name="appURL" value="http://localhost/airpay_php/transaction.html"/>
-    <parameter name="tcID" value="TC_PP_BharatOR_BarCode_Cross_btn_errVerification"/>
+    <parameter name="tcID" value="TC_PP_UPI_Session_Cancel_Popup_ErrorMessage_NewDesign"/>
     <parameter name="browserType" value="CHROME"/>
     <classes>
-      <class name="com.Airpay.Tests.TC_PP_BharatOR_BarCode_CrossBtn_Error_verification"/>
+      <class name="com.Airpay.Tests.TC_PP_valid_UPI_Session_Cancel_popup_ErrMsg"/>
     </classes>
-  </test> <!-- TC_PP_BharatOR_BarCode_Cross_btn_errVerification -->
+  </test> <!-- TC_PP_UPI_Session_Cancel_Popup_ErrorMessage_NewDesign -->
 </suite> <!-- Failed suite [Airpay] -->

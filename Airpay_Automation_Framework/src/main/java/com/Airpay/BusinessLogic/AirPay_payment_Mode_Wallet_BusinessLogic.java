@@ -16,21 +16,19 @@ import com.Airpay.Utilities.ElementAction;
 import com.Airpay.Utilities.Log;
 
 public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage_PageObject {
-	
-
-
-
 	public WebDriver driver;
 	public String TC_ID = "";
 	ElementAction Assert = new ElementAction();
 	Log log = new Log();	
 	public AirPay_payment_Mode_Wallet_BusinessLogic(WebDriver driver, String TC_ID)
 	{
+		Log.info("AirPay_payment_Mode_Wallet_BusinessLogic");
 		this.driver = driver;
 		this.TC_ID=TC_ID;
 		log = new Log();
+		
 	}
-
+	
 	/**
 	 * @author parmeshwar Sakole
 	 * @Method Name: Card Selection method.

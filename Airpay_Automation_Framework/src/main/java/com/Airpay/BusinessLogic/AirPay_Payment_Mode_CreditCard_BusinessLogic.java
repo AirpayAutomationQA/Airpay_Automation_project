@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.HasInputDevices;
 import org.openqa.selenium.interactions.Keyboard;
+import org.openqa.selenium.support.ui.Select;
 
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -30,12 +31,14 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	public WebDriver driver;
 	public String TC_ID = "";
 	ElementAction Assert = new ElementAction();
-	Log log = new Log();	
+	AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
+
+	//Log log = new Log();	
 	public AirPay_Payment_Mode_CreditCard_BusinessLogic(WebDriver driver, String TC_ID)
 	{
+		Log.info("AirPay_Payment_Mode_CreditCard_BusinessLogic");
 		this.driver = driver;
 		this.TC_ID=TC_ID;
-		log = new Log();
 	}
 	/**
 	 * @author parmeshwar Sakole
@@ -429,7 +432,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	
 	
 
-
+	//*[@class='msgclosebtn']
 
 	public void sessionTimeOut() throws Exception{
 		try{
@@ -448,10 +451,12 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 					if(errMsg.contains("REJECTED. Please try paying using another method?")
 							||errMsg.contains("We are sorry but the transaction failed. Try paying using another method?") 		                    
 							||errMsg.contains("Please use a valid debit card issued in india")|| errMsg.contains("Improper Card Name Entered")
-							||errMsg.contains("FAILED. Please try paying using another method?")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method"))
+							||errMsg.contains("FAILED. Please try paying using another method?")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method")
+							|| errMsg.contains("VPA is not registered"))
 					{
 						Extent_Reporting.Log_Pass("Repective Error Message is exist", "Error Msg is:"+errMsg);
 						Extent_Reporting.Log_report_img("Respective Error Message is exist", "Passed", driver);	
+						
 						break;
 					}
 				}
@@ -462,15 +467,45 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 
 	}
+	
+	
+	public void sessionInvalidUserID() throws Exception{
+		try{		
+				Thread.sleep(20000);
+				errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();
+				System.out.println(errMsg);
+				if(errMsg.contains("REJECTED. Please try paying using another method?")
+						||errMsg.contains("We are sorry but the transaction failed. Try paying using another method?") 		                    
+						||errMsg.contains("Please use a valid debit card issued in india")|| errMsg.contains("Improper Card Name Entered")
+						||errMsg.contains("FAILED. Please try paying using another method?")||errMsg.contains("We are sorry but the transaction failed. Try paying using another method")
+						|| errMsg.contains("VPA is not registered"))
+				{
+					Extent_Reporting.Log_Pass("Repective Error Message is exist", "Error Msg is:"+errMsg);
+					Extent_Reporting.Log_report_img("Respective Error Message is exist", "Passed", driver);						
+				}
+				else{
+					Extent_Reporting.Log_Fail("Repsective error message does not exist", "Failed", driver);
+				}
+		}catch(Exception e){
+			Extent_Reporting.Log_Fail("Repective Error Message does not exist", "Error Msg is:"+errMsg, driver);
+
+		}
+
+	}
+	
 
 	public void sessionTimeOut_errMsg() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
 			for(int i=1;i<=1;i++)
-			{			
-				boolean timerState = driver.findElement(By.xpath(SessionTimer)).isDisplayed();
+			{	
+				Thread.sleep(10000);
+				if(Assert.isElementDisplay(driver, SessionTimer))
+				{
+					boolean timerState = driver.findElement(By.xpath(SessionTimer)).isDisplayed();			
 				System.out.println(timerState);	
-				if(timerState==true){					
+				if(timerState==true)
+				{					
 					Thread.sleep(180000);
 					Assert.waitForPageToLoad(driver);
 					errMsg = driver.findElement(By.xpath(CardInvalidErrMsgVerify)).getText();
@@ -485,6 +520,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 					}
 				}else{	
 					Extent_Reporting.Log_Fail("Repective Error Message does not exist", "Error Msg is:"+errMsg, driver);
+				}
 				}
 			}
 		}catch(Exception e){
@@ -1123,6 +1159,51 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	}
 
 
+	public void UPIErrorMSgForALL() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			Assert.Clickbtn(driver, UPICommonPayment, "UPi Common make button");    
+			if(Assert.isElementDisplay(driver, UPICommoneErrLine)){
+				Assert.isElementDisplayed(driver, UPICommoneErrLine, "UPI Red line Error is exist");
+				Extent_Reporting.Log_Pass("UPI Address red line error is exist as expected", "Passed");
+				Extent_Reporting.Log_report_img("UPI Address error screen print", "Passed", driver);
+
+			}else{
+				Extent_Reporting.Log_Fail("UPI Address Red Line Error does not exist", "Failed", driver);
+				throw new Exception("UPI Address Red Line Error does not exist");
+			}
+		}catch(Exception e) 
+		{
+			Extent_Reporting.Log_Fail("UPI Address Red Line Error does not exist", "Failed", driver);
+			Log.error("UPI Address Red Line Error does not exist");
+			e.printStackTrace();
+			throw new Exception("UPI Address Red Line Error does not exist");
+		}
+	}
+	
+	public void UPIErrorMSgForOther() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			Assert.Clickbtn(driver, UPIMakePayment, "UPi Common make button");    
+			if(Assert.isElementDisplay(driver, CashPincodeErrLine)){
+				Assert.isElementDisplayed(driver, CashPincodeErrLine, "UPI Red line Error is exist");
+				Extent_Reporting.Log_Pass("UPI Address red line error is exist as expected", "Passed");
+				Extent_Reporting.Log_report_img("UPI Address error screen print", "Passed", driver);
+
+			}else{
+				Extent_Reporting.Log_Fail("UPI Address Red Line Error does not exist", "Failed", driver);
+				throw new Exception("UPI Address Red Line Error does not exist");
+			}
+		}catch(Exception e) 
+		{
+			Extent_Reporting.Log_Fail("UPI Address Red Line Error does not exist", "Failed", driver);
+			Log.error("UPI Address Red Line Error does not exist");
+			e.printStackTrace();
+			throw new Exception("UPI Address Red Line Error does not exist");
+		}
+	}
+	
+	
 	public void Cash_UPIRedLineError() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
@@ -1172,12 +1253,12 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	}
 
 
-	public void Invalid_UPIAddress_Popup() throws Exception{
+	public void Invalid_UPIAddress_Popup(String UserID ) throws Exception{
 
 		try{
 			Assert.waitForPageToLoad(driver);
 			if(Assert.isElementDisplayed(driver, UPIAddressField, "UPI Red line Error is exist")){
-				Assert.inputText(driver, UPIAddressField, Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim(), "UPI Address field");
+				Assert.inputText(driver, UPIAddressField, UserID, "UPI Address field");
 				Extent_Reporting.Log_report_img("UPI Address detail entered", "Passed", driver);
 				Assert.Clickbtn(driver, UPIMakePayment, "UPI make button");    
 				Assert.waitForPageToLoad(driver);
@@ -1193,7 +1274,209 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			throw new Exception("UPI Address Field Does not exist");
 		}
 	}
+	
+	
+	
+	public void Invalid_UPIAddress_Common(String UserID) throws Exception{
 
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, UPICommonPayment, "UPI Red line Error is exist")){
+				Assert.inputText(driver, UPIAddressCommonField, UserID, "UPI Address field");
+				Extent_Reporting.Log_report_img("UPI Address detail entered", "assed", driver);
+				Assert.Clickbtn(driver, UPICommonPayment, "UPI make button");    
+				Assert.waitForPageToLoad(driver);
+			}else{
+				Extent_Reporting.Log_Fail("UPI Address Field Does not exist", "Failed", driver);
+				throw new Exception("UPI Address Field Does not exist");
+			}
+		}catch(Exception e) 
+		{
+			Extent_Reporting.Log_Fail("UPI Address Field Does not exist", "Failed", driver);
+			Log.error("UPI Address Field Does not exist");
+			e.printStackTrace();
+			throw new Exception("UPI Address Field Does not exist");
+		}
+	}
+	
+	public void Gpay_Common(String UserID) throws Exception{
+
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, UPICommonPayment, "UPI Red line Error is exist")){
+				Assert.inputText(driver, UPIAddressCommonField, UserID, "UPI Address field");
+				Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, TezDomainName, Excel_Handling.Get_Data(TC_ID, "TezDomain").trim(), "Bank Domain name");
+				Extent_Reporting.Log_report_img("UPI Address detail entered", "assed", driver);
+				Assert.Clickbtn(driver, UPICommonPayment, "UPI make button");    
+				Assert.waitForPageToLoad(driver);
+			}else{
+				Extent_Reporting.Log_Fail("UPI Address Field Does not exist", "Failed", driver);
+				throw new Exception("UPI Address Field Does not exist");
+			}
+		}catch(Exception e) 
+		{
+			Extent_Reporting.Log_Fail("UPI Address Field Does not exist", "Failed", driver);
+			Log.error("UPI Address Field Does not exist");
+			e.printStackTrace();
+			throw new Exception("UPI Address Field Does not exist");
+		}
+	}
+	
+	public void ErrorPopupMsgClikcbtn() throws Exception{
+
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, PopupErrmShbBtn, "Popup is")){
+				Extent_Reporting.Log_report_img("UPI Address detail entered", "assed", driver);
+				Assert.Clickbtn(driver, PopupErrmShbBtn, "Error Message");    
+			}else{
+				Extent_Reporting.Log_Fail("Error Popup does not exist", "Failed", driver);
+				throw new Exception("Error Popup does not exist");
+			}
+		}catch(Exception e) 
+		{
+			Extent_Reporting.Log_Fail("UPI Address Field Does not exist", "Failed", driver);
+			Log.error("UPI Address Field Does not exist");
+			e.printStackTrace();
+			throw new Exception("UPI Address Field Does not exist");
+		}
+	}
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * @Method Name: Card Selection method.
+	 * Following method is used Handling Multiple Card options
+	 * @throws Exception
+	 */
+	public void Popular_UPI_Wallet_Verification() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
+			{         	
+				List<WebElement> popular1 = driver.findElements(By.xpath(PopulaUPIWallets));			
+				for(int i =0;i<popular1.size();i++)
+				{
+					driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).click();
+					String popularbackName = driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).getText().trim();
+					System.out.println("popularbackName"+popularbackName);
+					if(popularbackName.contains("tez"))
+					{
+						Extent_Reporting.Log_Pass("Gpay wallet selected", "Passed");
+						Extent_Reporting.Log_report_img(" Gpay wallet selected", "Passed", driver);
+					}else{
+						
+						String UpiAttribute = driver.findElement(By.xpath("//div[@class='upi-bank']")).getAttribute("data-upi-bank").trim();
+						if(UpiAttribute.contains("@upi") && popularbackName.contains("bhim"))
+						{
+							Extent_Reporting.Log_Pass("Bhim Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("bhim selecetd", "passed", driver);	
+						}
+						else if(UpiAttribute.contains("@paytm") && popularbackName.contains("paytm")){
+							Extent_Reporting.Log_Pass("paytm Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("paytm wallet selecetd", "passed", driver);
+						}
+						else if(UpiAttribute.contains("@ybl") && popularbackName.contains("phonepe")){
+							Extent_Reporting.Log_Pass("phonepe Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("phonepe wallet selecetd", "passed", driver);
+						}
+						else if(UpiAttribute.contains("@ikwik") && popularbackName.contains("mobiKwik")){
+							Extent_Reporting.Log_Pass("mobiKwik Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("mobiKwik wallet selecetd", "passed", driver);
+						}
+						else if(popularbackName.contains("other")){
+							Extent_Reporting.Log_Pass("UPI other Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("UPI other wallet selecetd", "passed", driver);
+						}		
+					}
+				}   		
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * @Method Name: Card Selection method.
+	 * Following method is used Handling Multiple Card options
+	 * @throws Exception
+	 */
+	public void Popular_UPI_Wallet_VerificationErrMsg() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
+			{         	
+				List<WebElement> popular1 = driver.findElements(By.xpath(PopulaUPIWallets));			
+				for(int i =0;i<popular1.size();i++)
+				{
+					driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).click();
+					String popularbackName = driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).getText().trim();
+					System.out.println("popularbackName"+popularbackName);
+					if(popularbackName.contains("tez"))
+					{
+						Extent_Reporting.Log_Pass("Gpay wallet selected", "Passed");
+						Extent_Reporting.Log_report_img(" Gpay wallet selected", "Passed", driver);
+						UPIErrorMSgForALL();
+						
+					}else{
+						
+						String UpiAttribute = driver.findElement(By.xpath("//div[@class='upi-bank']")).getAttribute("data-upi-bank").trim();
+						if(UpiAttribute.contains("@upi") && popularbackName.contains("bhim"))
+						{
+							Extent_Reporting.Log_Pass("Bhim Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("bhim selecetd", "passed", driver);
+							UPIErrorMSgForALL();
+						}
+						else if(UpiAttribute.contains("@paytm") && popularbackName.contains("paytm")){
+							Extent_Reporting.Log_Pass("paytm Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("paytm wallet selecetd", "passed", driver);
+							UPIErrorMSgForALL();
+						}
+						else if(UpiAttribute.contains("@ybl") && popularbackName.contains("phonepe")){
+							Extent_Reporting.Log_Pass("phonepe Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("phonepe wallet selecetd", "passed", driver);
+							UPIErrorMSgForALL();
+						}
+						else if(UpiAttribute.contains("@ikwik") && popularbackName.contains("mobiKwik")){
+							Extent_Reporting.Log_Pass("mobiKwik Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("mobiKwik wallet selecetd", "passed", driver);
+							UPIErrorMSgForALL();
+						}
+						else if(popularbackName.contains("other")){
+							Extent_Reporting.Log_Pass("UPI other Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("UPI other wallet selecetd", "passed", driver);
+							UPIErrorMSgForOther();
+						}		
+					}
+				}   		
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
+	
 	public void Card_InvalidMesgVerify() throws Exception{
 		try{	
 			Thread.sleep(10000);
@@ -1219,9 +1502,7 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
-
-
-
+	
 	public void Cash_RTGS_And_NEFT() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
@@ -1253,7 +1534,381 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 
+	/**
+	 * @author parmeshwar Sakole
+	 * @Method Name: Card Selection method.
+	 * Following method is used Handling Multiple Card options
+	 * @throws Exception
+	 */
+	public void Popular_UPI_Wallet_InvalidUserIDVerification() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
+			{         	
+				List<WebElement> popular1 = driver.findElements(By.xpath(PopulaUPIWallets));			
+				for(int i =0;i<popular1.size();i++)
+				{
+					driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).click();
+					String popularbackName = driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).getText().trim();
+					System.out.println("popularbackName"+popularbackName);
+					if(popularbackName.contains("tez"))
+					{
+						Extent_Reporting.Log_Pass("Gpay wallet selected", "Passed");
+						Extent_Reporting.Log_report_img(" Gpay wallet selected", "Passed", driver);
+						Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+						sessionInvalidUserID();
+						ErrorPopupMsgClikcbtn();
+						AirPay_Local.Card_Details_Options();
 
+					}else{
+						
+						String UpiAttribute = driver.findElement(By.xpath("//div[@class='upi-bank']")).getAttribute("data-upi-bank").trim();
+						if(UpiAttribute.contains("@upi") && popularbackName.contains("bhim"))
+						{
+							Extent_Reporting.Log_Pass("Bhim Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("bhim selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+							sessionInvalidUserID();
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();
+
+						}
+						else if(UpiAttribute.contains("@paytm") && popularbackName.contains("paytm")){
+							Extent_Reporting.Log_Pass("paytm Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("paytm wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+							sessionInvalidUserID();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();
+
+
+						}
+						else if(UpiAttribute.contains("@ybl") && popularbackName.contains("phonepe")){
+							Extent_Reporting.Log_Pass("phonepe Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("phonepe wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+							sessionInvalidUserID();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();
+
+
+						}
+						else if(UpiAttribute.contains("@ikwik") && popularbackName.contains("mobiKwik")){
+							Extent_Reporting.Log_Pass("mobiKwik Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("mobiKwik wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+							sessionInvalidUserID();						
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();
+
+						}
+						else if(popularbackName.contains("other")){
+							Extent_Reporting.Log_Pass("UPI other Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("UPI other wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Popup(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+							sessionInvalidUserID();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();
+
+						}		
+					}
+				}   		
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * @Method Name: Card Selection method.
+	 * Following method is used Handling Multiple Card options
+	 * @throws Exception
+	 */
+	public void Popular_UPI_Wallet_TimeOutSessionNegativeErrMsg() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
+			{         	
+				List<WebElement> popular1 = driver.findElements(By.xpath(PopulaUPIWallets));			
+				for(int i =0;i<popular1.size();i++)
+				{
+					driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).click();
+					String popularbackName = driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).getText().trim();
+					System.out.println("popularbackName"+popularbackName);
+					if(popularbackName.contains("tez"))
+					{
+						Extent_Reporting.Log_Pass("Gpay wallet selected", "Passed");
+						Extent_Reporting.Log_report_img(" Gpay wallet selected", "Passed", driver);
+						Gpay_Common(Excel_Handling.Get_Data(TC_ID, "GpayUserID").trim());
+						sessionTimeOut_errMsg();						
+						ErrorPopupMsgClikcbtn();
+						AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
+						AirPay_Local.Card_Details_Options();				
+
+					}else{
+						
+						String UpiAttribute = driver.findElement(By.xpath("//div[@class='upi-bank']")).getAttribute("data-upi-bank").trim();
+						if(UpiAttribute.contains("@upi") && popularbackName.contains("bhim"))
+						{
+							Extent_Reporting.Log_Pass("Bhim Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("bhim selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "BHIMUserID").trim());
+							sessionTimeOut_errMsg();
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+						}
+						else if(UpiAttribute.contains("@paytm") && popularbackName.contains("paytm")){
+							Extent_Reporting.Log_Pass("paytm Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("paytm wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "PaytmUserID").trim());
+							sessionTimeOut_errMsg();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+
+						}
+						else if(UpiAttribute.contains("@ybl") && popularbackName.contains("phonepe")){
+							Extent_Reporting.Log_Pass("phonepe Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("phonepe wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "PhonepeUserID").trim());
+							sessionTimeOut_errMsg();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+						}
+						else if(UpiAttribute.contains("@ikwik") && popularbackName.contains("mobiKwik")){
+							Extent_Reporting.Log_Pass("mobiKwik Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("mobiKwik wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "MobiKwikiUserID").trim());
+							sessionTimeOut_errMsg();						
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+						}
+						else if(popularbackName.contains("other")){
+							Extent_Reporting.Log_Pass("UPI other Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("UPI other wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Popup(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+							sessionTimeOut_errMsg();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+						}		
+					}
+				}   		
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * @Method Name: Card Selection method.
+	 * Following method is used Handling Multiple Card options
+	 * @throws Exception
+	 */
+	public void Popular_UPI_Wallet_TimeOutSessionCancelBtnClickErrMsg() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
+			{         	
+				List<WebElement> popular1 = driver.findElements(By.xpath(PopulaUPIWallets));			
+				for(int i =0;i<popular1.size();i++)
+				{
+					driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).click();
+					String popularbackName = driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).getText().trim();
+					System.out.println("popularbackName"+popularbackName);
+					if(popularbackName.contains("tez"))
+					{
+						Extent_Reporting.Log_Pass("Gpay wallet selected", "Passed");
+						Extent_Reporting.Log_report_img(" Gpay wallet selected", "Passed", driver);
+						Gpay_Common(Excel_Handling.Get_Data(TC_ID, "GpayUserID").trim());
+						sessionCancel_errMsg();						
+						ErrorPopupMsgClikcbtn();
+						AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
+						AirPay_Local.Card_Details_Options();				
+
+					}else{
+						
+						String UpiAttribute = driver.findElement(By.xpath("//div[@class='upi-bank']")).getAttribute("data-upi-bank").trim();
+						if(UpiAttribute.contains("@upi") && popularbackName.contains("bhim"))
+						{
+							Extent_Reporting.Log_Pass("Bhim Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("bhim selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "BHIMUserID").trim());
+							sessionCancel_errMsg();
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+						}
+						else if(UpiAttribute.contains("@paytm") && popularbackName.contains("paytm")){
+							Extent_Reporting.Log_Pass("paytm Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("paytm wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "PaytmUserID").trim());
+							sessionCancel_errMsg();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+
+						}
+						else if(UpiAttribute.contains("@ybl") && popularbackName.contains("phonepe")){
+							Extent_Reporting.Log_Pass("phonepe Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("phonepe wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "PhonepeUserID").trim());
+							sessionCancel_errMsg();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+
+						}
+						else if(UpiAttribute.contains("@ikwik") && popularbackName.contains("mobiKwik")){
+							Extent_Reporting.Log_Pass("mobiKwik Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("mobiKwik wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "MobiKwikiUserID").trim());
+							sessionCancel_errMsg();						
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+						}
+						else if(popularbackName.contains("other")){
+							Extent_Reporting.Log_Pass("UPI other Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("UPI other wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Popup(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+							sessionCancel_errMsg();	
+							ErrorPopupMsgClikcbtn();
+							AirPay_Local.Card_Details_Options();				
+
+						}		
+					}
+				}   		
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	/**
+	 * @author parmeshwar Sakole
+	 * @Method Name: Card Selection method.
+	 * Following method is used Handling Multiple Card options
+	 * @throws Exception
+	 */
+	public void Popular_UPI_Wallet_DeclineTransactionErrMsg() throws Exception {
+		try{ 
+			Log.info("Navigating To Net Banking Page");	 
+			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
+			{         	
+				List<WebElement> popular1 = driver.findElements(By.xpath(PopulaUPIWallets));			
+				for(int i =0;i<popular1.size();i++)
+				{
+					driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).click();
+					String popularbackName = driver.findElement(By.xpath(PopulaUPIWallets+"["+(i+1)+"]")).getText().trim();
+					System.out.println("popularbackName"+popularbackName);
+					if(popularbackName.contains("tez"))
+					{
+						Extent_Reporting.Log_Pass("Gpay wallet selected", "Passed");
+						Extent_Reporting.Log_report_img(" Gpay wallet selected", "Passed", driver);
+						Gpay_Common(Excel_Handling.Get_Data(TC_ID, "GpayUserID").trim());
+						UPIDecline_errMsg();						
+						ErrorPopupMsgClikcbtn();
+						AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
+						AirPay_Local.Card_Details_Options();				
+
+					}else{
+						
+						String UpiAttribute = driver.findElement(By.xpath("//div[@class='upi-bank']")).getAttribute("data-upi-bank").trim();
+						if(UpiAttribute.contains("@upi") && popularbackName.contains("bhim"))
+						{
+							Extent_Reporting.Log_Pass("Bhim Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("bhim selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "BHIMUserID").trim());
+							UPIDecline_errMsg();
+							ErrorPopupMsgClikcbtn();
+						}
+						else if(UpiAttribute.contains("@paytm") && popularbackName.contains("paytm")){
+							Extent_Reporting.Log_Pass("paytm Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("paytm wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "PaytmUserID").trim());
+							UPIDecline_errMsg();	
+							ErrorPopupMsgClikcbtn();
+
+						}
+						else if(UpiAttribute.contains("@ybl") && popularbackName.contains("phonepe")){
+							Extent_Reporting.Log_Pass("phonepe Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("phonepe wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "PhonepeUserID").trim());
+							UPIDecline_errMsg();	
+							ErrorPopupMsgClikcbtn();
+
+						}
+						else if(UpiAttribute.contains("@ikwik") && popularbackName.contains("mobiKwik")){
+							Extent_Reporting.Log_Pass("mobiKwik Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("mobiKwik wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Common(Excel_Handling.Get_Data(TC_ID, "MobiKwikiUserID").trim());
+							UPIDecline_errMsg();						
+							ErrorPopupMsgClikcbtn();
+						}
+						else if(popularbackName.contains("other")){
+							Extent_Reporting.Log_Pass("UPI other Wallet selected", "Passed");
+							Extent_Reporting.Log_report_img("UPI other wallet selecetd", "passed", driver);
+							Invalid_UPIAddress_Popup(Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim());
+							UPIDecline_errMsg();	
+							ErrorPopupMsgClikcbtn();
+						}		
+					}
+				}   		
+			}
+			else{
+				Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+				Log.error("Local Host page not successfully displayed");
+				throw new Exception("option does not exist displayed");
+			}
+		}                     
+		catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail(" option does not exis",	"Failed",driver);
+			Log.error("Test failed due to card does not exist");
+			e.printStackTrace();
+			throw new Exception("Test failed due to local host page not displayed");
+		}
+	}
+	
+	
+	
 
 
 }
