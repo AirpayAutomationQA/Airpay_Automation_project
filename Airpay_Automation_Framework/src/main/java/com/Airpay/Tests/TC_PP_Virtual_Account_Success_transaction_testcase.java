@@ -31,7 +31,7 @@ public class TC_PP_Virtual_Account_Success_transaction_testcase extends Driver_S
 			AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic EMI = new AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic(driver, TC_ID);
 			AirPay_Payment_Mode_CreditCard_BusinessLogic CreditCard = new AirPay_Payment_Mode_CreditCard_BusinessLogic(driver, TC_ID);
 	
-			AirPay_Local.LocalHostDetailPage();	
+				AirPay_Local.LocalHostDetailPage();	
 				AirPay_Local.Verify_PaymentPageFields();
 				AirPay_Local.Card_Details_Options();
 				EMI.VirtualmakePaymentBtnClick();

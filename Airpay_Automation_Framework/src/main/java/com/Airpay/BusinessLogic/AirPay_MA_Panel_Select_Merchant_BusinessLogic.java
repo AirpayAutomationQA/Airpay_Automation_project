@@ -158,7 +158,6 @@ public class AirPay_MA_Panel_Select_Merchant_BusinessLogic extends Airpay_Paymen
 		}
 	}
 
-
 	public void CLickbtn(String MenuOption, String Option ) throws Throwable{
 		try{
 			Assert.waitForPageToLoad(driver);

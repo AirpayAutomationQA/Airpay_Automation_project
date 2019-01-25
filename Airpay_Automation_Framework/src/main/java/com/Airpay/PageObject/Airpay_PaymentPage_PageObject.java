@@ -85,7 +85,11 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String CashMakePayment = "//*[@class='btn cash-submit' and @data-sub-form-id='cash-form']";
         public static final String UPIMakePayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[1]";
         public static final String UPICommonPayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[2]";
-
+        public static final String payTmChaanelInput ="//input[@class='form-control paytm-validation']";
+        
+        
+      
+        
 		public static final String CashSuccessTransaction = "//*[text()='Success Transaction']";	
 		
 	//********************************* RTGS and NEFT **************************************************
@@ -146,6 +150,8 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String TezDomainName ="//*[@class='form-control tez-upi-bank']";
 		public static final String TezIdFieldErrRedline ="//*[@class='formDom form-group errorvalue']";		
 		public static final String TezDomainRedLineErr= "//*[@class='formDom form-group select-group errorvalue']";
+		public static final String PaytmlogoIcon ="//div[@class='paytm_logo icon']";
+
 		
 		
 	//**************************************MA Panel ********************************************************

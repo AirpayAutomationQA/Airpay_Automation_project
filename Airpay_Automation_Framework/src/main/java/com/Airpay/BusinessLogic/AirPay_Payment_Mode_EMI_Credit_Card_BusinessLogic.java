@@ -286,7 +286,7 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 	public void sessionTimeOut_errMsg() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 			for(int i=1;i<=1;i++)
 			{
 			 if(Assert.isElementDisplayed(driver, SessionTimer, "Session timer"))
@@ -335,7 +335,8 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			  String domain = (String) js.executeScript("return document.domain");
 			  driver.manage().timeouts().implicitlyWait(10000, TimeUnit.MILLISECONDS);			 			 
 			  if(domain.equals("") || domain.equals("payments.airpay.co.in")||(driver.getPageSource().contains("Error Page Exception"))==true
-					  ||(driver.getPageSource().contains("Internal Server Error"))==true|| driver.getTitle().contains("HTTP Status - 400"))
+					  ||(driver.getPageSource().contains("Internal Server Error"))==true|| driver.getTitle().contains("HTTP Status - 400")
+					  || driver.getTitle().contains("502 Bad Gateway"))
 			  {			 
 				  Extent_Reporting.Log_Fail("Its not navigated to Respective Bank as", "Error Snap", driver);
 				  Log.error("Its not navigated to Respective Bank as :"+bankName);
@@ -371,10 +372,10 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 		}
 	}	
 	
-	public void VirtualBankMakePaymentBtnClick() throws Exception{
+	public void VirtualBankMakePaymentBtnClick() throws Throwable{
 		try{		   		   			
 			Extent_Reporting.Log_report_img("Virtual Bank Account details", "Passed", driver);
-			Assert.Clickbtn(driver, virtualBankAccountBtn, "make payment");	
+			Assert.Javascriptexecutor_forClick(driver, virtualBankAccountBtn, "make payment");	
 			Thread.sleep(2000);
 			Assert.waitForPageToLoad(driver);
 		}catch(Exception e)	
@@ -385,7 +386,6 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			throw new Exception("Virtual Bank Account details issue");
 		}
 	}	
-	
 	
 	
 	public void VirtualAccountDetails() throws Exception{
@@ -433,6 +433,34 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 		}
 	}
 	
+	public void PaytmField() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			Thread.sleep(2000);
+			if(Assert.isElementDisplayed(driver, PaytmlogoIcon, "Tez Id field"))
+			{
+				Assert.clickButton(driver, payTmChaanelInput,  "UPI Id field");
+				Assert.inputText(driver, payTmChaanelInput, Excel_Handling.Get_Data(TC_ID, "UPI_Address").trim(), "paytm UPI Id field");
+				//Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, TezDomainName, Excel_Handling.Get_Data(TC_ID, "TezDomain").trim(), "Bank Domain name");
+				Extent_Reporting.Log_report_img("paytm details entered as expectedd", "Passed", driver);
+				Assert.waitForPageToLoad(driver);			
+			}else{
+				Extent_Reporting.Log_Fail("paytm details fields does not exist", "Failed", driver);
+			}		
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("paytm details fields does not exist", "Failed", driver);
+			Log.error("paytm details option issue");
+			e.printStackTrace();
+			throw new Exception("paytm details");
+		}
+	}
+	
+	
+	
+	
+	
+	
 	public void TezFieldOld() throws Exception{
 		try{
 			Assert.waitForPageToLoad(driver);
@@ -474,6 +502,25 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			Log.error("Tez details option issue");
 			e.printStackTrace();
 			throw new Exception("Tez details");
+		}
+	}
+	
+	public void paymentMakepaymentBtn() throws Exception{
+		try{
+			Assert.waitForPageToLoad(driver);
+			if(Assert.isElementDisplayed(driver, PaytmlogoIcon, "paytm Id field"))
+			{
+				Assert.Clickbtn(driver, TezIDMakepayment, "paytm make payment button");
+				Assert.waitForPageToLoad(driver);			
+			}else{
+				Extent_Reporting.Log_Fail("paytm make payment button does not exist", "Failed", driver);
+			}		
+		}catch(Exception e)	
+		{
+			Extent_Reporting.Log_Fail("paytm make payment button does not exist", "Failed", driver);
+			Log.error("paytm details option issue");
+			e.printStackTrace();
+			throw new Exception("paytm details");
 		}
 	}
 	

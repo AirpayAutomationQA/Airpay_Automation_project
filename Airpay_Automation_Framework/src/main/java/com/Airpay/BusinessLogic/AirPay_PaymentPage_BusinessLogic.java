@@ -386,7 +386,12 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 				WebElement ChannelsName = Channels.get(i);
 				String name = ChannelsName.getText();
 				System.out.println("Channel Name: "+name);
-				if(name.equalsIgnoreCase(Card)){					
+				if(name.equalsIgnoreCase(Card))
+				{
+					/*WebElement e=ChannelsName;
+					JavascriptExecutor js = (JavascriptExecutor)driver;					
+					js.executeScript("arguments[0].click();", e);*/
+					//Assert.Javascriptexecutor_forClick(driver, ChannelsName, "");
 					ChannelsName.click();
 					Extent_Reporting.Log_report_img(" payment mode option choosen as: "+name, "Passed", driver);
 					flag = false;
@@ -764,8 +769,8 @@ public class AirPay_PaymentPage_BusinessLogic extends Airpay_PaymentPage_PageObj
 			Thread.sleep(2000);
 			if(Assert.isElementDisplayed(driver, LogoPaymentPage, "Logo payment page" ))
 			{         	
-			//	Assert.Verify_Image(driver, ImgLogo, "Airpay Logo");
-				Assert.isElementDisplayed(driver, airPayFavIcon, "Airpay Fav icon");
+				//Assert.Verify_Image(driver, ImgLogo, "Airpay Logo");
+				//Assert.isElementDisplayed(driver, airPayFavIcon, "Airpay Fav icon");
 				Extent_Reporting.Log_report_img("Respective Details is exist", "Passed", driver);
 			}else{
 				Extent_Reporting.Log_Fail("Logo payment page does not exis",	"Failed",driver);

@@ -180,6 +180,8 @@ public class AirPay_Payment_Mode_Debit_Card_BusinessLogic extends Airpay_Payment
 			PassedAmt = driver.findElement(By.xpath("//div[@class='main-amount-block show-amnt']//following::span[@id='total_amount']")).getText().trim();
 			confFees = driver.findElement(By.xpath("(//*[@class='surcharge_amount'])[1]")).getText().trim();
 			TotAmt = driver.findElement(By.xpath("//span[@class='amount-value-block']")).getText().trim();
+			Extent_Reporting.Log_report_img("Surcharge filed snap", "Passed", driver);
+			Extent_Reporting.Log_Pass("Surcharge Amount: "+confFees, "Total Amount: "+TotAmt);
 			Assert.Clickbtn(driver, DebitCardMakePaymtBtn, "Debit Card make payment button");	
 			Thread.sleep(10000);
 		}catch(Exception e)	

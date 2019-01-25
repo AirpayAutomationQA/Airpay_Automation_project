@@ -31,7 +31,6 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	public WebDriver driver;
 	public String TC_ID = "";
 	ElementAction Assert = new ElementAction();
-	AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
 
 	//Log log = new Log();	
 	public AirPay_Payment_Mode_CreditCard_BusinessLogic(WebDriver driver, String TC_ID)
@@ -260,6 +259,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 			PassedAmt = driver.findElement(By.xpath("//div[@class='main-amount-block show-amnt']//following::span[@id='total_amount']")).getText().trim();
 			confFees = driver.findElement(By.xpath("(//*[@class='surcharge_amount'])[1]")).getText().trim();
 			TotAmt = driver.findElement(By.xpath("//span[@class='amount-value-block']")).getText().trim();
+			Extent_Reporting.Log_report_img("Surcharge filed snap", "Passed", driver);
+			Extent_Reporting.Log_Pass("Surcharge Amount: "+confFees, "Total Amount: "+TotAmt);
 			Assert.Clickbtn(driver, CreditCardMakePaymtBtn, "Credit Card make payment button");	
 			Thread.sleep(10000);
 		}catch(Exception e)	
@@ -1322,13 +1323,13 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 		}
 	}
 	
-	public void ErrorPopupMsgClikcbtn() throws Exception{
+	public void ErrorPopupMsgClikcbtn() throws Throwable{
 
 		try{
 			Assert.waitForPageToLoad(driver);
 			if(Assert.isElementDisplayed(driver, PopupErrmShbBtn, "Popup is")){
 				Extent_Reporting.Log_report_img("UPI Address detail entered", "assed", driver);
-				Assert.Clickbtn(driver, PopupErrmShbBtn, "Error Message");    
+				Assert.Javascriptexecutor_forClick(driver, PopupErrmShbBtn, "Error Message");    
 			}else{
 				Extent_Reporting.Log_Fail("Error Popup does not exist", "Failed", driver);
 				throw new Exception("Error Popup does not exist");
@@ -1536,12 +1537,14 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 
 	/**
 	 * @author parmeshwar Sakole
+	 * @throws Throwable 
 	 * @Method Name: Card Selection method.
 	 * Following method is used Handling Multiple Card options
-	 * @throws Exception
 	 */
-	public void Popular_UPI_Wallet_InvalidUserIDVerification() throws Exception {
+	public void Popular_UPI_Wallet_InvalidUserIDVerification() throws Throwable {
 		try{ 
+			AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
+
 			Log.info("Navigating To Net Banking Page");	 
 			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
 			{         	
@@ -1631,12 +1634,14 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	
 	/**
 	 * @author parmeshwar Sakole
+	 * @throws Throwable 
 	 * @Method Name: Card Selection method.
 	 * Following method is used Handling Multiple Card options
-	 * @throws Exception
 	 */
-	public void Popular_UPI_Wallet_TimeOutSessionNegativeErrMsg() throws Exception {
+	public void Popular_UPI_Wallet_TimeOutSessionNegativeErrMsg() throws Throwable {
 		try{ 
+			AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
+
 			Log.info("Navigating To Net Banking Page");	 
 			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
 			{         	
@@ -1653,7 +1658,6 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 						Gpay_Common(Excel_Handling.Get_Data(TC_ID, "GpayUserID").trim());
 						sessionTimeOut_errMsg();						
 						ErrorPopupMsgClikcbtn();
-						AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
 						AirPay_Local.Card_Details_Options();				
 
 					}else{
@@ -1667,7 +1671,6 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 							sessionTimeOut_errMsg();
 							ErrorPopupMsgClikcbtn();
 							AirPay_Local.Card_Details_Options();				
-
 						}
 						else if(UpiAttribute.contains("@paytm") && popularbackName.contains("paytm")){
 							Extent_Reporting.Log_Pass("paytm Wallet selected", "Passed");
@@ -1676,8 +1679,6 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 							sessionTimeOut_errMsg();	
 							ErrorPopupMsgClikcbtn();
 							AirPay_Local.Card_Details_Options();				
-
-
 						}
 						else if(UpiAttribute.contains("@ybl") && popularbackName.contains("phonepe")){
 							Extent_Reporting.Log_Pass("phonepe Wallet selected", "Passed");
@@ -1727,12 +1728,14 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	
 	/**
 	 * @author parmeshwar Sakole
+	 * @throws Throwable 
 	 * @Method Name: Card Selection method.
 	 * Following method is used Handling Multiple Card options
-	 * @throws Exception
 	 */
-	public void Popular_UPI_Wallet_TimeOutSessionCancelBtnClickErrMsg() throws Exception {
+	public void Popular_UPI_Wallet_TimeOutSessionCancelBtnClickErrMsg() throws Throwable {
 		try{ 
+			AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
+
 			Log.info("Navigating To Net Banking Page");	 
 			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
 			{         	
@@ -1749,7 +1752,6 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 						Gpay_Common(Excel_Handling.Get_Data(TC_ID, "GpayUserID").trim());
 						sessionCancel_errMsg();						
 						ErrorPopupMsgClikcbtn();
-						AirPay_PaymentPage_BusinessLogic AirPay_Local = new AirPay_PaymentPage_BusinessLogic(driver, TC_ID);
 						AirPay_Local.Card_Details_Options();				
 
 					}else{
@@ -1823,11 +1825,11 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 	
 	/**
 	 * @author parmeshwar Sakole
+	 * @throws Throwable 
 	 * @Method Name: Card Selection method.
 	 * Following method is used Handling Multiple Card options
-	 * @throws Exception
 	 */
-	public void Popular_UPI_Wallet_DeclineTransactionErrMsg() throws Exception {
+	public void Popular_UPI_Wallet_DeclineTransactionErrMsg() throws Throwable {
 		try{ 
 			Log.info("Navigating To Net Banking Page");	 
 			if(Assert.isElementDisplayed(driver, PopulaUPIWallets, "Select UPI wallet" ))
