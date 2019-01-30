@@ -1427,6 +1427,8 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 					{
 						Extent_Reporting.Log_Pass("Gpay wallet selected", "Passed");
 						Extent_Reporting.Log_report_img(" Gpay wallet selected", "Passed", driver);
+						AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+						obj.SurchargeForCommonFunctionNotclickplus();
 						UPIErrorMSgForALL();
 						
 					}else{
@@ -1436,26 +1438,36 @@ public class AirPay_Payment_Mode_CreditCard_BusinessLogic extends Airpay_Payment
 						{
 							Extent_Reporting.Log_Pass("Bhim Wallet selected", "Passed");
 							Extent_Reporting.Log_report_img("bhim selecetd", "passed", driver);
+							AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+							obj.SurchargeForCommonFunctionNotclickplus();
 							UPIErrorMSgForALL();
 						}
 						else if(UpiAttribute.contains("@paytm") && popularbackName.contains("paytm")){
 							Extent_Reporting.Log_Pass("paytm Wallet selected", "Passed");
 							Extent_Reporting.Log_report_img("paytm wallet selecetd", "passed", driver);
+							AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+							obj.SurchargeForCommonFunctionNotclickplus();
 							UPIErrorMSgForALL();
 						}
 						else if(UpiAttribute.contains("@ybl") && popularbackName.contains("phonepe")){
 							Extent_Reporting.Log_Pass("phonepe Wallet selected", "Passed");
 							Extent_Reporting.Log_report_img("phonepe wallet selecetd", "passed", driver);
+							AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+							obj.SurchargeForCommonFunctionNotclickplus();
 							UPIErrorMSgForALL();
 						}
 						else if(UpiAttribute.contains("@ikwik") && popularbackName.contains("mobiKwik")){
 							Extent_Reporting.Log_Pass("mobiKwik Wallet selected", "Passed");
 							Extent_Reporting.Log_report_img("mobiKwik wallet selecetd", "passed", driver);
+							AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+							obj.SurchargeForCommonFunctionNotclickplus();
 							UPIErrorMSgForALL();
 						}
 						else if(popularbackName.contains("other")){
 							Extent_Reporting.Log_Pass("UPI other Wallet selected", "Passed");
 							Extent_Reporting.Log_report_img("UPI other wallet selecetd", "passed", driver);
+							AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+							obj.SurchargeForCommonFunctionNotclickplus();
 							UPIErrorMSgForOther();
 						}		
 					}

@@ -57,6 +57,9 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 			Assert.inputText(driver, EMICardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "EMI Card Number Exp Date");
 			Assert.inputText(driver, EMICardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), " card Number CVVCode");
 			Extent_Reporting.Log_report_img("Details has been Entered", "Passed", driver);
+			AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+			obj.SurchargeForCommonFunction();
+			Assert.waitForPageToLoad(driver);
 			Assert.Clickbtn(driver, EMICardMakePaymtBtn, "EMI Card make payment button");		   
 		}catch(Exception e)	
 		{
@@ -111,10 +114,16 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 					//Assert.selectDropBoxValuebyVisibleTextwithoutClick(driver, EmiBankNameSelectDropDown, Excel_Handling.Get_Data(TC_ID, "BankName").trim(), "EMI surcharge");
 					bankName =  select1.getFirstSelectedOption().getText();
 					Extent_Reporting.Log_report_img(bankName+" Bank Selected", "Passed", driver);					
-				}   
+				} 
+				Assert.inputText(driver, EMICardNumber, Excel_Handling.Get_Data(TC_ID, "InvalidCardNumber").trim(), "Invalid EMI Card Number");
+				Assert.inputText(driver, EMICardHolderName, Excel_Handling.Get_Data(TC_ID, "BuyerFirstName").trim(), "Card Holder name");
+				Assert.inputText(driver, EMICardExpDate,Excel_Handling.Get_Data(TC_ID, "CardExpDate").trim(), "EMI Card Number Exp Date");
+				Assert.inputText(driver, EMICardCVVCode,Excel_Handling.Get_Data(TC_ID, "CardCVVCode").trim(), " card Number CVVCode");
+				Extent_Reporting.Log_report_img("Details has been Entered", "Passed", driver);
 				AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
 				obj.SurchargeForCommonFunction();
 				Assert.waitForPageToLoad(driver);
+				
 			}
 			else{
 				Extent_Reporting.Log_Fail("Bank Name selection issue",	"Failed",driver);
@@ -171,6 +180,8 @@ public class AirPay_Payment_Mode_EMI_Credit_Card_BusinessLogic extends Airpay_Pa
 	public void BharatQRMakePayBtn() throws Exception{
 		try{		   		   			
 			Extent_Reporting.Log_report_img("Bharat QR option is exist", "Passed", driver);
+			AirPay_Payment_Mode_Debit_Card_BusinessLogic obj = new AirPay_Payment_Mode_Debit_Card_BusinessLogic(driver, TC_ID); 
+			obj.SurchargeForCommonFunctionNotclickplus();
 			Assert.Clickbtn(driver, BharatOrMakepaymtBtn, "Bharat QR make payment");		   
 		}catch(Exception e)	
 		{

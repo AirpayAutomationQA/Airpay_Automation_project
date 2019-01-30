@@ -3,6 +3,7 @@ package com.Airpay.BusinessLogic;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -231,7 +232,8 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 			  driver.manage().timeouts().implicitlyWait(2000, TimeUnit.MILLISECONDS);	
 			  Thread.sleep(2000);
 			  if(domain.equals("") || domain.equals("payments.airpay.co.in")||driver.getPageSource().contains("Error Page Exception")==true
-					  ||driver.getPageSource().contains("Internal Server Error")==true|| driver.getTitle().contains("HTTP Status - 400"))
+					  ||driver.getPageSource().contains("Internal Server Error")==true|| driver.getTitle().contains("HTTP Status - 400")
+					  || domain.equals("staging-payments.airpay.co.in"))
 			  {			  
 				  if(Assert.isElementDisplay(driver, "(//div[@class='generic-success'])[1]")){
 					   OtpPass =driver.findElement(By.xpath("(//div[@class='generic-success'])[1]")).getText().trim();
@@ -337,7 +339,12 @@ public class AirPay_payment_Mode_Wallet_BusinessLogic extends Airpay_PaymentPage
 				Assert.inputText(driver, BuyerPhoneNumber, Excel_Handling.Get_Data(TC_ID, "BuyerPhoneNumber"), "Buyer Phone Number");
 				Assert.inputText(driver, BuyerFirstName, Excel_Handling.Get_Data(TC_ID, "BuyerFirstName"), "Buyer First Name");
 				Assert.inputText(driver, BuyerLastName, Excel_Handling.Get_Data(TC_ID, "BuyerLastName"), "Buyer Last Name");
-				Assert.inputText(driver, Order_Id, Excel_Handling.Get_Data(TC_ID, "Order_Id"), "Order_Id");
+				
+				String  string = RandomStringUtils.randomAlphabetic(8);		
+				System.out.println("Random 1 = " + string);				
+				Assert.inputText(driver, Order_Id, string, "Order_Id");
+				//GetOrderID = driver.findElement(By.xpath(Order_Id)).getAttribute("value");				
+				//Assert.inputText(driver, Order_Id, Excel_Handling.Get_Data(TC_ID, "Order_Id"), "Order_Id")				
 				Assert.inputText(driver, Amount, Excel_Handling.Get_Data(TC_ID, "Amount"), "Amount");
 				Extent_Reporting.Log_report_img("Local Host page required field filled", "Passed", driver);
 				Assert.Clickbtn(driver, payHerebtn, "Pay Here");

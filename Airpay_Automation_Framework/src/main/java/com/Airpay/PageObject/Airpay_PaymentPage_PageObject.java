@@ -83,8 +83,12 @@ public class Airpay_PaymentPage_PageObject {
 		public static final String UPICommoneErrLine ="(//*[contains(@class,'formDom form-group errorvalue')])[2]";
 
 		public static final String CashMakePayment = "//*[@class='btn cash-submit' and @data-sub-form-id='cash-form']";
-        public static final String UPIMakePayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[1]";
-        public static final String UPICommonPayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[2]";
+        //public static final String UPIMakePayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[1]";
+        public static final String UPIMakePayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[2]";
+
+        //public static final String UPICommonPayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[2]";
+        public static final String UPICommonPayment ="(//*[@class='btn' and @data-sub-form-id='upi-form'])[3]";
+
         public static final String payTmChaanelInput ="//input[@class='form-control paytm-validation']";
         
         

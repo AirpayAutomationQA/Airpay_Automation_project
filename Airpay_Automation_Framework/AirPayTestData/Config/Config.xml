@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Root>
 	<Environment_Details>
-		<AppUrl>http://localhost/airpay_php/transaction.html</AppUrl>
+		<AppUrl>https://devel-ma.airpayme.com/airpay_php_live/transaction.html</AppUrl>
 	</Environment_Details>
 	
 	<Execution_Details>
